@@ -11,7 +11,7 @@ public class Ingredient {
     // **** Instance variable
 
     private String name;
-    private LinkedList<Recipe> linkedRecipe;
+    private LinkedList<Recipe> linkedRecipe = new LinkedList<>();
 
     // **** Constructor
 
