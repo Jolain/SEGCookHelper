@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -8,10 +9,170 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.compilers.segcookhelper.MainActivity">
+    tools:context="com.compilers.segcookhelper.MainActivity"
+    android:background="@drawable/macaroni"
+    tools:background="?android:attr/colorActivatedHighlight">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="CookHelper"
+                android:layout_width="match_parent"
+                android:id="@+id/textView"
+                android:layout_height="wrap_content"
+                android:textSize="50sp"
+                android:textStyle="normal|bold|italic"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="By"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:textStyle="normal|bold"
+                android:textColor="@android:color/holo_blue_dark" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Jolain Poirier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:textStyle="normal|bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Mathieu Daniel Séguin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:textStyle="normal|bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView5"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:textStyle="normal|bold|italic"
+                android:text="Wambo Kengneson" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Martin Matte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:textStyle="normal|bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Kadiatou N'Diaye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView7"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:textStyle="normal|bold|italic" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            app:srcCompat="@drawable/macaroni"
+            android:id="@+id/imageView"
+            android:layout_weight="0.51"
+            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.09">
+
+            <Button
+                android:text="Search Recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/research"
+                android:layout_weight="1"
+                android:elevation="0dp"
+                android:textStyle="normal|bold"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="onClickSearch (MainActivity)" />
+
+            <Button
+                android:text="Add Recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:backgroundTint="@android:color/holo_blue_bright"
+                android:onClick="onClickAddRecipe (MainActivity)" />
+
+            <Button
+                android:text="Help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/help"
+                android:layout_weight="1"
+                android:textStyle="normal|bold"
+                android:backgroundTint="@android:color/holo_green_light"
+                android:onClick="onClickHelp (MainActivity)" />
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>
