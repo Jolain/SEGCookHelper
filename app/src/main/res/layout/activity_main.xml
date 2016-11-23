@@ -66,7 +66,8 @@
                 android:id="@+id/textView3"
                 android:layout_weight="1"
                 android:textSize="30sp"
-                android:textStyle="normal|bold|italic" />
+                android:textStyle="normal|bold|italic"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,7 +82,8 @@
                 android:id="@+id/textView4"
                 android:layout_weight="1"
                 android:textSize="30sp"
-                android:textStyle="normal|bold|italic" />
+                android:textStyle="normal|bold|italic"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -96,7 +98,8 @@
                 android:layout_weight="1"
                 android:textSize="30sp"
                 android:textStyle="normal|bold|italic"
-                android:text="Wambo Kengneson" />
+                android:text="Wambo Kengneson"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,7 +114,8 @@
                 android:id="@+id/textView6"
                 android:layout_weight="1"
                 android:textSize="30sp"
-                android:textStyle="normal|bold|italic" />
+                android:textStyle="normal|bold|italic"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -126,7 +130,8 @@
                 android:id="@+id/textView7"
                 android:layout_weight="1"
                 android:textSize="30sp"
-                android:textStyle="normal|bold|italic" />
+                android:textStyle="normal|bold|italic"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <ImageView
