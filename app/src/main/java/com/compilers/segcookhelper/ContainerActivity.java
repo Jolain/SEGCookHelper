@@ -21,20 +21,18 @@ public class ContainerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_container);
         ListView listView = (ListView) findViewById(R.id.list_recipe);
+        // Retrieve objects created by the search query (not yet implemented)
+        Recipe results;
 
-        List<Recipe> listRecettes = new ArrayList<Recipe>();
-
-
-
-        RecipeAdapter ad;
-        ad = new RecipeAdapter(this, listRecettes);
+        RecipeAdapter ad = new RecipeAdapter(this, results);
         listView.setAdapter(ad);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                final String item = (String) adapterView.getItemAtPosition(i);
+                final Recipe recipe = (Recipe) adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(getApplicationContext(), RecipeViewActivity.class); //Application Context and Activity
+                // Need some way to give recipe to the intent
                 startActivityForResult(intent, 0);
 
             }

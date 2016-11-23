@@ -19,7 +19,7 @@
         <activity android:name=".ResearchActivity" />
         <activity android:name=".RecipeViewActivity" />
         <activity android:name=".EditRecipeActivity" />
-        <activity android:name=".AddRecipeActivity"></activity>
+        <activity android:name=".AddRecipeActivity" />
     </application>
 
 </manifest>
