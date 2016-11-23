@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_recipe">
+
+        <ImageView
+            android:layout_width="30sp"
+            app:srcCompat="@drawable/ic_logo_00"
+            android:id="@+id/ImageRecipe"
+            android:layout_weight="0.55"
+            android:layout_height="100sp" />
+
+        <TextView
+            android:text="Recipe Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/RecipeName"
+            android:layout_weight="0.55"
+            android:textSize="35sp"
+            android:textStyle="normal|bold|italic"
+            android:textAlignment="textStart" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -3,40 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="9dp"
-        android:id="@+id/item_recipe">
-
-        <ImageView
-            app:srcCompat="@drawable/ic_logo_00"
-            android:id="@+id/ImageRecipe"
-            android:layout_weight="1"
-            android:layout_width="20sp"
-            android:layout_height="100sp" />
-
-        <TextView
-            android:text="RecipeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/RecipeName"
-            android:layout_weight="1"
-            android:textSize="30sp"
-            android:textAlignment="textStart"
-            android:textStyle="normal|bold"
-            android:textAllCaps="false" />
-    </LinearLayout>
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/item_recipe"
-        android:layout_below="@+id/item_recipe"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         android:id="@+id/list_recipe" />
 </RelativeLayout>

@@ -25,7 +25,7 @@ public class RecipeAdapter extends ArrayAdapter<Recipe>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.activity_main, parent, false);
+        View rowView = inflater.inflate(R.layout.item_recipe, parent, false);
         TextView recipeName = (TextView) rowView.findViewById(R.id.RecipeName);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.ImageRecipe);
 
