@@ -10,35 +10,22 @@ import java.util.LinkedList;
 
 public class Recipe {
 
-    // **** Instance variable
-
-
     private String name;
+    private String description;
+    private int img; // Maybe not Image type
+    private LinkedList<Ingredient> linkedIngeredient = new LinkedList<>();
+    private LinkedList<Category> linkedCategory = new LinkedList<>();
+    private String cookTime;
 
-    public Recipe(String name, String cookTime, LinkedList<Category> categories, LinkedList<Ingredient> ingredients, int img, String description) {
+    public Recipe(String name, String cookTime, LinkedList<Category> linkedCategory, LinkedList<Ingredient> linkedIngredient, int img, String description) {
         this.name = name;
         this.cookTime = cookTime;
-        this.categories = categories;
-        this.ingredients = ingredients;
+        this.linkedCategory = linkedCategory;
+        this.linkedIngeredient = linkedIngredient;
         this.img = img;
         this.description = description;
 
     }
-
-    private String description;
-    private int img; // Maybe not Image type
-    private LinkedList<Ingredient> ingredients = new LinkedList<>();
-    private LinkedList<Category> categories = new LinkedList<>();
-    private String cookTime;
-
-    public String getCookTime() {
-        return cookTime;
-    }
-
-    public void setCookTime(String cookTime) {
-        this.cookTime = cookTime;
-    }
-
 
     public String getName() {
         return name;
@@ -46,27 +33,6 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-
-    public LinkedList<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(LinkedList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public void addIngredient(Ingredient ingredient){
-        ingredients.add(ingredient);
-    }
-
-    public int getImg() {
-        return img;
-    }
-
-    public void setImg(int img) {
-        this.img = img;
     }
 
     public String getDescription() {
@@ -77,20 +43,50 @@ public class Recipe {
         this.description = description;
     }
 
-    public LinkedList<Category> getCategories() {
-        return categories;
+    public int getImg() {
+        return img;
     }
 
-    public void setCategories(LinkedList<Category> categories) {
-        this.categories = categories;
+    public void setImg(int img) {
+        this.img = img;
+    }
+
+    public String getCookTime() {
+        return cookTime;
+    }
+
+    public void setCookTime(String cookTime) {
+        this.cookTime = cookTime;
+    }
+
+    public void addIngredient(Ingredient ingredient){
+        if(!linkedIngeredient.contains(ingredient)){
+            linkedIngeredient.add(ingredient);
+        } else {
+            System.out.println("Ingredient " + ingredient.toString() +
+                    " is already associated with recipe " + getName());
+        }
+    }
+
+    public void deleteIngredient(Ingredient ingredient){
+        linkedIngeredient.remove(ingredient);
     }
 
     public void addCategory(Category category){
-        categories.add(category);
+        if(!linkedCategory.contains(category)) {
+            linkedCategory.add(category);
+        } else{
+            System.out.println("Category " + category.getName() +
+                    " is already associated with recipe " + getName());
+        }
     }
 
+    public void deleteCategory(Category category) {
+        linkedCategory.remove(category);
+    }
 
-    // **** Constructor
-
-
+    //TODO possibly add more info to toString
+    public String toString(){
+        return name;
+    }
 }
