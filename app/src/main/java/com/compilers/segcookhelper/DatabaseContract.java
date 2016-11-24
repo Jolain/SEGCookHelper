@@ -20,9 +20,9 @@ public class DatabaseContract {
 
     // TABLE STRUCTURE
 
-    public static abstract class recipe implements BaseColumns {
+    public static abstract class R_table implements BaseColumns {
         public static final String TABLE_NAME = "Recipes";
-        public static final String COL_NAME = "Nom"; // String
+        public static final String COL_NAME = "Name"; // String
         public static final String COL_DESC = "Description"; // String
         public static final String COL_IMG = "LinkedImage"; // Integer
 
@@ -42,26 +42,51 @@ public class DatabaseContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-    public static abstract class ingredient implements BaseColumns {
+    public static abstract class I_table implements BaseColumns {
+        public static final String TABLE_NAME = "Ingredients";
+        public static final String COL_NAME = "Name";
+        // SQLite does not support storing arrays. Explained above @line 29
+        public static final String COL_RECIPE = "Recipe";
+
+        public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
+                _ID + " INTEGER PRIMARY KEY," +
+                COL_NAME + TEXT_TYPE + COMMA_SEP +
+                COL_RECIPE + TEXT_TYPE + " )";
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
 
-    public static abstract class category implements BaseColumns {
+    public static abstract class C_table implements BaseColumns {
+        public static final String TABLE_NAME = "Categories";
+        public static final String COL_NAME = "Name";
+        // SQLite does not support storing arrays. Explained above @line 29
+        public static final String COL_RECIPE = "Recipe";
+
+        public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
+                _ID + " INTEGER PRIMARY KEY," +
+                COL_NAME + TEXT_TYPE + COMMA_SEP +
+                COL_RECIPE + TEXT_TYPE + " )";
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
 
     // Array Conversion Methods
 
-    private String arrayToString(String[] array) {
+    public String arrayToString(String[] array) {
+        String outputString = "";
+        for(int i = 0; i < array.length; i++) { // Append each element next to each other with __,__
+            outputString = outputString + array[i];
+            if(i < array.length - 1) { // Do not append comma to the last element
+                outputString = outputString + "__,__";
+            }
+        }
 
-        return null;
+        return outputString;
     }
 
-    private String stringToArray(String s) {
-
-        return null;
+    public String[] stringToArray(String s) {
+        String[] outputArray = s.split("__,__");
+        return outputArray;
     }
-
-
 
 }
