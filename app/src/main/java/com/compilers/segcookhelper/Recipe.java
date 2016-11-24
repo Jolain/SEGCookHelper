@@ -12,6 +12,34 @@ public class Recipe {
 
     // **** Instance variable
 
+
+    private String name;
+
+    public Recipe(String name, String cookTime, LinkedList<Category> categories, LinkedList<Ingredient> ingredients, int img, String description) {
+        this.name = name;
+        CookTime = cookTime;
+        this.categories = categories;
+        this.ingredients = ingredients;
+        this.img = img;
+        this.description = description;
+
+    }
+
+    private String description;
+    private int img; // Maybe not Image type
+    private LinkedList<Ingredient> ingredients = new LinkedList<>();
+    private LinkedList<Category> categories = new LinkedList<>();
+    private String CookTime;
+
+    public String getCookTime() {
+        return CookTime;
+    }
+
+    public void setCookTime(String cookTime) {
+        CookTime = cookTime;
+    }
+
+
     public String getName() {
         return name;
     }
@@ -20,12 +48,6 @@ public class Recipe {
         this.name = name;
     }
 
-    private String name;
-    private String description;
-    private int img; // Maybe not Image type
-    private LinkedList<Ingredient> ingredients = new LinkedList<>();
-    private LinkedList<Category> categories = new LinkedList<>();
-
 
     public LinkedList<Ingredient> getIngredients() {
         return ingredients;
@@ -33,6 +55,10 @@ public class Recipe {
 
     public void setIngredients(LinkedList<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void addIngredient(Ingredient ingredient){
+        ingredients.add(ingredient);
     }
 
     public int getImg() {
@@ -57,6 +83,10 @@ public class Recipe {
 
     public void setCategories(LinkedList<Category> categories) {
         this.categories = categories;
+    }
+
+    public void addCategory(Category category){
+        categories.add(category);
     }
 
 

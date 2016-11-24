@@ -22,7 +22,7 @@ public class ContainerActivity extends Activity {
         setContentView(R.layout.recipe_container);
         ListView listView = (ListView) findViewById(R.id.list_recipe);
         // Retrieve objects created by the search query (not yet implemented)
-        Recipe results;
+        Recipe results = new Recipe();
 
         RecipeAdapter ad = new RecipeAdapter(this, results);
         listView.setAdapter(ad);
