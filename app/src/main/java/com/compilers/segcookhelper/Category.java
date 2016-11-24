@@ -27,9 +27,9 @@ public class Category {
         if(!linkedRecipe.contains(recipe)) {
             linkedRecipe.add(recipe);
         } else{
-            System.out.print("Recipe " + recipe.toString() +
-                    " is already associated with category "
-                    + name);
+            System.out.print("Category " + getName() +
+                    " is already associated with recipe "
+                    + recipe.getName());
         }
     }
 
