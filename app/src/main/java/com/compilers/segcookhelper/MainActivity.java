@@ -15,10 +15,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //TODO
-        //search.findViewById(R.id.research);
-        //add.findViewById(R.id.add);
-        //help.findViewById(R.id.help);
+
+        search.findViewById(R.id.research);
+        add.findViewById(R.id.add);
+        help.findViewById(R.id.help);
 
     }
 
