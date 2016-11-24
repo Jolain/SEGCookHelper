@@ -17,7 +17,7 @@ public class Recipe {
 
     public Recipe(String name, String cookTime, LinkedList<Category> categories, LinkedList<Ingredient> ingredients, int img, String description) {
         this.name = name;
-        CookTime = cookTime;
+        this.cookTime = cookTime;
         this.categories = categories;
         this.ingredients = ingredients;
         this.img = img;
@@ -29,14 +29,14 @@ public class Recipe {
     private int img; // Maybe not Image type
     private LinkedList<Ingredient> ingredients = new LinkedList<>();
     private LinkedList<Category> categories = new LinkedList<>();
-    private String CookTime;
+    private String cookTime;
 
     public String getCookTime() {
-        return CookTime;
+        return cookTime;
     }
 
     public void setCookTime(String cookTime) {
-        CookTime = cookTime;
+        this.cookTime = cookTime;
     }
 
 
