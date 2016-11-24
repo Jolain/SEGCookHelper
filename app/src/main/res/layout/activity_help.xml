@@ -11,10 +11,9 @@
     tools:context="com.compilers.segcookhelper.HelpActivity">
 
     <TextView
-        android:text="TextView"
+        android:text="Helpful information (placeholder)"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/HelpText"
-        tools:text="Helpful information (placeholder)"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 </RelativeLayout>
