@@ -7,66 +7,67 @@ import android.provider.BaseColumns;
  *
  * Class file which contains the SQL contract Database.class must follow. Strings are defined
  * to be used with (SQLiteDatabase).execSQL()
+ * This class should not be used by any other application and such is package private.
  */
 
-public class DatabaseContract {
+class DatabaseContract {
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "RecipeDatabase.db";
-    public static final String TEXT_TYPE = " TEXT";
-    public static final String COMMA_SEP = ",";
+    static final int DATABASE_VERSION = 1;
+    static final String DATABASE_NAME = "RecipeDatabase.db";
+    static final String TEXT_TYPE = " TEXT";
+    static final String COMMA_SEP = ",";
 
     private DatabaseContract() {} // This class must not be instantiated.
 
     // TABLE STRUCTURE
 
-    public static abstract class R_table implements BaseColumns {
-        public static final String TABLE_NAME = "Recipes";
-        public static final String COL_NAME = "Name"; // String
-        public static final String COL_DESC = "Description"; // String
-        public static final String COL_IMG = "LinkedImage"; // Integer
+    static abstract class R_table implements BaseColumns {
+        static final String TABLE_NAME = "Recipes";
+        static final String COL_NAME = "Name"; // String
+        static final String COL_DESC = "Description"; // String
+        static final String COL_IMG = "LinkedImage"; // Integer
 
         // SQLite does not support storing arrays. By using arrayToString() and stringToArray(),
         // we can store the ingredient & category array in a string like so:
         // ["Tomato", "Potato"] -> "Tomato__,__Potato"
-        public static final String COL_INGREDIENT = "Ingredients"; // String
-        public static final String COL_CATEGORY = "Category"; // String
+        static final String COL_INGREDIENT = "Ingredients"; // String
+        static final String COL_CATEGORY = "Category"; // String
 
-        public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
+        static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY," +
                 COL_NAME + TEXT_TYPE + COMMA_SEP +
                 COL_DESC + TEXT_TYPE + COMMA_SEP +
                 COL_IMG + TEXT_TYPE + COMMA_SEP +
                 COL_INGREDIENT + TEXT_TYPE + COMMA_SEP +
                 COL_CATEGORY + TEXT_TYPE + " )";
-        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-    public static abstract class I_table implements BaseColumns {
-        public static final String TABLE_NAME = "Ingredients";
-        public static final String COL_NAME = "Name";
+    static abstract class I_table implements BaseColumns {
+        static final String TABLE_NAME = "Ingredients";
+        static final String COL_NAME = "Name";
         // SQLite does not support storing arrays. Explained above @line 29
-        public static final String COL_RECIPE = "Recipe";
+        static final String COL_RECIPE = "Recipe";
 
-        public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
+        static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY," +
                 COL_NAME + TEXT_TYPE + COMMA_SEP +
                 COL_RECIPE + TEXT_TYPE + " )";
-        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
 
-    public static abstract class C_table implements BaseColumns {
-        public static final String TABLE_NAME = "Categories";
-        public static final String COL_NAME = "Name";
+    static abstract class C_table implements BaseColumns {
+        static final String TABLE_NAME = "Categories";
+        static final String COL_NAME = "Name";
         // SQLite does not support storing arrays. Explained above @line 29
-        public static final String COL_RECIPE = "Recipe";
+        static final String COL_RECIPE = "Recipe";
 
-        public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
+        static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY," +
                 COL_NAME + TEXT_TYPE + COMMA_SEP +
                 COL_RECIPE + TEXT_TYPE + " )";
-        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
 

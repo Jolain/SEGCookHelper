@@ -15,7 +15,9 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        //db.execSQL();
+        db.execSQL(DatabaseContract.I_table.CREATE_TABLE);
+        db.execSQL(DatabaseContract.C_table.CREATE_TABLE);
+        db.execSQL(DatabaseContract.R_table.CREATE_TABLE);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
