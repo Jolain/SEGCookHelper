@@ -15,4 +15,17 @@ public class Category {
 
     // **** Constructor
 
+    public Category(String name) {
+        this.name = name;
+    }
+
+    public void addRecipe(Recipe recipe){
+        if(!linkedRecipe.contains(recipe)) {
+            linkedRecipe.add(recipe);
+        } else{
+            System.out.print("Recipe " + recipe.getName() +
+                    " is already associated with category "
+                    + name);
+        }
+    }
 }
