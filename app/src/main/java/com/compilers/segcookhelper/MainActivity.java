@@ -16,10 +16,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        search.findViewById(R.id.research);
-        add.findViewById(R.id.add);
-        help.findViewById(R.id.help);
-
+        //TODO fix NullPointerException
+        //search.findViewById(R.id.research);
+        //add.findViewById(R.id.add);
+        //help.findViewById(R.id.help);
     }
 
     public void onClickSearch(View view) {
