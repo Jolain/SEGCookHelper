@@ -155,7 +155,7 @@
                 android:elevation="0dp"
                 android:textStyle="normal|bold"
                 android:backgroundTint="@color/colorAccent"
-                android:onClick="onClickSearch (MainActivity)" />
+                android:onClick="onClickSearch" />
 
             <Button
                 android:text="Add Recipe"
@@ -165,7 +165,7 @@
                 android:layout_weight="1"
                 android:textStyle="normal|bold"
                 android:backgroundTint="@android:color/holo_blue_bright"
-                android:onClick="onClickAddRecipe (MainActivity)" />
+                android:onClick="onClickAddRecipe" />
 
             <Button
                 android:text="Help"
@@ -175,7 +175,7 @@
                 android:layout_weight="1"
                 android:textStyle="normal|bold"
                 android:backgroundTint="@android:color/holo_green_light"
-                android:onClick="onClickHelp (MainActivity)" />
+                android:onClick="onClickHelp" />
         </LinearLayout>
 
     </LinearLayout>
