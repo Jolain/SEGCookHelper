@@ -24,6 +24,7 @@ public class Recipe {
         this.linkedIngeredient = linkedIngredient;
         this.img = img;
         this.description = description;
+        //TODO database.addRecipe(this)
 
     }
 
@@ -68,8 +69,12 @@ public class Recipe {
         }
     }
 
-    public void deleteIngredient(Ingredient ingredient){
-        linkedIngeredient.remove(ingredient);
+    public void removeIngredient(Ingredient ingredient){
+        if(linkedIngeredient.remove(ingredient)) { // If the remove operation succeeded, check list size
+            if(linkedCategory.size() < 1 && linkedIngeredient.size() < 1) {} //TODO database.removeRecipe(this)
+        } else {
+            System.out.println("Failed to remove " + ingredient.getName() + " from " + getName());
+        }
     }
 
     public void addCategory(Category category){
@@ -81,8 +86,12 @@ public class Recipe {
         }
     }
 
-    public void deleteCategory(Category category) {
-        linkedCategory.remove(category);
+    public void removeCategory(Category category) {
+        if(linkedCategory.remove(category)) { // If the remove operation succeeded, check list size
+            if(linkedCategory.size() < 1 && linkedIngeredient.size() < 1) {} //TODO database.removeRecipe(this)
+        } else {
+            System.out.println("Failed to remove " + category.getName() + " from " + getName());
+        }
     }
 
     //TODO possibly add more info to toString

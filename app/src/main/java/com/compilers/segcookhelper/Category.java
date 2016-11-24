@@ -17,6 +17,7 @@ public class Category {
 
     public Category(String name) {
         this.name = name;
+        //TODO database.addCategory(this)
     }
 
     public String getName(){
@@ -30,6 +31,12 @@ public class Category {
             System.out.print("Category " + getName() +
                     " is already associated with recipe "
                     + recipe.getName());
+        }
+    }
+
+    public void removeRecipe(Recipe recipe){
+        if(!linkedRecipe.remove(recipe)) {
+            System.out.println("Failed to remove " + recipe.getName() + " from " + getName());
         }
     }
 
