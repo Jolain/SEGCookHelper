@@ -19,6 +19,10 @@ public class Category {
         this.name = name;
     }
 
+    public String getName(){
+        return name;
+    }
+
     public void addRecipe(Recipe recipe){
         if(!linkedRecipe.contains(recipe)) {
             linkedRecipe.add(recipe);
@@ -29,5 +33,8 @@ public class Category {
         }
     }
 
-    public String toString() {return name;}
+    //TODO possibly add more info to toString
+    public String toString(){
+        return name;
+    }
 }
