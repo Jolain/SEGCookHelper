@@ -21,8 +21,8 @@ public class ContainerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_container);
         ListView listView = (ListView) findViewById(R.id.list_recipe);
-        // Retrieve objects created by the search query (not yet implemented)
-        Recipe results = new Recipe();
+        //TODO Retrieve objects created by the search query (not yet implemented)
+        Recipe[] results = new Recipe[0];
 
         RecipeAdapter ad = new RecipeAdapter(this, results);
         listView.setAdapter(ad);
