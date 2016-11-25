@@ -94,6 +94,14 @@ public class Recipe {
         }
     }
 
+    public Ingredient[] getIngredientArray(){
+        return (Ingredient[])linkedIngeredient.toArray();
+    }
+
+    public Category[] getCategoryArray(){
+        return (Category[])linkedCategory.toArray();
+    }
+
     //TODO possibly add more info to toString
     public String toString(){
         return name;
