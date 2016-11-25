@@ -12,7 +12,7 @@ import android.provider.BaseColumns;
 
 class DatabaseContract {
 
-    static final int DATABASE_VERSION = 1;
+    static final int DATABASE_VERSION = 2;
     static final String DATABASE_NAME = "RecipeDatabase.db";
     static final String TEXT_TYPE = " TEXT";
     static final String COMMA_SEP = ",";
@@ -46,13 +46,10 @@ class DatabaseContract {
     static abstract class I_table implements BaseColumns {
         static final String TABLE_NAME = "Ingredients";
         static final String COL_NAME = "Name";
-        // SQLite does not support storing arrays. Explained above @line 29
-        static final String COL_RECIPE = "Recipe";
 
         static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY," +
-                COL_NAME + TEXT_TYPE + COMMA_SEP +
-                COL_RECIPE + TEXT_TYPE + " )";
+                COL_NAME + TEXT_TYPE + " )";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
@@ -60,15 +57,11 @@ class DatabaseContract {
     static abstract class C_table implements BaseColumns {
         static final String TABLE_NAME = "Categories";
         static final String COL_NAME = "Name";
-        // SQLite does not support storing arrays. Explained above @line 29
-        static final String COL_RECIPE = "Recipe";
 
         static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY," +
-                COL_NAME + TEXT_TYPE + COMMA_SEP +
-                COL_RECIPE + TEXT_TYPE + " )";
+                COL_NAME + TEXT_TYPE + " )";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
-
     }
 
     // Array Conversion Methods
