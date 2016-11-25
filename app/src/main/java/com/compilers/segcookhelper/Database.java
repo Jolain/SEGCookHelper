@@ -21,8 +21,11 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Database structure should not change, so no need to implement this method for now.
-
+        // If database changes, drop old tables and create new ones
+        db.execSQL(DatabaseContract.I_table.DELETE_TABLE);
+        db.execSQL(DatabaseContract.C_table.DELETE_TABLE);
+        db.execSQL(DatabaseContract.R_table.DELETE_TABLE);
+        onCreate(db);
     }
 
 }

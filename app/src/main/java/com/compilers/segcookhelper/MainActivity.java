@@ -2,6 +2,7 @@ package com.compilers.segcookhelper;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,11 @@ public class MainActivity extends Activity {
         search = (Button)findViewById(R.id.search1);
         help = (Button)findViewById(R.id.help);
         add = (Button)findViewById(R.id.add);
+
+        Database dbHelper = new Database(this);
+        // Creates database instance, if it already exists links to the existing one.
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // TODO: Add recipes/ingredients/categories to the database
 
     }
 

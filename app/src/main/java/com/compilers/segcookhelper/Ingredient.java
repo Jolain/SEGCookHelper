@@ -7,49 +7,66 @@ import java.util.LinkedList;
  */
 
 public class Ingredient {
-
     // **** Instance variable
 
     private String name;
-    private LinkedList<Recipe> linkedRecipe = new LinkedList<>();
 
     // **** Constructor
 
-    public Ingredient(String name, Recipe recipe) {
+    /**
+     * Constructs an ingredient
+     * @param name the name of the ingredient
+     */
+    public Ingredient(String name){
         this.name = name;
-        linkedRecipe.add(recipe);
-        //TODO database.addIngredient(this)
     }
+
+//    public Ingredient(String name, Recipe recipe) {
+//        this(name);
+//        linkedRecipe.add(recipe);
+//        //TODO database.addIngredient(this)
+//    }
 
     // **** Public methods
 
+    /**
+     * Get the name of the ingredient
+     * @return the name of the ingredient
+     */
     public String getName(){
         return name;
     }
 
-    public void addRecipe(Recipe recipe) {
-        if (!linkedRecipe.contains(recipe)){
-            linkedRecipe.add(recipe);
-        } else {
-            System.out.println("Ingredient " + getName()
-            + " is already associated with recipe " + recipe.getName());
-        }
-    }
-
-    public void removeRecipe(Recipe recipe) {
-        if(linkedRecipe.remove(recipe)) { // If the remove operation succeeded, check list size
-            if(linkedRecipe.size() < 1) {} //TODO database.removeIngredient(this)
-        } else {
-            System.out.println("Failed to remove " + recipe + " from " + name);
-        }
-    }
-
-    public Recipe[] getRecipeArray(){
-        return (Recipe[])linkedRecipe.toArray();
-    }
-
+    /**
+     * Returns a String representing the ingredient
+     * @return the String
+     */
     public String toString() {
         return name;
     }
-
 }
+
+/*
+private LinkedList<Recipe> linkedRecipe = new LinkedList<>();
+
+public void addRecipe(Recipe recipe) {
+    if (!linkedRecipe.contains(recipe)){
+        linkedRecipe.add(recipe);
+    } else {
+        System.out.println("Ingredient " + getName()
+        + " is already associated with recipe " + recipe.getName());
+    }
+}
+
+public void removeRecipe(Recipe recipe) {
+    if(linkedRecipe.remove(recipe)) { // If the remove operation succeeded, check list size
+        if(linkedRecipe.size() < 1) {} //TODO database.removeIngredient(this)
+    } else {
+        System.out.println("Failed to remove " + recipe + " from " + name);
+    }
+}
+
+public Recipe[] getRecipeArray(){
+    return (Recipe[])linkedRecipe.toArray();
+}
+*/
