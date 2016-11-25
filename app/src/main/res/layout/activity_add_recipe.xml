@@ -36,7 +36,7 @@
                     android:id="@+id/textView9"
                     android:layout_weight="1"
                     android:textStyle="normal|bold|italic"
-                    android:textSize="50sp"
+                    android:textSize="40sp"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimary" />
 
@@ -69,12 +69,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView8"
-                    android:layout_weight="1.37"
+                    android:layout_weight="0.42"
                     android:textSize="20sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
-                    android:layout_width="189dp"
+                    android:layout_width="163dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
@@ -82,7 +82,8 @@
                     android:textSize="15sp"
                     android:textAlignment="textStart"
                     android:textStyle="normal|italic"
-                    android:hint="Enter recipe name " />
+                    android:hint="Enter recipe name "
+                    android:layout_weight="0.48" />
             </LinearLayout>
 
             <Space
@@ -181,7 +182,7 @@
 
                 <TextView
                     android:text="Description:"
-                    android:layout_width="199dp"
+                    android:layout_width="147dp"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textStyle="normal|bold" />
@@ -191,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:layout_weight="1"
+                    android:layout_weight="24062.80"
                     android:textAlignment="textStart"
                     android:textSize="15sp"
                     android:hint="Enter description " />
