@@ -41,7 +41,7 @@
                 android:id="@+id/searchQuery"
                 android:inputType="textPersonName"
                 android:hint="ie: Tomato AND Onions"
-                android:singleLine="true" />
+                android:maxLines="1" />
 
             <Space
                 android:layout_width="match_parent"
