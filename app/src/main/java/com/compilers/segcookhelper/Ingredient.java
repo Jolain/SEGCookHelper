@@ -11,21 +11,36 @@ public class Ingredient {
 
     private String name;
 
-
     // **** Constructor
 
-    public Ingredient(String name, Recipe recipe) {
+    /**
+     * Constructs an ingredient
+     * @param name the name of the ingredient
+     */
+    public Ingredient(String name){
         this.name = name;
-        //linkedRecipe.add(recipe);
-        //TODO database.addIngredient(this)
     }
+
+//    public Ingredient(String name, Recipe recipe) {
+//        this(name);
+//        linkedRecipe.add(recipe);
+//        //TODO database.addIngredient(this)
+//    }
 
     // **** Public methods
 
+    /**
+     * Get the name of the ingredient
+     * @return the name of the ingredient
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Returns a String representing the ingredient
+     * @return the String
+     */
     public String toString() {
         return name;
     }
