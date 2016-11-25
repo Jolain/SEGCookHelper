@@ -11,19 +11,31 @@ public class Category {
 
     private String name;
 
-
     // **** Constructor
 
+    /**
+     * Constructs a Category
+     * @param name the name of the category
+     */
     public Category(String name) {
         this.name = name;
         //TODO database.addCategory(this)
     }
 
+    /**
+     * Get the name of the category
+     * @return the name of the category
+     */
     public String getName(){
         return name;
     }
 
     //TODO possibly add more info to toString
+
+    /**
+     * Returns a String representing the category
+     * @return the String
+     */
     public String toString(){
         return name;
     }
