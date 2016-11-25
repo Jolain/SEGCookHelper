@@ -50,7 +50,8 @@ public class RecipeViewActivity extends Activity {
             public void onClick(DialogInterface dialog, int id) {
                 // delete the recipe from the database and return to research screen;
                 Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
-                startActivityForResult(intent, 0);
+                setResult(RESULT_OK,intent);
+                finish();
             }
         });
 
