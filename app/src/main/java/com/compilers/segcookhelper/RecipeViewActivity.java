@@ -1,8 +1,12 @@
 package com.compilers.segcookhelper;
 
 import android.app.Activity;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,9 +41,29 @@ public class RecipeViewActivity extends Activity {
     }
 
     public void onClickDeleteRecipe(View view){
-        // delete the recipe from the database and return to research screen;
-        Intent intent = new Intent(getApplicationContext(), ResearchActivity.class);
-        startActivityForResult(intent,0);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you really want to delete this recipe?");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // delete the recipe from the database and return to research screen;
+                Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
 
     }
 }
