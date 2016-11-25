@@ -44,6 +44,10 @@ public class Ingredient {
         }
     }
 
+    public Recipe[] getRecipeArray(){
+        return (Recipe[])linkedRecipe.toArray();
+    }
+
     public String toString() {
         return name;
     }

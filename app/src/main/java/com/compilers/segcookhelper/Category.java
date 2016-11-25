@@ -40,6 +40,10 @@ public class Category {
         }
     }
 
+    public Recipe[] getRecipeArray(){
+        return (Recipe[])linkedRecipe.toArray();
+    }
+
     //TODO possibly add more info to toString
     public String toString(){
         return name;
