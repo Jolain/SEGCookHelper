@@ -20,6 +20,8 @@
         <activity android:name=".RecipeViewActivity" />
         <activity android:name=".EditRecipeActivity" />
         <activity android:name=".AddRecipeActivity" />
+        <activity android:name=".ContainerActivity"/>
+
     </application>
 
 </manifest>

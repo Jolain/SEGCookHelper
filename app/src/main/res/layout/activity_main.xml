@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.compilers.segcookhelper.MainActivity"
-    tools:background="?android:attr/colorActivatedHighlight">
+    android:background="@android:color/holo_orange_dark">
 
     <LinearLayout
         android:orientation="vertical"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Mathieu Daniel Séguin"
+                android:text="Mathieu  Séguin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
@@ -138,24 +138,15 @@
             app:srcCompat="@drawable/macaroni"
             android:id="@+id/imageView"
             android:layout_weight="0.51"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:src="@drawable/macaroni" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.09">
-
-            <Button
-                android:text="Search Recipe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/research"
-                android:layout_weight="1"
-                android:elevation="0dp"
-                android:textStyle="normal|bold"
-                android:backgroundTint="@color/colorAccent"
-                android:onClick="onClickSearch" />
+            android:layout_weight="0.09"
+            android:id="@+id/Buttons">
 
             <Button
                 android:text="Add Recipe"
@@ -165,7 +156,8 @@
                 android:layout_weight="1"
                 android:textStyle="normal|bold"
                 android:backgroundTint="@android:color/holo_blue_bright"
-                android:onClick="onClickAddRecipe" />
+                android:onClick="onClickAddRecipe"
+                android:background="@android:drawable/btn_default" />
 
             <Button
                 android:text="Help"
@@ -175,7 +167,19 @@
                 android:layout_weight="1"
                 android:textStyle="normal|bold"
                 android:backgroundTint="@android:color/holo_green_light"
-                android:onClick="onClickHelp" />
+                android:onClick="onClickHelp"
+                android:background="@android:drawable/btn_default" />
+
+            <Button
+                android:text="Search Recipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/search1"
+                android:textStyle="normal|bold"
+                android:background="@android:drawable/btn_default"
+                android:onClick="onClickSearch"
+                android:backgroundTint="@android:color/holo_red_light" />
         </LinearLayout>
 
     </LinearLayout>

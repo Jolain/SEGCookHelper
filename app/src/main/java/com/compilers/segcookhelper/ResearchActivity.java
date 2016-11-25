@@ -16,9 +16,9 @@ public class ResearchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_research);
-        search.findViewById(R.id.searchButton);
-        clear.findViewById(R.id.clearButton);
-        edit.findViewById(R.id.searchQuery);
+        clear = (Button)findViewById(R.id.clearButton);
+        search = (Button)findViewById(R.id.searchButton);
+        edit = (EditText)findViewById(R.id.searchQuery);
 
     }
 
@@ -29,6 +29,7 @@ public class ResearchActivity extends Activity {
 
     public void onClickReset(View view){
         edit.setText(" ");
-
     }
+
+
 }
