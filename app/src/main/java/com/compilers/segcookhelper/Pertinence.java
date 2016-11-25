@@ -4,7 +4,7 @@ package com.compilers.segcookhelper;
  * Created by martin on 2016-11-25.
  */
 
-public class Persistence {
+public class Pertinence {
     private static Pertinence pertinence = new Pertinence();
 
     private int categoriePertinence = 3;
