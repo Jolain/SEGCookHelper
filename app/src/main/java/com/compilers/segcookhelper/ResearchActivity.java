@@ -1,6 +1,8 @@
 package com.compilers.segcookhelper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +12,9 @@ import android.widget.EditText;
 public class ResearchActivity extends Activity {
     private Button search;
     private Button clear;
+    private Button help;
     private EditText edit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,7 @@ public class ResearchActivity extends Activity {
         clear = (Button)findViewById(R.id.clearButton);
         search = (Button)findViewById(R.id.searchButton);
         edit = (EditText)findViewById(R.id.searchQuery);
+        help = (Button)findViewById(R.id.HelpResearch);
 
     }
 
@@ -29,6 +34,25 @@ public class ResearchActivity extends Activity {
 
     public void onClickReset(View view){
         edit.setText(" ");
+    }
+
+
+
+    public void onClickHelp(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("To research a recipe blablabla...");
+        builder.setCancelable(true);
+
+
+
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 

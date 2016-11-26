@@ -13,9 +13,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -50,9 +48,10 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageRecipe"
+                    android:id="@+id/imageRecipeAdd"
                     android:layout_weight="1.34"
-                    android:src="@drawable/ic_logo_00" />
+                    android:src="@drawable/ic_logo_00"
+                    android:onClick="onImageClick" />
             </LinearLayout>
 
             <Space
@@ -125,7 +124,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:text="Ingedients:"
+                    android:text="Ingredients:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView12"
@@ -195,7 +194,8 @@
                     android:layout_weight="24062.80"
                     android:textAlignment="textStart"
                     android:textSize="15sp"
-                    android:hint="Enter description " />
+                    android:hint="Enter description "
+                    android:id="@+id/descriptionEdit" />
 
             </LinearLayout>
 
@@ -209,12 +209,22 @@
                 android:layout_height="match_parent">
 
                 <Button
+                    android:text="Help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/HelpAdd"
+                    android:layout_weight="1"
+                    android:textStyle="normal|bold"
+                    android:onClick="onClickHelp" />
+
+                <Button
                     android:text="Create"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/button"
+                    android:id="@+id/createAdd"
                     android:layout_weight="1"
-                    android:textStyle="normal|bold" />
+                    android:textStyle="normal|bold"
+                    android:onClick="onClickCreate" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
