@@ -12,7 +12,7 @@ import android.provider.BaseColumns;
 
 class DatabaseContract {
 
-    static final int DATABASE_VERSION = 2;
+    static final int DATABASE_VERSION = 3;
     static final String DATABASE_NAME = "RecipeDatabase.db";
     static final String TEXT_TYPE = " TEXT";
     static final String COMMA_SEP = ",";
@@ -37,7 +37,7 @@ class DatabaseContract {
                 _ID + " INTEGER PRIMARY KEY," +
                 COL_NAME + TEXT_TYPE + COMMA_SEP +
                 COL_DESC + TEXT_TYPE + COMMA_SEP +
-                COL_IMG + TEXT_TYPE + COMMA_SEP +
+                COL_IMG + " INTEGER" + COMMA_SEP +
                 COL_INGREDIENT + TEXT_TYPE + COMMA_SEP +
                 COL_CATEGORY + TEXT_TYPE + " )";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
