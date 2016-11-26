@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,12 +29,18 @@ public class ResearchActivity extends Activity {
     }
 
     public void onClickSearchRecipe(View view) {
+
+        String query = edit.getText().toString();
+        Database dbHelper = Database.getInstance(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        //TODO: Add search implementation
+
         Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
     }
 
     public void onClickReset(View view){
-        edit.setText(" ");
+        edit.setText("");
     }
 
 
