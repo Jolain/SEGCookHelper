@@ -10,12 +10,13 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class RecipeViewActivity extends Activity {
-
+    private TextView recipename;
     private TextView category;
     private TextView ingredient;
     private TextView cookTime;
@@ -24,14 +25,24 @@ public class RecipeViewActivity extends Activity {
     private Button deleteRecipe;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_view);
+        recipename = (TextView)findViewById(R.id.RecipeName);
         category = (TextView) findViewById(R.id.category);
         ingredient = (TextView)findViewById(R.id.ingredient);
         cookTime = (TextView) findViewById(R.id.cookTime);
         description = (TextView)findViewById(R.id.description);
+        Bundle bundle = getIntent().getExtras();
+        String message = bundle.getString("RecipeName");
+        Recipe recipeView;
+        // search in the database with message and recipe recipeView to return the recipe matching with message since the message
+        // is the recipe name
+        recipename.setText(message);
+
+
 
     }
 
@@ -52,6 +63,7 @@ public class RecipeViewActivity extends Activity {
                 Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
                 setResult(RESULT_OK,intent);
                 finish();
+
             }
         });
 

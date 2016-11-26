@@ -5,7 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,7 +19,7 @@ public class EditRecipeActivity extends Activity {
     private EditText cooktime;
     private EditText ingredient;
     private EditText category;
-    private Spinner spinner;
+    private Spinner dropdown;
     private ImageView image;
     private Button save;
     private Button help;
@@ -28,10 +31,27 @@ public class EditRecipeActivity extends Activity {
         cooktime = (EditText)findViewById(R.id.cooktimeAdd);
         ingredient = (EditText)findViewById(R.id.ingredientsADD);
         category = (EditText)findViewById(R.id.ingredientsADD);
-        spinner = (Spinner)findViewById(R.id.categoryADD);
+
         image = (ImageView) findViewById(R.id.imageRecipeAdd);
         save = (Button)findViewById(R.id.createAdd);
         help = (Button)findViewById(R.id.HelpAdd);
+        dropdown = (Spinner)findViewById(R.id.categoryEdit);
+        String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
+        // Category[] category = datebase.category; ???
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                Log.v("item", (String) parent.getItemAtPosition(position));
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
 
     }
 

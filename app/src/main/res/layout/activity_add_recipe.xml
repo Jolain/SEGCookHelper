@@ -156,7 +156,7 @@
 
                 <TextView
                     android:text="Category:"
-                    android:layout_width="199dp"
+                    android:layout_width="147dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView13"
                     android:textSize="20sp"
@@ -166,7 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/categoryADD"
-                    android:layout_weight="1" />
+                    android:spinnerMode="dialog" />
 
             </LinearLayout>
 
