@@ -19,12 +19,6 @@ public class MainActivity extends Activity {
         search = (Button)findViewById(R.id.search1);
         help = (Button)findViewById(R.id.help);
         add = (Button)findViewById(R.id.add);
-
-        Database dbHelper = new Database(this);
-        // Creates database instance, if it already exists links to the existing one.
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // TODO: Add recipes/ingredients/categories to the database
-
     }
 
     public void onClickSearch(View view) {
