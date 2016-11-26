@@ -10,9 +10,24 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database extends SQLiteOpenHelper {
 
-    public Database(Context context) {
+    private static Database instance;
+
+    // Private Constructor
+
+    private Database(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
     }
+
+    // Singleton Implementation
+
+    public static synchronized Database getInstance(Context context) {
+        if(instance == null) {
+            instance = new Database(context.getApplicationContext());
+        }
+        return instance;
+    }
+
+    // Override methods
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DatabaseContract.I_table.CREATE_TABLE);
