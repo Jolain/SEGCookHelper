@@ -17,18 +17,19 @@ public class Recipe {
     private String description;
     private int img; // Maybe not Image type
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<>();
-    //private LinkedList<Category> linkedCategory = new LinkedList<>();
     private Category category;
     private String cookTime;
+    public int recipePertinence;
 
     /**
      * Constructs a Recipe
-     * @param name the name of the recipe
-     * @param cookTime time required to cook
-     * @param category the category
+     *
+     * @param name             the name of the recipe
+     * @param cookTime         time required to cook
+     * @param category         the category
      * @param linkedIngredient LinkedList of ingrdients that are part of the recipe
-     * @param img image chosen
-     * @param description description of the recipe
+     * @param img              image chosen
+     * @param description      description of the recipe
      */
     public Recipe(String name, String cookTime, Category category, LinkedList<Ingredient> linkedIngredient, int img, String description) {
         this.name = name;
@@ -38,6 +39,7 @@ public class Recipe {
         this.linkedIngredient = linkedIngredient;
         this.img = img;
         this.description = description;
+        this.recipePertinence = 0;
         //TODO database.addRecipe(this)
     }
 
@@ -47,6 +49,7 @@ public class Recipe {
 
     /**
      * Get the name of the recipe
+     *
      * @return the name
      */
     public String getName() {
@@ -55,6 +58,7 @@ public class Recipe {
 
     /**
      * Set the name of the recipe
+     *
      * @param name the name to set
      */
     public void setName(String name) {
@@ -63,6 +67,7 @@ public class Recipe {
 
     /**
      * Get the description of the recipe
+     *
      * @return the description
      */
     public String getDescription() {
@@ -71,6 +76,7 @@ public class Recipe {
 
     /**
      * Set the description of the recipe
+     *
      * @param description the description to set
      */
     public void setDescription(String description) {
@@ -79,6 +85,7 @@ public class Recipe {
 
     /**
      * Get the int of the image
+     *
      * @return the int of the image
      */
     public int getImg() {
@@ -94,6 +101,7 @@ public class Recipe {
 
     /**
      * Get the cooktime required for this recipe
+     *
      * @return the cooktime
      */
     public String getCookTime() {
@@ -102,6 +110,7 @@ public class Recipe {
 
     /**
      * Set the required cooktime
+     *
      * @param cookTime the cooktime
      */
     public void setCookTime(String cookTime) {
@@ -110,19 +119,21 @@ public class Recipe {
 
     /**
      * Get the category of the recipe
+     *
      * @return the category
      */
-    public Category getCategory(){
+    public Category getCategory() {
         return category;
     }
 
     /**
      * Add an ingredient to the recipe
+     *
      * @param ingredient the ingredient to add
      */
-    public void addIngredient(Ingredient ingredient){
+    public void addIngredient(Ingredient ingredient) {
         //TODO check database for existing ingredients
-        if(!linkedIngredient.contains(ingredient)){
+        if (!linkedIngredient.contains(ingredient)) {
             linkedIngredient.add(ingredient);
         } else {
             System.out.println("Ingredient " + ingredient.toString() +
@@ -132,11 +143,13 @@ public class Recipe {
 
     /**
      * Remove an ingredient form the recipe, deletes the recipe if the last ingredient is removed
+     *
      * @param ingredient the ingredient to remove
      */
-    public void removeIngredient(Ingredient ingredient){
-        if(linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
-            if(linkedIngredient.size() < 1 && linkedIngredient.size() < 1) {} //TODO database.removeRecipe(this)
+    public void removeIngredient(Ingredient ingredient) {
+        if (linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
+            if (linkedIngredient.size() < 1 && linkedIngredient.size() < 1) {
+            } //TODO database.removeRecipe(this)
         } else {
             System.out.println("Failed to remove " + ingredient.getName() + " from " + getName());
         }
@@ -144,36 +157,27 @@ public class Recipe {
 
     /**
      * Get an array of ingredients that are part of the recipe
+     *
      * @return an Array of the ingredients
      */
-    public Ingredient[] getIngredientArray(){
-        return (Ingredient[])linkedIngredient.toArray();
+    public Ingredient[] getIngredientArray() {
+        // String[] array = linkedlist.toArray(new String[linkedlist.size()]);
+        // return (Ingredient[])linkedIngredient.toArray();
+        Ingredient[] tempArray = linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
+        return tempArray;
+    }
+
+    // added this method to facilitate the sorting process.
+    public boolean containIngredients(Ingredient ingredient) {
+        if (linkedIngredient.contains(ingredient)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //TODO possibly add more info to toString
-    public String toString(){
+    public String toString() {
         return name;
     }
-
-//    public void addCategory(Category category){
-//        if(!linkedCategory.contains(category)) {
-//            linkedCategory.add(category);
-//        } else{
-//            System.out.println("Category " + category.getName() +
-//                    " is already associated with recipe " + getName());
-//        }
-//    }
-//
-//    public void removeCategory(Category category) {
-//        if(linkedCategory.remove(category)) { // If the remove operation succeeded, check list size
-//            if(linkedCategory.size() < 1 && linkedIngeredient.size() < 1) {} //TODO database.removeRecipe(this)
-//        } else {
-//            System.out.println("Failed to remove " + category.getName() + " from " + getName());
-//        }
-//    }
-//
-//   public Category[] getCategoryArray(){
-//        return (Category[])linkedCategory.toArray();
-//    }
-
 }
