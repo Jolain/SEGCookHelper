@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by Weierstrass on 2016-11-25.
+ * Created by Weierstrass on 2016-11-26.
  */
 
-public class ImagesDatabase  extends Activity{
-
+public class DataBaseImages extends Activity {
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.database_images);
     }
-
 
 
 }

@@ -63,6 +63,7 @@ public class ResearchActivity extends Activity {
 
     public void onClickReset(View view){
         edit.setText("");
+        ;
     }
 
 

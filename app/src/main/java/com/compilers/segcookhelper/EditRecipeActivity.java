@@ -4,7 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import java.io.File;
+import java.util.Date;
 
 public class EditRecipeActivity extends Activity {
 
@@ -23,6 +31,9 @@ public class EditRecipeActivity extends Activity {
     private ImageView image;
     private Button save;
     private Button help;
+    private String imgPath;
+    int RESULT_LOAD_IMAGE;
+    int CAPTURE_IMAGE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +48,7 @@ public class EditRecipeActivity extends Activity {
         help = (Button)findViewById(R.id.HelpAdd);
         dropdown = (Spinner)findViewById(R.id.categoryEdit);
         String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
-        // Category[] category = datebase.category; ???
+        // Category[] category = database.category; ???
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -64,7 +75,7 @@ public class EditRecipeActivity extends Activity {
 
     public void onClickHelp(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("To Edit a recipe blablabla...");
+        builder.setMessage("Please make sure to crop your picture before selecting it and to edit a recipe blablabla...");
         builder.setCancelable(true);
 
 
@@ -80,7 +91,77 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onImageClick(View view){
-        Intent intent = new Intent(getApplicationContext(),ImagesDatabase.class);
-        startActivityForResult(intent,0);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Select from where your picture should come");
+        builder.setCancelable(true);
+
+
+
+        builder.setNeutralButton("DataBase", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(getApplicationContext(),DataBaseImages.class);
+                startActivityForResult(intent,0);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton("Take a pic", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".png");
+                Uri imgUri = Uri.fromFile(file);
+                imgPath = file.getAbsolutePath();
+                final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+                startActivityForResult(intent,CAPTURE_IMAGE);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,RESULT_LOAD_IMAGE);
+                dialog.dismiss();
+            }
+        });
+
+
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode != Activity.RESULT_CANCELED) {
+            if (requestCode == CAPTURE_IMAGE) {
+
+                image.setImageBitmap(BitmapFactory.decodeFile(imgPath));
+
+            }
+            super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+
+                image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+
+            }
+
+
+        }
+
+
+
+
+
+    }
+
 }
