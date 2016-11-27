@@ -23,7 +23,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import static com.compilers.segcookhelper.R.id.imageView;
 
@@ -34,6 +38,7 @@ public class AddRecipeActivity extends Activity {
     private EditText category;
     private Spinner dropdown;
     private ImageView image;
+    private EditText description;
     private Button create;
     private Button help;
     private String imgPath;
@@ -49,6 +54,7 @@ public class AddRecipeActivity extends Activity {
         cooktime = (EditText)findViewById(R.id.cooktimeAdd);
         ingredient = (EditText)findViewById(R.id.ingredientsADD);
         category = (EditText)findViewById(R.id.ingredientsADD);
+        description = (EditText)findViewById(R.id.descriptionAdd);
 
         image = (ImageView) findViewById(R.id.imageRecipeAdd);
         create = (Button)findViewById(R.id.createAdd);
@@ -75,10 +81,22 @@ public class AddRecipeActivity extends Activity {
         // create new recipe in the data base
         Intent returnintent = new Intent();
         setResult(RESULT_OK,returnintent);
-
+        String ingredients = ingredient.getText().toString();
+        List<String> items = Arrays.asList(ingredients.split("\\s*,\\s*"));
+        Ingredient[] resultIng = new Ingredient[items.size()];
+        for(int i =0; i<items.size();i++){
+            resultIng[i] = new Ingredient(items.get(i));
+        }
+        List<Ingredient> listIngredients = new ArrayList<Ingredient>(Arrays.asList(resultIng));
+        LinkedList<Ingredient> linkedIngredients = new LinkedList<Ingredient>();
+        for(int i = 0;i<listIngredients.size();i++){
+            linkedIngredients.add(listIngredients.get(i));
+        }
+        Category resultCat = new Category(category.getText().toString());
         Database dbHelper = Database.getInstance(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        //TODO: Actually create the item & add it to the database
+        //TODO: add it to the database
+        Recipe recipe = new Recipe(recipename.getText().toString(),cooktime.getText().toString(),resultCat,linkedIngredients,R.id.imageRecipeAdd,description.getText().toString());
 
         finish();
     }
