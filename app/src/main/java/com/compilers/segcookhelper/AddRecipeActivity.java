@@ -87,7 +87,7 @@ public class AddRecipeActivity extends Activity {
 
     public void onClickHelp(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Please make sure to crop your photo before selecting it and to add a recipe blablabla...");
+        builder.setMessage("To add a recipe blablabla...");
         builder.setCancelable(true);
 
 
@@ -105,12 +105,12 @@ public class AddRecipeActivity extends Activity {
     public void onImageClick(View view){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Select from where your picture should come");
+        builder.setMessage("Select where you want to take your picture");
         builder.setCancelable(true);
 
 
 
-        builder.setNeutralButton("DataBase", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Application", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Intent intent = new Intent(getApplicationContext(),DataBaseImages.class);
                 startActivityForResult(intent,0);
@@ -118,7 +118,7 @@ public class AddRecipeActivity extends Activity {
             }
         });
 
-        builder.setPositiveButton("Take a pic", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".png");
                 Uri imgUri = Uri.fromFile(file);

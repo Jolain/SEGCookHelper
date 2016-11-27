@@ -44,12 +44,14 @@
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1">
+                android:layout_width="wrap_content"
+                android:weightSum="1"
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
+                    android:maxHeight="120dp"
+                    android:minHeight="120dp"
                     android:adjustViewBounds="true"
                     android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
@@ -59,10 +61,6 @@
                     android:onClick="onImageClick"
                     android:layout_weight="0.02" />
             </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="50sp" />
 
             <Space
                 android:layout_width="match_parent"

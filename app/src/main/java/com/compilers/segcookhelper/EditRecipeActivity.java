@@ -32,8 +32,8 @@ public class EditRecipeActivity extends Activity {
     private Button save;
     private Button help;
     private String imgPath;
-    int RESULT_LOAD_IMAGE;
-    int CAPTURE_IMAGE;
+    int RESULT_LOAD_IMAGE = 1;
+    int CAPTURE_IMAGE = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,7 @@ public class EditRecipeActivity extends Activity {
         ingredient = (EditText)findViewById(R.id.ingredientsADD);
         category = (EditText)findViewById(R.id.ingredientsADD);
 
-        image = (ImageView) findViewById(R.id.imageRecipeAdd);
+        image = (ImageView) findViewById(R.id.imageRecipe);
         save = (Button)findViewById(R.id.createAdd);
         help = (Button)findViewById(R.id.HelpAdd);
         dropdown = (Spinner)findViewById(R.id.categoryEdit);
@@ -75,7 +75,7 @@ public class EditRecipeActivity extends Activity {
 
     public void onClickHelp(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Please make sure to crop your picture before selecting it and to edit a recipe blablabla...");
+        builder.setMessage(" To edit a recipe blablabla...");
         builder.setCancelable(true);
 
 
@@ -92,12 +92,12 @@ public class EditRecipeActivity extends Activity {
 
     public void onImageClick(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Select from where your picture should come");
+        builder.setMessage("Select where you want to take your picture");
         builder.setCancelable(true);
 
 
 
-        builder.setNeutralButton("DataBase", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Application", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Intent intent = new Intent(getApplicationContext(),DataBaseImages.class);
                 startActivityForResult(intent,0);
@@ -105,7 +105,7 @@ public class EditRecipeActivity extends Activity {
             }
         });
 
-        builder.setPositiveButton("Take a pic", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".png");
                 Uri imgUri = Uri.fromFile(file);
