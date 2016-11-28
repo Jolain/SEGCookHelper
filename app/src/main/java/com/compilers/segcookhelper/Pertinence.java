@@ -28,7 +28,9 @@ public class Pertinence {
     }
 
     public Recipe[] getRecipeArray(){
-        return this.recipeArray;
+        //TODO currently gets all recipes from database without sorting
+        Database db = Database.getInstance(null);
+        return db.getRecipeArray();
     }
 
     // send every recipe to have their pertinence calculated and updated

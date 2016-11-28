@@ -57,6 +57,7 @@ public class Database extends SQLiteOpenHelper {
     public void addRecipe(Recipe recipe){
         if(!linkedRecipe.contains(recipe)) {
             linkedRecipe.add(recipe);
+            System.out.println("Database: added recipe " + recipe.getName());
         }
     }
 
@@ -78,19 +79,30 @@ public class Database extends SQLiteOpenHelper {
                 " is not included in the database");
     }
 
+    public Recipe[] getRecipeArray(){
+        return linkedRecipe.toArray(new Recipe[linkedRecipe.size()]);
+    }
+
     public void removeRecipe(Recipe recipe){
         linkedRecipe.remove(recipe);
+        System.out.println("Database: removed recipe " + recipe.getName());
     }
 
     public void addCategory(Category category){
         if(linkedCategory.contains(category)) {
             linkedCategory.add(category);
+            System.out.println("Databsse: added category " + category.getName());
         }
+    }
+
+    public Category[] getCategoryArray(){
+        return linkedCategory.toArray(new Category[linkedCategory.size()]);
     }
 
     public void addIngredient(Ingredient ingredient){
         if(!linkedIngredient.contains(ingredient)) {
             linkedIngredient.add(ingredient);
+            System.out.println("Database: added ingredient " + ingredient.getName());
         }
     }
 
@@ -112,8 +124,13 @@ public class Database extends SQLiteOpenHelper {
                 " is not included in the database");
     }
 
+    public Ingredient[] getIngredientArray(){
+        return linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
+    }
+
     public void removeIngredient(Ingredient ingredient){
         linkedIngredient.remove(ingredient);
+        System.out.println("Database: removed ingredient " + ingredient.getName());
     }
 
 }
