@@ -24,7 +24,6 @@ public class Ingredient {
 //    public Ingredient(String name, Recipe recipe) {
 //        this(name);
 //        linkedRecipe.add(recipe);
-//        //TODO database.addIngredient(this)
 //    }
 
     // **** Public methods
@@ -38,7 +37,7 @@ public class Ingredient {
     }
 
     public boolean equals(Ingredient other){
-        return this.name == other.name;
+        return this.name.equals(other.name);
     }
 
     /**
@@ -64,7 +63,7 @@ public void addRecipe(Recipe recipe) {
 
 public void removeRecipe(Recipe recipe) {
     if(linkedRecipe.remove(recipe)) { // If the remove operation succeeded, check list size
-        if(linkedRecipe.size() < 1) {} //TODO database.removeIngredient(this)
+        if(linkedRecipe.size() < 1) {}
     } else {
         System.out.println("Failed to remove " + recipe + " from " + name);
     }

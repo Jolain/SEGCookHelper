@@ -84,18 +84,22 @@ public class AddRecipeActivity extends Activity {
         String ingredients = ingredient.getText().toString();
         List<String> items = Arrays.asList(ingredients.split("\\s*,\\s*"));
         Ingredient[] resultIng = new Ingredient[items.size()];
+
         for(int i =0; i<items.size();i++){
             resultIng[i] = new Ingredient(items.get(i));
         }
+
         List<Ingredient> listIngredients = new ArrayList<Ingredient>(Arrays.asList(resultIng));
         LinkedList<Ingredient> linkedIngredients = new LinkedList<Ingredient>();
+
         for(int i = 0;i<listIngredients.size();i++){
             linkedIngredients.add(listIngredients.get(i));
         }
+
         Category resultCat = new Category(category.getText().toString());
         Database dbHelper = Database.getInstance(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        //TODO: add it to the database
+
         Recipe recipe = new Recipe(recipename.getText().toString(),cooktime.getText().toString(),resultCat,linkedIngredients,R.id.imageRecipeAdd,description.getText().toString());
 
         finish();

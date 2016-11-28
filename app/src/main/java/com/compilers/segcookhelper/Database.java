@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.IllegalFormatCodePointException;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -58,6 +60,24 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
+    public boolean containsRecipe(Recipe recipe){
+        return linkedRecipe.contains(recipe);
+    }
+
+    public Recipe getRecipe(String name){
+        Iterator<Recipe> i = linkedRecipe.iterator();
+
+        Recipe node;
+        while(i.hasNext()){
+            node = i.next();
+            if(node.getName().equals(name)){
+                return node;
+            }
+        }
+        throw new IllegalArgumentException("Recipe with name: " + name +
+                " is not included in the database");
+    }
+
     public void removeRecipe(Recipe recipe){
         linkedRecipe.remove(recipe);
     }
@@ -74,10 +94,26 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
+    public boolean containsIngredient(Ingredient ingredient){
+        return linkedIngredient.contains(ingredient);
+    }
+
+    public Ingredient getIngredient(String name){
+        Iterator<Ingredient> i = linkedIngredient.iterator();
+
+        Ingredient node;
+        while(i.hasNext()){
+            node = i.next();
+            if(node.getName().equals(name)){
+                return node;
+            }
+        }
+        throw new IllegalArgumentException("Recipe with name: " + name +
+                " is not included in the database");
+    }
+
     public void removeIngredient(Ingredient ingredient){
         linkedIngredient.remove(ingredient);
     }
-
-
 
 }

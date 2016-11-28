@@ -40,7 +40,11 @@ public class Recipe {
         this.img = img;
         this.description = description;
         this.recipePertinence = 0;
-        //TODO database.addRecipe(this)
+
+        //TODO database.addRecipe(this) (test implementation)
+
+        Database db = Database.getInstance(null);
+        db.addRecipe(this);
     }
 
     /*
@@ -132,9 +136,17 @@ public class Recipe {
      * @param ingredient the ingredient to add
      */
     public void addIngredient(Ingredient ingredient) {
-        //TODO check database for existing ingredients
+        //TODO check database for existing ingredients (test inplementation)
+
+        Database db = Database.getInstance(null);
+
         if (!linkedIngredient.contains(ingredient)) {
-            linkedIngredient.add(ingredient);
+            if(!db.containsIngredient(ingredient)) {
+                linkedIngredient.add(ingredient);
+                db.addIngredient(ingredient);
+            } else{
+                linkedIngredient.add(db.getIngredient(ingredient.getName()));
+            }
         } else {
             System.out.println("Ingredient " + ingredient.toString() +
                     " is already associated with recipe " + getName());
@@ -147,9 +159,13 @@ public class Recipe {
      * @param ingredient the ingredient to remove
      */
     public void removeIngredient(Ingredient ingredient) {
+        //TODO database.removeRecipe(this) (test implementation)
+        Database db = Database.getInstance(null);
+
         if (linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
             if (linkedIngredient.size() < 1 && linkedIngredient.size() < 1) {
-            } //TODO database.removeRecipe(this)
+                db.removeRecipe(this);
+            }
         } else {
             System.out.println("Failed to remove " + ingredient.getName() + " from " + getName());
         }
@@ -163,24 +179,18 @@ public class Recipe {
     public Ingredient[] getIngredientArray() {
         // String[] array = linkedlist.toArray(new String[linkedlist.size()]);
         // return (Ingredient[])linkedIngredient.toArray();
-        Ingredient[] tempArray = linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
-        return tempArray;
+        return linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
     }
 
     // added this method to facilitate the sorting process.
     public boolean containIngredients(Ingredient ingredient) {
-        if (linkedIngredient.contains(ingredient)) {
-            return true;
-        } else {
-            return false;
-        }
+        return linkedIngredient.contains(ingredient);
     }
 
-    public boolean equals(Recipe Other){
-        return this.name == other.name;
+    public boolean equals(Recipe other){
+        return this.name.equals(other.name);
     }
 
-    //TODO possibly add more info to toString
     public String toString() {
         return name;
     }
