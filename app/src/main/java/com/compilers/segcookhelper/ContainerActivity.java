@@ -25,7 +25,7 @@ public class ContainerActivity extends Activity {
         //TODO Retrieve objects created by the search query (not yet implemented)
         // nouvelle section pour tester le containter
         Pertinence pertinence = Pertinence.getPertinence();
-        Recipe[] results = pertinence.getRecipes();
+        Recipe[] results = pertinence.getRecipeArray();
 
         /*
         Recipe r1,r2;

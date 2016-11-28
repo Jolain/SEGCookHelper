@@ -14,7 +14,7 @@ public class Pertinence {
     private int notPertinence = 3;
     private int highestPertinence = 0; // will facilitate the sorting
     private int lowestPertinence = 100; // will facilitate the sorting
-    private Recipe[] recipeArray;
+    private Recipe[] recipeArray = new Recipe[0];
 
     private Pertinence() {
     }
@@ -130,9 +130,5 @@ public class Pertinence {
             pertinenceIndex = pertinenceIndex - 1;
         }
 
-    }
-
-    public Recipe[] getRecipes() {
-        return this.recipeArray;
     }
 }
