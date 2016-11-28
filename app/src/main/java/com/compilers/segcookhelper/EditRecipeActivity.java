@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import org.w3c.dom.Node;
+
 import java.io.File;
 import java.util.Date;
 
@@ -26,27 +28,49 @@ public class EditRecipeActivity extends Activity {
 
     private EditText cooktime;
     private EditText ingredient;
-    private EditText category;
+    private StringBuilder ingredientInString;
+
     private Spinner dropdown;
     private ImageView image;
     private Button save;
     private Button help;
+    private EditText description;
     private String imgPath;
     int RESULT_LOAD_IMAGE = 1;
     int CAPTURE_IMAGE = 2;
+    private Recipe recipeDatabase;
+    private Recipe newRecipe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
 
-        cooktime = (EditText)findViewById(R.id.cooktimeAdd);
-        ingredient = (EditText)findViewById(R.id.ingredientsADD);
-        category = (EditText)findViewById(R.id.ingredientsADD);
+        cooktime = (EditText)findViewById(R.id.cooktimeEdit);
+        ingredient = (EditText)findViewById(R.id.ingredientsEdit);
+        description = (EditText)findViewById(R.id.descriptionEdit);
 
         image = (ImageView) findViewById(R.id.imageRecipe);
-        save = (Button)findViewById(R.id.createAdd);
-        help = (Button)findViewById(R.id.HelpAdd);
+        save = (Button)findViewById(R.id.SaveEdit);
+        help = (Button)findViewById(R.id.HelpEdit);
         dropdown = (Spinner)findViewById(R.id.categoryEdit);
+
+        Bundle bundle = getIntent().getExtras();
+        String message = bundle.getString("RecipeName");
+        // research a recipe from the database with name == message;
+        //recipeDatabase = recipeFoundInTheDatabase
+        cooktime.setText(recipeDatabase.getCookTime());
+        description.setText(recipeDatabase.getDescription());
+        Ingredient[] current = recipeDatabase.getIngredientArray();
+        for(int i =0; i < current.length;i++){
+            ingredientInString.append(current[i].getName()+ ", ");
+        }
+
+
+        ingredient.setText(ingredientInString);
+
+        image.setImageBitmap(recipeDatabase.getImg());
+
+
         String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
         // Category[] category = database.category; ???
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);

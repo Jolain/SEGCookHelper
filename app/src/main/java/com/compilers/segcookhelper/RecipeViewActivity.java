@@ -48,6 +48,7 @@ public class RecipeViewActivity extends Activity {
 
     public void onClickEditRecipe(View view){
         Intent intent = new Intent(getApplicationContext(), EditRecipeActivity.class); //Application Context and Activity
+        intent.putExtra("RecipeName",recipename.getText().toString());
         startActivityForResult(intent, 0);
     }
 
