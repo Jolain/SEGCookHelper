@@ -60,9 +60,20 @@ public class AddRecipeActivity extends Activity {
         create = (Button)findViewById(R.id.createAdd);
         help = (Button)findViewById(R.id.HelpAdd);
         dropdown = (Spinner)findViewById(R.id.categoryADD);
-        String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
-        // Category[] category = datebase.category; ???
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
+        //TODO currently gets the instance of database (test implementation)
+        Database db;
+        db = Database.getInstance(null);
+
+        Category[] categoryArray = db.getCategoryArray();
+
+        String[] categoryNameArray = new String[categoryArray.length];
+
+        for(int i=0;i<categoryNameArray.length;i++){
+            categoryNameArray[i] = categoryArray[i].getName();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

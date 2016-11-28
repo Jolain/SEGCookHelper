@@ -38,12 +38,20 @@ public class RecipeViewActivity extends Activity {
         Bundle bundle = getIntent().getExtras();
         String message = bundle.getString("RecipeName");
         Recipe recipeView;
+
         // search in the database with message and recipe recipeView to return the recipe matching with message since the message
         // is the recipe name
+
+        //TODO set category, Ingredients, Description
+
+        Database db = Database.getInstance(null);
+        recipeView = db.getRecipe(message);
+
         recipename.setText(message);
-
-
-
+        category.setText(recipeView.getCategoryName());
+        ingredient.setText(recipeView.ingredientListToString());
+        cookTime.setText(recipeView.getCookTime());
+        description.setText(recipeView.getDescription());
     }
 
     public void onClickEditRecipe(View view){
@@ -63,7 +71,6 @@ public class RecipeViewActivity extends Activity {
                 Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
                 setResult(RESULT_OK,intent);
                 finish();
-
             }
         });
 
@@ -75,10 +82,5 @@ public class RecipeViewActivity extends Activity {
 
         AlertDialog alert = builder.create();
         alert.show();
-
-
-
     }
-
-
 }

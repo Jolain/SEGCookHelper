@@ -2,6 +2,7 @@ package com.compilers.segcookhelper;
 
 
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -131,6 +132,14 @@ public class Recipe {
     }
 
     /**
+     * Get the name of the category of this recipe
+     * @return the name of the category
+     */
+    public String getCategoryName(){
+        return category.getName();
+    }
+
+    /**
      * Add an ingredient to the recipe
      *
      * @param ingredient the ingredient to add
@@ -185,6 +194,27 @@ public class Recipe {
     // added this method to facilitate the sorting process.
     public boolean containIngredients(Ingredient ingredient) {
         return linkedIngredient.contains(ingredient);
+    }
+
+    /**
+     * Get all the ingredients in String form
+     * @return the ingredients separated with a space
+     */
+    public String ingredientListToString(){
+        Iterator<Ingredient> i = linkedIngredient.iterator();
+
+        String result = "";
+        Ingredient node;
+
+        while(i.hasNext()){
+            node = i.next();
+            result += node.getName();
+
+            if(i.hasNext()){//add a space after if there is another element
+                result += " ";
+            }
+        }
+        return result;
     }
 
     public boolean equals(Recipe other){
