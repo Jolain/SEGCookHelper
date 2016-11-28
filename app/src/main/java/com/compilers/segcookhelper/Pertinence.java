@@ -14,17 +14,21 @@ public class Pertinence {
     private int notPertinence = 3;
     private int highestPertinence = 0; // will facilitate the sorting
     private int lowestPertinence = 100; // will facilitate the sorting
-    public Recipe[] recipeArray;
+    private Recipe[] recipeArray;
 
     private Pertinence() {
     }
 
-    public Pertinence getPertinence() {
+    public static Pertinence getPertinence() {
         return pertinence;
     }
 
     public void updateRecipe(Recipe[] recipes) {
         recipeArray = recipes;
+    }
+
+    public Recipe[] getRecipeArray(){
+        return this.recipeArray;
     }
 
     // send every recipe to have their pertinence calculated and updated
