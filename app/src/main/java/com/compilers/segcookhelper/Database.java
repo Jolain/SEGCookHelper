@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.LinkedList;
+
 /**
  * Created by Jolain Poirier on 11/23/2016.
  */
@@ -42,5 +44,40 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.R_table.DELETE_TABLE);
         onCreate(db);
     }
+
+    //TODO replace methods with database implementation
+    //TEMPORARY METHODS AND ATTRIBUTES
+
+    private LinkedList<Recipe> linkedRecipe = new LinkedList<Recipe>();
+    private LinkedList<Ingredient> linkedIngredient = new LinkedList<Ingredient>();
+    private LinkedList<Category> linkedCategory = new LinkedList<Category>();
+
+    public void addRecipe(Recipe recipe){
+        if(!linkedRecipe.contains(recipe)) {
+            linkedRecipe.add(recipe);
+        }
+    }
+
+    public void removeRecipe(Recipe recipe){
+        linkedRecipe.remove(recipe);
+    }
+
+    public void addCategory(Category category){
+        if(linkedCategory.contains(category)) {
+            linkedCategory.add(category);
+        }
+    }
+
+    public void addIngredient(Ingredient ingredient){
+        if(!linkedIngredient.contains(ingredient)) {
+            linkedIngredient.add(ingredient);
+        }
+    }
+
+    public void removeIngredient(Ingredient ingredient){
+        linkedIngredient.remove(ingredient);
+    }
+
+
 
 }

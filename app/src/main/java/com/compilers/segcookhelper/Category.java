@@ -32,6 +32,10 @@ public class Category {
 
     //TODO possibly add more info to toString
 
+    public boolean equals(Category other){
+        return this.name == other.name;
+    }
+
     /**
      * Returns a String representing the category
      * @return the String
