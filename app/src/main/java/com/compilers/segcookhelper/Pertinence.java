@@ -29,6 +29,8 @@ public class Pertinence {
 
     // send every recipe to have their pertinence calculated and updated
     public void updatePertinence(Category category, Ingredient[] ingredients, String[] operateur) {
+        this.highestPertinence = 0;
+        this.lowestPertinence = 100;
         for (int x = 0; x < recipeArray.length; x++) {
             //System.out.println("recette with name: " + this.recipeArray[x].getName());
             this.calculatePertinence(this.recipeArray[x], category, ingredients, operateur);
