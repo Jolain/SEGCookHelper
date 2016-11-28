@@ -176,6 +176,10 @@ public class Recipe {
         }
     }
 
+    public boolean equals(Recipe Other){
+        return this.name == other.name;
+    }
+
     //TODO possibly add more info to toString
     public String toString() {
         return name;

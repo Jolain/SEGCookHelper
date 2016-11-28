@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
         add = (Button)findViewById(R.id.add);
         // Initialise database singleton on app load
         Database dbHelper = Database.getInstance(getApplicationContext());
+
     }
 
     public void onClickSearch(View view) {

@@ -37,6 +37,10 @@ public class Ingredient {
         return name;
     }
 
+    public boolean equals(Ingredient other){
+        return this.name == other.name;
+    }
+
     /**
      * Returns a String representing the ingredient
      * @return the String
