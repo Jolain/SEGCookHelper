@@ -14,12 +14,12 @@ public class Pertinence {
     private int notPertinence = 3;
     private int highestPertinence = 0; // will facilitate the sorting
     private int lowestPertinence = 100; // will facilitate the sorting
-    public Recipe[] recipeArray;
+    private Recipe[] recipeArray = new Recipe[0];
 
     private Pertinence() {
     }
 
-    public Pertinence getPertinence() {
+    public static Pertinence getPertinence() {
         return pertinence;
     }
 
@@ -27,8 +27,16 @@ public class Pertinence {
         recipeArray = recipes;
     }
 
+    public Recipe[] getRecipeArray(){
+        //TODO currently gets all recipes from database without sorting
+        Database db = Database.getInstance(null);
+        return db.getRecipeArray();
+    }
+
     // send every recipe to have their pertinence calculated and updated
     public void updatePertinence(Category category, Ingredient[] ingredients, String[] operateur) {
+        this.highestPertinence = 0;
+        this.lowestPertinence = 100;
         for (int x = 0; x < recipeArray.length; x++) {
             //System.out.println("recette with name: " + this.recipeArray[x].getName());
             this.calculatePertinence(this.recipeArray[x], category, ingredients, operateur);
@@ -124,9 +132,5 @@ public class Pertinence {
             pertinenceIndex = pertinenceIndex - 1;
         }
 
-    }
-
-    public Recipe[] getRecipes() {
-        return this.recipeArray;
     }
 }

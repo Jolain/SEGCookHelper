@@ -22,15 +22,20 @@ public class ContainerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_container);
         ListView listView = (ListView) findViewById(R.id.list_recipe);
+
         //TODO Retrieve objects created by the search query (not yet implemented)
+        // nouvelle section pour tester le containter
 
+        Pertinence pertinence = Pertinence.getPertinence();
+        Recipe[] results = pertinence.getRecipeArray();
 
+        /*
         Recipe r1,r2;
         Recipe[] results = {
                 r1 = new Recipe("Macaroni","30 min", null, null, R.drawable.macaroni,"ok" ),
                 r2 = new Recipe("NoRecipe","60 min", null, null, R.drawable.ic_logo_00, "ok")
         };
-
+        */
 
         RecipeAdapter ad = new RecipeAdapter(this, results);
         listView.setAdapter(ad);

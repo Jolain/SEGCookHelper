@@ -35,7 +35,7 @@ public class AddRecipeActivity extends Activity {
     private EditText recipename;
     private EditText cooktime;
     private EditText ingredient;
-
+    private EditText category;
     private Spinner dropdown;
     private ImageView image;
     private EditText description;
@@ -53,7 +53,7 @@ public class AddRecipeActivity extends Activity {
         recipename = (EditText)findViewById(R.id.nameAdd);
         cooktime = (EditText)findViewById(R.id.cooktimeAdd);
         ingredient = (EditText)findViewById(R.id.ingredientsADD);
-
+        category = (EditText)findViewById(R.id.ingredientsADD);
         description = (EditText)findViewById(R.id.descriptionAdd);
 
         image = (ImageView) findViewById(R.id.imageRecipeAdd);
@@ -92,11 +92,11 @@ public class AddRecipeActivity extends Activity {
         for(int i = 0;i<listIngredients.size();i++){
             linkedIngredients.add(listIngredients.get(i));
         }
-        Category resultCat = new Category(dropdown.getSelectedItem().toString());
+        Category resultCat = new Category(category.getText().toString());
         Database dbHelper = Database.getInstance(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         //TODO: add it to the database
-        Recipe recipe = new Recipe(recipename.getText().toString(),cooktime.getText().toString(),resultCat,linkedIngredients,image,description.getText().toString());
+        Recipe recipe = new Recipe(recipename.getText().toString(),cooktime.getText().toString(),resultCat,linkedIngredients,R.id.imageRecipeAdd,description.getText().toString());
 
         finish();
     }

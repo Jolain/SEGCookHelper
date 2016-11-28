@@ -19,7 +19,10 @@ public class Category {
      */
     public Category(String name) {
         this.name = name;
-        //TODO database.addCategory(this)
+
+        //TODO database.addCategory(this) (test implementation)
+        Database db = Database.getInstance(null);
+        db.addCategory(this);
     }
 
     /**
@@ -30,7 +33,10 @@ public class Category {
         return name;
     }
 
-    //TODO possibly add more info to toString
+
+    public boolean equals(Category other){
+        return this.name.equals(other.name);
+    }
 
     /**
      * Returns a String representing the category

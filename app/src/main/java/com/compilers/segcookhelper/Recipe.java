@@ -2,8 +2,6 @@ package com.compilers.segcookhelper;
 
 
 
-import android.widget.ImageView;
-
 import java.util.LinkedList;
 
 /**
@@ -17,7 +15,7 @@ public class Recipe {
      */
     private String name;
     private String description;
-    private ImageView img; // Maybe not Image type
+    private int img; // Maybe not Image type
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<>();
     private Category category;
     private String cookTime;
@@ -33,7 +31,7 @@ public class Recipe {
      * @param img              image chosen
      * @param description      description of the recipe
      */
-    public Recipe(String name, String cookTime, Category category, LinkedList<Ingredient> linkedIngredient, ImageView img, String description) {
+    public Recipe(String name, String cookTime, Category category, LinkedList<Ingredient> linkedIngredient, int img, String description) {
         this.name = name;
         this.cookTime = cookTime;
         //this.linkedCategory = linkedCategory;
@@ -90,14 +88,14 @@ public class Recipe {
      *
      * @return the int of the image
      */
-    public ImageView getImg() {
+    public int getImg() {
         return img;
     }
 
     /**
      * Set the int of the image
      */
-    public void ImageView(ImageView img) {
+    public void setImg(int img) {
         this.img = img;
     }
 
