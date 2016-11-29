@@ -25,11 +25,11 @@ public class MainActivity extends Activity {
         dbHelper.onLoad(dbHelper.getReadableDatabase());
         System.out.println("App started");
 
-        //TODO initialises categories on startup, should be in database
-        String[] items = {"chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"};
-        for(int i=0;i<items.length;i++){
-            dbHelper.addCategory(new Category(items[i]));
-        }
+        // Database already initialized categories
+        // String[] items = {"chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"};
+        // for(int i=0;i<items.length;i++){
+        //     dbHelper.addCategory(new Category(items[i]));
+        // }
     }
 
     public void onClickSearch(View view) {
