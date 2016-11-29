@@ -1,5 +1,6 @@
 package com.compilers.segcookhelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,6 +16,9 @@ import java.util.LinkedList;
 public class Database extends SQLiteOpenHelper {
 
     private static Database instance;
+    private LinkedList<Recipe> linkedRecipe = new LinkedList<Recipe>();
+    private LinkedList<Ingredient> linkedIngredient = new LinkedList<Ingredient>();
+    private LinkedList<Category> linkedCategory = new LinkedList<Category>();
 
     // Private Constructor
 
@@ -24,7 +28,9 @@ public class Database extends SQLiteOpenHelper {
 
     // Singleton Implementation
 
-    public static synchronized Database getInstance(Context context) {
+    // The synchronized keyword makes sure that only one thread accesses the database
+    // at any time.
+    static synchronized Database getInstance(Context context) {
         if(instance == null) {
             instance = new Database(context.getApplicationContext());
         }
@@ -50,18 +56,36 @@ public class Database extends SQLiteOpenHelper {
     //TODO replace methods with database implementation
     //TEMPORARY METHODS AND ATTRIBUTES
 
-    private LinkedList<Recipe> linkedRecipe = new LinkedList<Recipe>();
 
-
-
-    private LinkedList<Ingredient> linkedIngredient = new LinkedList<Ingredient>();
-    private LinkedList<Category> linkedCategory = new LinkedList<Category>();
 
     public void addRecipe(Recipe recipe){
         if(!linkedRecipe.contains(recipe)) {
-
             linkedRecipe.add(recipe);
             System.out.println("Database: added recipe " + recipe.getName());
+
+            // SQLite Implementation
+            SQLiteDatabase db = getWritableDatabase();
+            ContentValues entry = new ContentValues();
+
+            // Convert ingredients into storable SQLite array
+            String[] ingredientNames = recipe.ingredientListToString().split(" ");
+            String convertedString = arrayToString(ingredientNames);
+
+            // Insert values in the entry
+            entry.put(DatabaseContract.R_table.COL_NAME, recipe.getName());
+            entry.put(DatabaseContract.R_table.COL_CATEGORY, recipe.getCategoryName());
+            entry.put(DatabaseContract.R_table.COL_DESC, recipe.getDescription());
+            entry.put(DatabaseContract.R_table.COL_IMG, recipe.getImg());
+            entry.put(DatabaseContract.R_table.COL_TIME, recipe.getCookTime());
+            entry.put(DatabaseContract.R_table.COL_INGREDIENT, convertedString);
+
+            // Insert entry intro database
+            try {
+                db.insert(DatabaseContract.R_table.TABLE_NAME, null, entry);
+            }
+            catch (Exception e) {
+                System.out.println("ERROR: Recipe was not added to SQLite database");
+            }
         }
     }
 
@@ -136,6 +160,28 @@ public class Database extends SQLiteOpenHelper {
     public void removeIngredient(Ingredient ingredient){
         linkedIngredient.remove(ingredient);
         System.out.println("Database: removed ingredient " + ingredient.getName());
+    }
+
+    // Array Conversion Methods
+
+    // These methods are used to store the ingredient names related to a recipe
+    // under a single string, all separated by "__,__". This permits SQL to store
+    // an array.
+
+    private String arrayToString(String[] array) {
+        String outputString = "";
+        for(int i = 0; i < array.length; i++) { // Append each element next to each other with __,__
+            outputString = outputString + array[i];
+            if(i < array.length - 1) { // Do not append comma to the last element
+                outputString = outputString + "__,__";
+            }
+        }
+
+        return outputString;
+    }
+
+    private String[] stringToArray(String s) {
+        return s.split("__,__");
     }
 
 }
