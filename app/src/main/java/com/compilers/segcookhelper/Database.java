@@ -2,6 +2,7 @@ package com.compilers.segcookhelper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -16,9 +17,9 @@ import java.util.LinkedList;
 public class Database extends SQLiteOpenHelper {
 
     private static Database instance;
-    private LinkedList<Recipe> linkedRecipe = new LinkedList<Recipe>();
-    private LinkedList<Ingredient> linkedIngredient = new LinkedList<Ingredient>();
-    private LinkedList<Category> linkedCategory = new LinkedList<Category>();
+    private LinkedList<Recipe> linkedRecipe;
+    private LinkedList<Ingredient> linkedIngredient;
+    private LinkedList<Category> linkedCategory;
 
     // Private Constructor
 
@@ -43,6 +44,56 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.I_table.CREATE_TABLE);
         db.execSQL(DatabaseContract.C_table.CREATE_TABLE);
         db.execSQL(DatabaseContract.R_table.CREATE_TABLE);
+
+        // SQLite Implementation
+        // When the database is first initialized, it reads the entire database and creates
+        // all the necessary objects. Clears existing objects in an atomic way.
+
+        linkedRecipe = new LinkedList<>();
+        linkedCategory = new LinkedList<>();
+        linkedIngredient = new LinkedList<>();
+
+        // Fetch data cursors
+        String query = "SELECT * FROM ";
+        Cursor ingredientCursor = db.rawQuery(query + DatabaseContract.I_table.TABLE_NAME, null);
+        Cursor categoryCursor = db.rawQuery(query + DatabaseContract.C_table.TABLE_NAME, null);
+        Cursor recipeCursor = db.rawQuery(query + DatabaseContract.R_table.TABLE_NAME, null);
+
+        // Parse data
+        if(ingredientCursor.moveToFirst()) { // Check if data is present
+            do {
+                String name = ingredientCursor.getString(1);
+                linkedIngredient.add(new Ingredient(name)); // Create ingredient and add it to the list
+            } while(ingredientCursor.moveToNext()); // Move on to the next ingredients
+        }
+        ingredientCursor.close();
+
+        if(categoryCursor.moveToFirst()) { // Check if data is present
+            do {
+                String name = categoryCursor.getString(1);
+                linkedCategory.add(new Category(name)); // Create the category and add it to the list
+            } while(categoryCursor.moveToNext()); // Move on to the next category
+        }
+        categoryCursor.close();
+
+        if(recipeCursor.moveToFirst()) { // Check if data is present
+            do {
+                String name = recipeCursor.getString(1);
+                Category category = getCategory(recipeCursor.getString(2));
+                String description = recipeCursor.getString(3);
+                Integer img = recipeCursor.getInt(4);
+                String time = recipeCursor.getString(5);
+                String[] ingredient = stringToArray(recipeCursor.getString(6));
+
+                // Get ingredients objects
+                LinkedList<Ingredient> ingObj = new LinkedList<>();
+                for(int i = 0; i < ingredient.length; i++) {
+                    ingObj.add(getIngredient(ingredient[i]));
+                }
+                linkedRecipe.add(new Recipe(name, time, category, ingObj, img, description));
+            } while(recipeCursor.moveToNext());
+        }
+
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -67,7 +118,7 @@ public class Database extends SQLiteOpenHelper {
             SQLiteDatabase db = getWritableDatabase();
             ContentValues entry = new ContentValues();
 
-            // Convert ingredients into storable SQLite array
+            // Convert ingredients into a string
             String[] ingredientNames = recipe.ingredientListToString().split(" ");
             String convertedString = arrayToString(ingredientNames);
 
@@ -86,6 +137,7 @@ public class Database extends SQLiteOpenHelper {
             catch (Exception e) {
                 System.out.println("ERROR: Recipe was not added to SQLite database");
             }
+            db.close(); // Required to not get sync errors
         }
     }
 
@@ -98,6 +150,21 @@ public class Database extends SQLiteOpenHelper {
         Iterator<Recipe> i = linkedRecipe.iterator();
 
         Recipe node;
+        while(i.hasNext()){
+            node = i.next();
+            if(node.getName().equals(name)){
+                return node;
+            }
+        }
+        throw new IllegalArgumentException("Recipe with name: " + name +
+                " is not included in the database");
+    }
+
+    public Category getCategory(String name){
+
+        Iterator<Category> i = linkedCategory.iterator();
+
+        Category node;
         while(i.hasNext()){
             node = i.next();
             if(node.getName().equals(name)){
