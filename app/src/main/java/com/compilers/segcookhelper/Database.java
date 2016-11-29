@@ -89,9 +89,9 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void addCategory(Category category){
-        if(linkedCategory.contains(category)) {
+        if(!linkedCategory.contains(category)) {
             linkedCategory.add(category);
-            System.out.println("Databsse: added category " + category.getName());
+            System.out.println("Database: added category " + category.getName());
         }
     }
 

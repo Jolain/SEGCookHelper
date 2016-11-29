@@ -22,6 +22,8 @@ public class Recipe {
     private String cookTime;
     public int recipePertinence;
 
+    private Database db;
+
     /**
      * Constructs a Recipe
      *
@@ -44,7 +46,7 @@ public class Recipe {
 
         //TODO database.addRecipe(this) (test implementation)
 
-        Database db = Database.getInstance(null);
+        db = Database.getInstance(null);
         db.addRecipe(this);
     }
 
@@ -147,8 +149,6 @@ public class Recipe {
     public void addIngredient(Ingredient ingredient) {
         //TODO check database for existing ingredients (test inplementation)
 
-        Database db = Database.getInstance(null);
-
         if (!linkedIngredient.contains(ingredient)) {
             if(!db.containsIngredient(ingredient)) {
                 linkedIngredient.add(ingredient);
@@ -169,7 +169,6 @@ public class Recipe {
      */
     public void removeIngredient(Ingredient ingredient) {
         //TODO database.removeRecipe(this) (test implementation)
-        Database db = Database.getInstance(null);
 
         if (linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
             if (linkedIngredient.size() < 1 && linkedIngredient.size() < 1) {

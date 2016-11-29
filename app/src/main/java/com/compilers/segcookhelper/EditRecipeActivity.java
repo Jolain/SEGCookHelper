@@ -34,6 +34,9 @@ public class EditRecipeActivity extends Activity {
     private String imgPath;
     int RESULT_LOAD_IMAGE = 1;
     int CAPTURE_IMAGE = 2;
+
+    Database db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +50,22 @@ public class EditRecipeActivity extends Activity {
         save = (Button)findViewById(R.id.createAdd);
         help = (Button)findViewById(R.id.HelpAdd);
         dropdown = (Spinner)findViewById(R.id.categoryEdit);
-        String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
-        // Category[] category = database.category; ???
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
+
+        //TODO currently gets the instance of database (test implementation)
+        //TODO needs a recipe to fill the fields and edit
+
+        db = Database.getInstance(getApplicationContext());
+
+        Category[] categoryArray = db.getCategoryArray();
+
+        String[] categoryNameArray = new String[categoryArray.length];
+
+        for(int i=0;i<categoryNameArray.length;i++){
+            categoryNameArray[i] = categoryArray[i].getName();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
