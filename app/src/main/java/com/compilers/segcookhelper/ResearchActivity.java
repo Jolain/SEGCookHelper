@@ -42,7 +42,7 @@ public class ResearchActivity extends Activity {
                 Log.v("item", (String) parent.getItemAtPosition(position));
             }
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
+
 
             }
 

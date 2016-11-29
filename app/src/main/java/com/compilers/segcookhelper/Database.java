@@ -51,11 +51,15 @@ public class Database extends SQLiteOpenHelper {
     //TEMPORARY METHODS AND ATTRIBUTES
 
     private LinkedList<Recipe> linkedRecipe = new LinkedList<Recipe>();
+
+
+
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<Ingredient>();
     private LinkedList<Category> linkedCategory = new LinkedList<Category>();
 
     public void addRecipe(Recipe recipe){
         if(!linkedRecipe.contains(recipe)) {
+
             linkedRecipe.add(recipe);
             System.out.println("Database: added recipe " + recipe.getName());
         }
@@ -66,6 +70,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public Recipe getRecipe(String name){
+
         Iterator<Recipe> i = linkedRecipe.iterator();
 
         Recipe node;

@@ -21,6 +21,7 @@ public class RecipeViewActivity extends Activity {
     private TextView ingredient;
     private TextView cookTime;
     private TextView description;
+    Recipe tempRecipe;
     private Button editRecipe;
     private Button deleteRecipe;
 
@@ -48,10 +49,10 @@ public class RecipeViewActivity extends Activity {
         recipeView = db.getRecipe(message);
 
         recipename.setText(message);
-        category.setText(recipeView.getCategoryName());
-        ingredient.setText(recipeView.ingredientListToString());
-        cookTime.setText(recipeView.getCookTime());
-        description.setText(recipeView.getDescription());
+        category.setText("Category: " + recipeView.getCategory().getName().toString());
+        ingredient.setText("Ingredient: "+recipeView.ingredientListToString().toString());
+        cookTime.setText("CookTime: " + recipeView.getCookTime());
+        description.setText("Description: " + recipeView.getDescription());
     }
 
     public void onClickEditRecipe(View view){
@@ -83,5 +84,19 @@ public class RecipeViewActivity extends Activity {
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK){
+            Bundle bundle = data.getExtras();
+            String message = bundle.getString("RecipeName");
+
+            //research again a recipe in the database with message as parameter and say tempRecipe = getDataBaseRecipe(message)
+            recipename.setText(message);
+            category.setText("Category: " + tempRecipe.getCategory().getName().toString());
+            ingredient.setText("Ingredient: "+tempRecipe.ingredientListToString().toString());
+            cookTime.setText("CookTime: " + tempRecipe.getCookTime());
+            description.setText("Description: " + tempRecipe.getDescription());
+        }
     }
 }

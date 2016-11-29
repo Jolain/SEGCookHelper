@@ -22,14 +22,18 @@ import android.widget.Spinner;
 import org.w3c.dom.Node;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class EditRecipeActivity extends Activity {
 
     private EditText cooktime;
     private EditText ingredient;
     private StringBuilder ingredientInString;
-
+    private String message;
     private Spinner dropdown;
     private ImageView image;
     private Button save;
@@ -55,20 +59,25 @@ public class EditRecipeActivity extends Activity {
         dropdown = (Spinner)findViewById(R.id.categoryEdit);
 
         Bundle bundle = getIntent().getExtras();
-        String message = bundle.getString("RecipeName");
-        // research a recipe from the database with name == message;
-        //recipeDatabase = recipeFoundInTheDatabase
+        message = bundle.getString("RecipeName");
+        //Database db = Database.getInstance(null);
+        //recipeDatabase = db.getRecipe(message);
+
         cooktime.setText(recipeDatabase.getCookTime());
         description.setText(recipeDatabase.getDescription());
         Ingredient[] current = recipeDatabase.getIngredientArray();
         for(int i =0; i < current.length;i++){
             ingredientInString.append(current[i].getName()+ ", ");
         }
+        String myString = recipeDatabase.getCategory().toString();
 
+        ArrayAdapter myAdap = (ArrayAdapter) dropdown.getAdapter();
 
+        int spinnerPosition = myAdap.getPosition(myString);
+        dropdown.setSelection(spinnerPosition);
         ingredient.setText(ingredientInString);
 
-        image.setImageBitmap(recipeDatabase.getImg());
+        //image.setImageBitmap(recipeDatabase.getImg());
 
 
         String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
@@ -90,9 +99,30 @@ public class EditRecipeActivity extends Activity {
 
     }
 
+    public LinkedList<Ingredient> stringIntoLinkedList(){
+        String ingredients = ingredient.getText().toString();
+        List<String> items = Arrays.asList(ingredients.split("\\s*,\\s*"));
+        Ingredient[] resultIng = new Ingredient[items.size()];
+        for(int i =0; i<items.size();i++){
+            resultIng[i] = new Ingredient(items.get(i));
+        }
+        List<Ingredient> listIngredients = new ArrayList<Ingredient>(Arrays.asList(resultIng));
+        LinkedList<Ingredient> linkedIngredients = new LinkedList<Ingredient>();
+        for(int i = 0;i<listIngredients.size();i++){
+            linkedIngredients.add(listIngredients.get(i));
+        }
+        return linkedIngredients;
+
+    }
+
     public void onClickSave(View view){
         // update method for the recipe in the data base
+        Category cat1 = new Category(dropdown.getItemAtPosition(0).toString());
+        newRecipe = new Recipe(message,cooktime.toString(),cat1,stringIntoLinkedList(),1,description.getText().toString());
+        // go in the database again and say the recipe with name as message = newRecipe
+
         Intent returnintent = new Intent();
+        returnintent.putExtra("RecipeName",newRecipe.getName());
         setResult(RESULT_OK,returnintent);
         finish();
     }

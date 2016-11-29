@@ -149,6 +149,7 @@ public class Recipe {
     public void removeIngredient(Ingredient ingredient) {
         if (linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
             if (linkedIngredient.size() < 1 && linkedIngredient.size() < 1) {
+
             } //TODO database.removeRecipe(this)
         } else {
             System.out.println("Failed to remove " + ingredient.getName() + " from " + getName());
@@ -180,4 +181,13 @@ public class Recipe {
     public String toString() {
         return name;
     }
+
+    public String ingredientListToString(){
+        StringBuilder ingredientInString = new StringBuilder();
+        for(int i =0; i < getIngredientArray().length;i++){
+            ingredientInString.append(getIngredientArray()[i].getName()+ ", ");
+        }
+        return ingredientInString.toString();
+    }
+
 }
