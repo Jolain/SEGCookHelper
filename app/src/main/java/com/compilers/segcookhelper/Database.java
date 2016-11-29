@@ -44,8 +44,9 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.I_table.CREATE_TABLE);
         db.execSQL(DatabaseContract.C_table.CREATE_TABLE);
         db.execSQL(DatabaseContract.R_table.CREATE_TABLE);
+    }
 
-        // SQLite Implementation
+    public void onLoad(SQLiteDatabase db) {
         // When the database is first initialized, it reads the entire database and creates
         // all the necessary objects. Clears existing objects in an atomic way.
 
@@ -93,7 +94,6 @@ public class Database extends SQLiteOpenHelper {
                 linkedRecipe.add(new Recipe(name, time, category, ingObj, img, description));
             } while(recipeCursor.moveToNext());
         }
-
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
