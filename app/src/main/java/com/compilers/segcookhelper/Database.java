@@ -1,5 +1,6 @@
 package com.compilers.segcookhelper;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import java.util.LinkedList;
 public class Database extends SQLiteOpenHelper {
 
     private static Database instance;
+    private static Context context;
     private LinkedList<Recipe> linkedRecipe;
     private LinkedList<Ingredient> linkedIngredient;
     private LinkedList<Category> linkedCategory;
@@ -25,6 +27,7 @@ public class Database extends SQLiteOpenHelper {
 
     private Database(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
+        this.context = context;
     }
 
     // Singleton Implementation
@@ -82,11 +85,12 @@ public class Database extends SQLiteOpenHelper {
                 String name = recipeCursor.getString(1);
                 Category category = getCategory(recipeCursor.getString(2));
                 String description = recipeCursor.getString(3);
-                Integer img = recipeCursor.getInt(4);
+                // Fetches the drawable ID by searching by filename
+                Integer img = context.getResources().getIdentifier(recipeCursor.getString(4), "drawable", context.getPackageName());
                 String time = recipeCursor.getString(5);
                 String[] ingredient = stringToArray(recipeCursor.getString(6));
 
-                // Get ingredients objects
+                // Construct an array of the linked ingredients
                 LinkedList<Ingredient> ingObj = new LinkedList<>();
                 for(int i = 0; i < ingredient.length; i++) {
                     ingObj.add(getIngredient(ingredient[i]));
