@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
 
         // Initialise database singleton on app load
         Database dbHelper = Database.getInstance(getApplicationContext());
+        dbHelper.onLoad(dbHelper.getReadableDatabase());
         System.out.println("App started");
 
         //TODO initialises categories on startup, should be in database

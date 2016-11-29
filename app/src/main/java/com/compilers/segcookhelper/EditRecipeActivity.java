@@ -2,9 +2,11 @@ package com.compilers.segcookhelper;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,57 +44,43 @@ public class EditRecipeActivity extends Activity {
     private String imgPath;
     int RESULT_LOAD_IMAGE = 1;
     int CAPTURE_IMAGE = 2;
-    private Recipe recipeDatabase;
+    private Recipe originalRecipe;
     private Recipe newRecipe;
-
-
-    private Database db;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
-
+        // Containers
         cooktime = (EditText)findViewById(R.id.cooktimeEdit);
         ingredient = (EditText)findViewById(R.id.ingredientsEdit);
         description = (EditText)findViewById(R.id.descriptionEdit);
-
         image = (ImageView) findViewById(R.id.imageRecipe);
         save = (Button)findViewById(R.id.SaveEdit);
         help = (Button)findViewById(R.id.HelpEdit);
         dropdown = (Spinner)findViewById(R.id.categoryEdit);
 
-
         Bundle bundle = getIntent().getExtras();
         message = bundle.getString("RecipeName");
-        //Database db = Database.getInstance(null);
-        //recipeDatabase = db.getRecipe(message);
+        Database db = Database.getInstance(getApplicationContext());
+        originalRecipe = db.getRecipe(message);
 
-        cooktime.setText(recipeDatabase.getCookTime());
-        description.setText(recipeDatabase.getDescription());
-        Ingredient[] current = recipeDatabase.getIngredientArray();
+        cooktime.setText(originalRecipe.getCookTime());
+        description.setText(originalRecipe.getDescription());
+        Ingredient[] current = originalRecipe.getIngredientArray();
         for(int i =0; i < current.length;i++){
             ingredientInString.append(current[i].getName()+ ", ");
         }
-        String myString = recipeDatabase.getCategory().toString();
+        String myString = originalRecipe.getCategory().toString();
 
         ArrayAdapter myAdap = (ArrayAdapter) dropdown.getAdapter();
 
-        int spinnerPosition = myAdap.getPosition(myString);
-        dropdown.setSelection(spinnerPosition);
+        // Spinner already does this by default
+        // int spinnerPosition = myAdap.getPosition(myString);
+        // dropdown.setSelection(spinnerPosition);
         ingredient.setText(ingredientInString);
-
-        //image.setImageBitmap(recipeDatabase.getImg());
-
-
-
-
-
-        //TODO currently gets the instance of database (test implementation)
-        //TODO needs a recipe to fill the fields and edit
-
-        db = Database.getInstance(getApplicationContext());
+        image.setImageResource(originalRecipe.getImg());
 
         Category[] categoryArray = db.getCategoryArray();
 
@@ -117,7 +105,7 @@ public class EditRecipeActivity extends Activity {
             }
 
         });
-
+        db.close();
     }
 
     public LinkedList<Ingredient> stringIntoLinkedList(){
@@ -137,13 +125,18 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onClickSave(View view){
-        // update method for the recipe in the data base
-        Category cat1 = new Category(dropdown.getItemAtPosition(0).toString());
-        newRecipe = new Recipe(message,cooktime.toString(),cat1,stringIntoLinkedList(),1,description.getText().toString());
-        // go in the database again and say the recipe with name as message = newRecipe
+        Database dbHelper = Database.getInstance(getApplicationContext());
+        String name = originalRecipe.getName();
+        Category cat = dbHelper.getCategory(dropdown.getSelectedItem().toString());
+        String desc = description.getText().toString();
+        int img = image.getId();
+        String time = cooktime.getText().toString();
+        LinkedList<Ingredient> ingredients = stringIntoLinkedList();
+
+        dbHelper.editRecipe(new Recipe(name, time, cat, ingredients, img, desc));
 
         Intent returnintent = new Intent();
-        returnintent.putExtra("RecipeName",newRecipe.getName());
+        returnintent.putExtra("RecipeName", name);
         setResult(RESULT_OK,returnintent);
         finish();
     }
