@@ -44,11 +44,6 @@ public class Recipe {
         this.img = img;
         setDescription(description);
         this.recipePertinence = 0;
-
-        //TODO database.addRecipe(this) (test implementation)
-
-        db = Database.getInstance(null);
-        db.addRecipe(this);
     }
 
     /*
