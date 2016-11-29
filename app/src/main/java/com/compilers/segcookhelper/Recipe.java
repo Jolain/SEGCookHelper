@@ -20,6 +20,7 @@ public class Recipe {
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<>();
     private Category category;
     private String cookTime;
+    private int DESCRIPTION_LIMIT = 500;
     public int recipePertinence;
 
     private Database db;
@@ -35,13 +36,13 @@ public class Recipe {
      * @param description      description of the recipe
      */
     public Recipe(String name, String cookTime, Category category, LinkedList<Ingredient> linkedIngredient, int img, String description) {
+        //TODO add steps for completing a recipe
         this.name = name;
         this.cookTime = cookTime;
-        //this.linkedCategory = linkedCategory;
         this.category = category;
         this.linkedIngredient = linkedIngredient;
         this.img = img;
-        this.description = description;
+        setDescription(description);
         this.recipePertinence = 0;
 
         //TODO database.addRecipe(this) (test implementation)
@@ -87,7 +88,11 @@ public class Recipe {
      * @param description the description to set
      */
     public void setDescription(String description) {
-        this.description = description;
+        if(description.length() <= DESCRIPTION_LIMIT) {
+            this.description = description;
+        } else{
+            //TODO Do something if description > 500 characters
+        }
     }
 
     /**
@@ -185,8 +190,6 @@ public class Recipe {
      * @return an Array of the ingredients
      */
     public Ingredient[] getIngredientArray() {
-        // String[] array = linkedlist.toArray(new String[linkedlist.size()]);
-        // return (Ingredient[])linkedIngredient.toArray();
         return linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
     }
 

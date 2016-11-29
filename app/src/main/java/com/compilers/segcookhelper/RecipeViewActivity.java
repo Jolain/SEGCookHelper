@@ -43,6 +43,7 @@ public class RecipeViewActivity extends Activity {
         // is the recipe name
 
         //TODO set category, Ingredients, Description
+        //TODO attributes need names in front eg: [Ingredients: Onions Tomato etc...]
 
         Database db = Database.getInstance(null);
         recipeView = db.getRecipe(message);

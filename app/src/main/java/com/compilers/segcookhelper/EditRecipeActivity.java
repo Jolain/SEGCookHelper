@@ -35,7 +35,7 @@ public class EditRecipeActivity extends Activity {
     int RESULT_LOAD_IMAGE = 1;
     int CAPTURE_IMAGE = 2;
 
-    Database db;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
