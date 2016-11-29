@@ -19,9 +19,16 @@ public class MainActivity extends Activity {
         search = (Button)findViewById(R.id.search1);
         help = (Button)findViewById(R.id.help);
         add = (Button)findViewById(R.id.add);
+
         // Initialise database singleton on app load
         Database dbHelper = Database.getInstance(getApplicationContext());
+        System.out.println("App started");
 
+        //TODO initialises categories on startup, should be in database
+        String[] items = {"chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"};
+        for(int i=0;i<items.length;i++){
+            dbHelper.addCategory(new Category(items[i]));
+        }
     }
 
     public void onClickSearch(View view) {

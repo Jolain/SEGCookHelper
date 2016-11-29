@@ -2,6 +2,7 @@ package com.compilers.segcookhelper;
 
 
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -19,7 +20,10 @@ public class Recipe {
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<>();
     private Category category;
     private String cookTime;
+    private int DESCRIPTION_LIMIT = 500;
     public int recipePertinence;
+
+    private Database db;
 
     /**
      * Constructs a Recipe
@@ -32,15 +36,19 @@ public class Recipe {
      * @param description      description of the recipe
      */
     public Recipe(String name, String cookTime, Category category, LinkedList<Ingredient> linkedIngredient, int img, String description) {
+        //TODO add steps for completing a recipe
         this.name = name;
         this.cookTime = cookTime;
-        //this.linkedCategory = linkedCategory;
         this.category = category;
         this.linkedIngredient = linkedIngredient;
         this.img = img;
-        this.description = description;
+        setDescription(description);
         this.recipePertinence = 0;
-        //TODO database.addRecipe(this)
+
+        //TODO database.addRecipe(this) (test implementation)
+
+        db = Database.getInstance(null);
+        db.addRecipe(this);
     }
 
     /*
@@ -80,7 +88,11 @@ public class Recipe {
      * @param description the description to set
      */
     public void setDescription(String description) {
-        this.description = description;
+        if(description.length() <= DESCRIPTION_LIMIT) {
+            this.description = description;
+        } else{
+            //TODO Do something if description > 500 characters
+        }
     }
 
     /**
@@ -127,14 +139,28 @@ public class Recipe {
     }
 
     /**
+     * Get the name of the category of this recipe
+     * @return the name of the category
+     */
+    public String getCategoryName(){
+        return category.getName();
+    }
+
+    /**
      * Add an ingredient to the recipe
      *
      * @param ingredient the ingredient to add
      */
     public void addIngredient(Ingredient ingredient) {
-        //TODO check database for existing ingredients
+        //TODO check database for existing ingredients (test inplementation)
+
         if (!linkedIngredient.contains(ingredient)) {
-            linkedIngredient.add(ingredient);
+            if(!db.containsIngredient(ingredient)) {
+                linkedIngredient.add(ingredient);
+                db.addIngredient(ingredient);
+            } else{
+                linkedIngredient.add(db.getIngredient(ingredient.getName()));
+            }
         } else {
             System.out.println("Ingredient " + ingredient.toString() +
                     " is already associated with recipe " + getName());
@@ -147,10 +173,12 @@ public class Recipe {
      * @param ingredient the ingredient to remove
      */
     public void removeIngredient(Ingredient ingredient) {
+        //TODO database.removeRecipe(this) (test implementation)
+
         if (linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
             if (linkedIngredient.size() < 1 && linkedIngredient.size() < 1) {
-
-            } //TODO database.removeRecipe(this)
+                db.removeRecipe(this);
+            }
         } else {
             System.out.println("Failed to remove " + ingredient.getName() + " from " + getName());
         }
@@ -162,32 +190,40 @@ public class Recipe {
      * @return an Array of the ingredients
      */
     public Ingredient[] getIngredientArray() {
-        // String[] array = linkedlist.toArray(new String[linkedlist.size()]);
-        // return (Ingredient[])linkedIngredient.toArray();
-        Ingredient[] tempArray = linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
-        return tempArray;
+        return linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
     }
 
     // added this method to facilitate the sorting process.
     public boolean containIngredients(Ingredient ingredient) {
-        if (linkedIngredient.contains(ingredient)) {
-            return true;
-        } else {
-            return false;
-        }
+        return linkedIngredient.contains(ingredient);
     }
 
-    //TODO possibly add more info to toString
+    /**
+     * Get all the ingredients in String form
+     * @return the ingredients separated with a space
+     */
+    public String ingredientListToString(){
+        Iterator<Ingredient> i = linkedIngredient.iterator();
+
+        String result = "";
+        Ingredient node;
+
+        while(i.hasNext()){
+            node = i.next();
+            result += node.getName();
+
+            if(i.hasNext()){//add a space after if there is another element
+                result += " ";
+            }
+        }
+        return result;
+    }
+
+    public boolean equals(Recipe other){
+        return this.name.equals(other.name);
+    }
+
     public String toString() {
         return name;
     }
-
-    public String ingredientListToString(){
-        StringBuilder ingredientInString = new StringBuilder();
-        for(int i =0; i < getIngredientArray().length;i++){
-            ingredientInString.append(getIngredientArray()[i].getName()+ ", ");
-        }
-        return ingredientInString.toString();
-    }
-
 }
