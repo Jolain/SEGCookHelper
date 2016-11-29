@@ -86,7 +86,7 @@ public class Database extends SQLiteOpenHelper {
                 Category category = getCategory(recipeCursor.getString(2));
                 String description = recipeCursor.getString(3);
                 // Fetches the drawable ID by searching by filename
-                Integer img = context.getResources().getIdentifier(recipeCursor.getString(4), "drawable", context.getPackageName());
+                int img = context.getResources().getIdentifier(recipeCursor.getString(4), "drawable", context.getPackageName());
                 String time = recipeCursor.getString(5);
                 String[] ingredient = stringToArray(recipeCursor.getString(6));
 
@@ -98,6 +98,7 @@ public class Database extends SQLiteOpenHelper {
                 linkedRecipe.add(new Recipe(name, time, category, ingObj, img, description));
             } while(recipeCursor.moveToNext());
         }
+        recipeCursor.close();
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -143,6 +144,10 @@ public class Database extends SQLiteOpenHelper {
             }
             db.close(); // Required to not get sync errors
         }
+    }
+
+    public void editRecipe(Recipe editedRecipe) {
+
     }
 
     public boolean containsRecipe(Recipe recipe){
@@ -239,7 +244,7 @@ public class Database extends SQLiteOpenHelper {
     // under a single string, all separated by "__,__". This permits SQL to store
     // an array.
 
-    private String arrayToString(String[] array) {
+    public String arrayToString(String[] array) {
         String outputString = "";
         for(int i = 0; i < array.length; i++) { // Append each element next to each other with __,__
             outputString = outputString + array[i];
@@ -251,7 +256,7 @@ public class Database extends SQLiteOpenHelper {
         return outputString;
     }
 
-    private String[] stringToArray(String s) {
+    public String[] stringToArray(String s) {
         return s.split("__,__");
     }
 
