@@ -51,14 +51,32 @@ public class ResearchActivity extends Activity {
     }
 
     public void onClickSearchRecipe(View view) {
-    /*
+
         String query = edit.getText().toString();
         Database dbHelper = Database.getInstance(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         //TODO: Add search implementation
-     */
-        //String query = edit.getText().toString();
-        //this.testSearch();
+
+        String[] splitArray = query.split("\\s+");
+        String[] ingredientsString = new String[(splitArray.length+1)/2];
+        String[] operators = new String[(splitArray.length-1)/2];
+        for(int i = 0;i<splitArray.length;i++){
+
+            if((i%2)==0){
+                ingredientsString[i/2] = splitArray[i];
+                Log.i("info",splitArray[i]);
+            }
+            else{
+                operators[(i-1)/2] = splitArray[i];
+                Log.i("info",splitArray[i]);
+            }
+        }
+        Ingredient[] ingredients = new Ingredient[ingredientsString.length];
+        for(int i = 0;i<ingredientsString.length;i++){
+            ingredients[i] = new Ingredient(ingredientsString[i]);
+        }
+
+        this.testSearch(ingredients,operators);
 
         Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
