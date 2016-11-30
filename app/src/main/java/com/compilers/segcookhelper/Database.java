@@ -6,8 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.util.IllegalFormatCodePointException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -18,7 +16,6 @@ import java.util.LinkedList;
 public class Database extends SQLiteOpenHelper {
 
     private static Database instance;
-    private static Context context;
     private LinkedList<Recipe> linkedRecipe;
     private LinkedList<Ingredient> linkedIngredient;
     private LinkedList<Category> linkedCategory;
@@ -27,7 +24,6 @@ public class Database extends SQLiteOpenHelper {
 
     private Database(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
-        this.context = context;
     }
 
     // Singleton Implementation
@@ -86,7 +82,7 @@ public class Database extends SQLiteOpenHelper {
                 Category category = getCategory(recipeCursor.getString(2));
                 String description = recipeCursor.getString(3);
                 // Fetches the drawable ID by searching by filename
-                int img = context.getResources().getIdentifier(recipeCursor.getString(4), "drawable", context.getPackageName());
+                int img = 0; // Implementation was wrong, looking for a fix
                 String time = recipeCursor.getString(5);
                 String[] ingredient = stringToArray(recipeCursor.getString(6));
 
