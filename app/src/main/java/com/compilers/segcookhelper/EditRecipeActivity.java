@@ -34,7 +34,7 @@ public class EditRecipeActivity extends Activity {
 
     private EditText cooktime;
     private EditText ingredient;
-    private StringBuilder ingredientInString;
+
     private String message;
     private Spinner dropdown;
     private ImageView image;
@@ -45,7 +45,7 @@ public class EditRecipeActivity extends Activity {
     int RESULT_LOAD_IMAGE = 1;
     int CAPTURE_IMAGE = 2;
     private Recipe originalRecipe;
-    private Recipe newRecipe;
+
 
 
     @Override
@@ -68,17 +68,14 @@ public class EditRecipeActivity extends Activity {
 
         cooktime.setText(originalRecipe.getCookTime());
         description.setText(originalRecipe.getDescription());
+        String ingredientInString = "";
         Ingredient[] current = originalRecipe.getIngredientArray();
         for(int i =0; i < current.length;i++){
-            ingredientInString.append(current[i].getName()+ ", ");
+            ingredientInString+= current[i].getName()+ ", ";
         }
-        String myString = originalRecipe.getCategory().toString();
 
-        ArrayAdapter myAdap = (ArrayAdapter) dropdown.getAdapter();
 
-        // Spinner already does this by default
-        // int spinnerPosition = myAdap.getPosition(myString);
-        // dropdown.setSelection(spinnerPosition);
+
         ingredient.setText(ingredientInString);
         image.setImageResource(originalRecipe.getImg());
 
@@ -90,9 +87,13 @@ public class EditRecipeActivity extends Activity {
             categoryNameArray[i] = categoryArray[i].getName();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
+        String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
+        dropdown.setSelection(getIndex(dropdown,originalRecipe.getCategory().getName()));
+
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -106,6 +107,18 @@ public class EditRecipeActivity extends Activity {
 
         });
         db.close();
+    }
+    private int getIndex(Spinner spinner, String myString)
+    {
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
     public LinkedList<Ingredient> stringIntoLinkedList(){

@@ -208,7 +208,7 @@ public class Recipe {
             result += node.getName();
 
             if(i.hasNext()){//add a space after if there is another element
-                result += " ";
+                result += ", ";
             }
         }
         return result;

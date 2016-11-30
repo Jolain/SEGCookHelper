@@ -180,8 +180,9 @@ public class Database extends SQLiteOpenHelper {
                 return node;
             }
         }
-        throw new IllegalArgumentException("Recipe with name: " + name +
-                " is not included in the database");
+        //throw new IllegalArgumentException("Recipe with name: " + name +
+               // " is not included in the database");
+        return null;
     }
 
     public Recipe[] getRecipeArray(){
@@ -225,8 +226,9 @@ public class Database extends SQLiteOpenHelper {
                 return node;
             }
         }
-        throw new IllegalArgumentException("Recipe with name: " + name +
-                " is not included in the database");
+//        throw new IllegalArgumentException("Recipe with name: " + name +
+               // " is not included in the database");
+        return null;
     }
 
     public Ingredient[] getIngredientArray(){

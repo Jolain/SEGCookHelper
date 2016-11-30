@@ -46,11 +46,11 @@ public class RecipeViewActivity extends Activity {
         //TODO set category, Ingredients, Description
         //TODO attributes need names in front eg: [Ingredients: Onions Tomato etc...]
 
-        Database db = Database.getInstance(null);
+        Database db = Database.getInstance(getApplicationContext());
         recipeView = db.getRecipe(message);
 
         recipename.setText(message);
-        category.setText("Category: " + recipeView.getCategory().getName().toString());
+        category.setText("Category: " + recipeView.getCategory().getName());
         ingredient.setText("Ingredient: "+recipeView.ingredientListToString().toString());
         cookTime.setText("CookTime: " + recipeView.getCookTime());
         description.setText("Description: " + recipeView.getDescription());
@@ -70,7 +70,7 @@ public class RecipeViewActivity extends Activity {
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // delete the recipe from the database and return to research screen;
+                // TODO:delete the recipe from the database and return to research screen;
                 Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
                 setResult(RESULT_OK,intent);
                 finish();
@@ -94,6 +94,8 @@ public class RecipeViewActivity extends Activity {
 
             //research again a recipe in the database with message as parameter and say tempRecipe = getDataBaseRecipe(message)
             recipename.setText(message);
+            Database dbHelper = Database.getInstance(getApplicationContext());
+            tempRecipe = dbHelper.getRecipe(message);
             category.setText("Category: " + tempRecipe.getCategory().getName().toString());
             ingredient.setText("Ingredient: "+tempRecipe.ingredientListToString().toString());
             cookTime.setText("CookTime: " + tempRecipe.getCookTime());
