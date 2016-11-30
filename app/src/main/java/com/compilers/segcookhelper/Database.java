@@ -150,9 +150,10 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public boolean containsRecipe(Recipe recipe){
-        return linkedRecipe.contains(recipe);
-    }
+    // Redundant method
+    //public boolean containsRecipe(Recipe recipe){
+    //    return linkedRecipe.contains(recipe);
+    //}
 
     public Recipe getRecipe(String name){
 
