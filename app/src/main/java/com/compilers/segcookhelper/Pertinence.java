@@ -14,7 +14,7 @@ public class Pertinence {
     private int notPertinence = 3;
     private int highestPertinence = 0; // will facilitate the sorting
     private int lowestPertinence = 100; // will facilitate the sorting
-    private Recipe[] recipeArray = new Recipe[0];
+    private Recipe[] recipeArray;
 
     private Pertinence() {
     }
@@ -29,8 +29,7 @@ public class Pertinence {
 
     public Recipe[] getRecipeArray(){
         //TODO currently gets all recipes from database without sorting
-        Database db = Database.getInstance(null);
-        return db.getRecipeArray();
+        return recipeArray;
     }
 
     // send every recipe to have their pertinence calculated and updated
