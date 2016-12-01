@@ -16,23 +16,29 @@ public class Pertinence {
     private int lowestPertinence = 100; // will facilitate the sorting
     private Recipe[] recipeArray;
 
+    // the classe pertinence is a singleton
     private Pertinence() {
     }
 
+    // permet d'avoir acces a l'objet pertinence
     public static Pertinence getPertinence() {
         return pertinence;
     }
 
+    // UpdateRecipe recoit une liste de recipe de la database apres qu'un search aille ete effectuer
+    // C'est cette liste de recipe qui serais trier.
     public void updateRecipe(Recipe[] recipes) {
         recipeArray = recipes;
     }
 
+    // permet au different activity au travers de l'application d'avoir asser au recette trier
     public Recipe[] getRecipeArray(){
         //TODO currently gets all recipes from database without sorting
         return recipeArray;
     }
 
     // send every recipe to have their pertinence calculated and updated
+    // the recipes sended are the one found from the database
     public void updatePertinence(Category category, Ingredient[] ingredients, String[] operateur) {
         this.highestPertinence = 0;
         this.lowestPertinence = 100;
@@ -54,11 +60,12 @@ public class Pertinence {
 
         // verifying which ingredient is present
         Ingredient[] listRecipeIngredient = recipe.getIngredientArray();
-        //System.out.println("the size of ingredient is: "+listRecipeIngredient.length);
+
         for (int i = 0; i < ingredients.length; i++) {
             boolean start = true;
             int index = 0;
-
+            // ici on test chaque ingredients de la recette selection avec la liste d'ingredient
+            // donner par l'utilisateur
             while (start) {
                 if (index < listRecipeIngredient.length) {
                     if (Objects.equals(listRecipeIngredient[index].getName(), ingredients[i].getName())) {
@@ -98,7 +105,7 @@ public class Pertinence {
 
         // update the pertinence
         recipe.recipePertinence = p;
-        // not sure if this part is really needed
+        // this place make the sorting faster by setting upper and lower bound on the pertinence
         if (p > this.highestPertinence) {
             this.highestPertinence = p;
         }
