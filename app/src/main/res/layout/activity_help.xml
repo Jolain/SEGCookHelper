@@ -11,9 +11,9 @@
     tools:context="com.compilers.segcookhelper.HelpActivity">
 
     <TextView
-        android:text="Helpful information (placeholder)"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/HelpText"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipuscing elit. Duis dignissim in enim ut finibus. Nam eros turpis, pharetra at mauris et, varius interdum nisl. Nulla ultricies metus eu lectus ullamcorper placerat. Suspendisse ullamcorper dui vitae tincidunt rhoncus. In malesuada malesuada mi ornare ornare. " />
 </RelativeLayout>

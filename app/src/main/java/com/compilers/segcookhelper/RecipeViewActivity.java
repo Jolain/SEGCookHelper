@@ -50,7 +50,7 @@ public class RecipeViewActivity extends Activity {
         recipeView = db.getRecipe(message);
 
         recipename.setText(message);
-        category.setText("Category: " + recipeView.getCategory().getName());
+        category.setText("Category: " + recipeView.getCategoryName());
         ingredient.setText("Ingredient: "+recipeView.ingredientListToString().toString());
         cookTime.setText("CookTime: " + recipeView.getCookTime());
         description.setText("Description: " + recipeView.getDescription());
