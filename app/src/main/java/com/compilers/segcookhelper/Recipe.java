@@ -1,11 +1,14 @@
 package com.compilers.segcookhelper;
 
+
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * Represents a recipe
+ * Created by Jolain Poirier on 11/16/2016.
  */
+
 public class Recipe {
 
     /*
@@ -17,8 +20,7 @@ public class Recipe {
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<>();
     private Category category;
     private String cookTime;
-    private final int MIN_DESCRIPTION_LIMIT = 1;
-    private final int MAX_DESCRIPTION_LIMIT = 500;
+    private int DESCRIPTION_LIMIT = 500;
     public int recipePertinence;
 
     private Database db;
@@ -81,7 +83,7 @@ public class Recipe {
      * @param description the description to set
      */
     public void setDescription(String description) {
-        if(description.length() <= MAX_DESCRIPTION_LIMIT && description.length() >= MIN_DESCRIPTION_LIMIT) {
+        if(description.length() <= DESCRIPTION_LIMIT) {
             this.description = description;
         } else{
             //TODO Do something if description > 500 characters
