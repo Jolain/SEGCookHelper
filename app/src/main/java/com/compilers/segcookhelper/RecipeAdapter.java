@@ -1,6 +1,7 @@
 package com.compilers.segcookhelper;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +32,18 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         View rowView = inflater.inflate(R.layout.item_recipe, parent, false);
         TextView recipeName = (TextView) rowView.findViewById(R.id.RecipeName);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.ImageRecipe);
-
         Recipe recipe = recettes[position];
-        imageView.setImageResource(recipe.getImg());
+        imageView.setImageResource(getImgID(recettes[position]));
         recipeName.setText(recipe.getName());
 
 
         return rowView;
+    }
+
+    private int getImgID(Recipe r) {
+        Resources assets = context.getResources();
+        int id = assets.getIdentifier(r.getImg(), "drawable", context.getPackageName());
+        return id;
     }
 }
 
