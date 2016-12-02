@@ -171,7 +171,7 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void editRecipe(Recipe oldRecipe Recipe editedRecipe) {
+    public void editRecipe(Recipe oldRecipe, Recipe editedRecipe) {
         SQLiteDatabase db = getWritableDatabase();
 
     }

@@ -77,7 +77,7 @@ public class EditRecipeActivity extends Activity {
 
 
         ingredient.setText(ingredientInString);
-        image.setImageResource(originalRecipe.getImg());
+        image.setImageResource(getApplicationContext().getResources().getIdentifier(originalRecipe.getImg(), "drawable", getPackageName()));
 
         Category[] categoryArray = db.getCategoryArray();
 
@@ -142,11 +142,11 @@ public class EditRecipeActivity extends Activity {
         String name = originalRecipe.getName();
         Category cat = dbHelper.getCategory(dropdown.getSelectedItem().toString());
         String desc = description.getText().toString();
-        int img = image.getId();
+        String img = ""; // A changer
         String time = cooktime.getText().toString();
         LinkedList<Ingredient> ingredients = stringIntoLinkedList();
 
-        dbHelper.editRecipe(new Recipe(name, time, cat, ingredients, img, desc));
+        dbHelper.editRecipe(originalRecipe, new Recipe(name, time, cat, ingredients, img, desc));
 
         Intent returnintent = new Intent();
         returnintent.putExtra("RecipeName", name);
