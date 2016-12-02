@@ -82,7 +82,7 @@ public class Database extends SQLiteOpenHelper {
                 Category category = getCategory(recipeCursor.getString(2));
                 String description = recipeCursor.getString(3);
                 // Fetches the drawable ID by searching by filename
-                int img = 0; // Implementation was wrong, looking for a fix
+                String img = recipeCursor.getString(4); // Implementation was wrong, looking for a fix
                 String time = recipeCursor.getString(5);
                 String[] ingredient = stringToArray(recipeCursor.getString(6));
 
@@ -171,7 +171,8 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void editRecipe(Recipe editedRecipe) {
+    public void editRecipe(Recipe oldRecipe Recipe editedRecipe) {
+        SQLiteDatabase db = getWritableDatabase();
 
     }
 
