@@ -12,7 +12,7 @@ public class Pertinence {
     private int ingredientPertinence = 1;
     private int andPertinence = 1;
     private int notPertinence = 3;
-    private int highestPertinence = 0; // will facilitate the sorting
+    private int highestPertinence = -100; // will facilitate the sorting
     private int lowestPertinence = 100; // will facilitate the sorting
     private Recipe[] recipeArray;
 
