@@ -108,6 +108,20 @@ public class Database extends SQLiteOpenHelper {
     //TODO replace methods with database implementation
     //TEMPORARY METHODS AND ATTRIBUTES
 
+    public Recipe[] recipeQuery(Ingredient[] ingredients) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME + " WHERE ";
+        for(int i = 0; i < ingredients.length; i++) {
+            if(ingredients[i] != null && ingredients[i].getName() != null) {
+                query = query + DatabaseContract.R_table.COL_INGREDIENT + " LIKE %" + ingredients[i].getName() + "% ";
+            }
+            if(ingredients[i+1] != null) {
+                query = query + "OR ";
+            }
+        }
+
+        return null;
+    }
 
 
     public void addRecipe(Recipe recipe){

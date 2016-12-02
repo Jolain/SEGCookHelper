@@ -54,8 +54,6 @@ public class ResearchActivity extends Activity {
 
         String query = edit.getText().toString();
         Database dbHelper = Database.getInstance(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        //TODO: Add search implementation
 
         String[] splitArray = query.split("\\s+");
         String[] ingredientsString = new String[(splitArray.length+1)/2];
@@ -76,7 +74,8 @@ public class ResearchActivity extends Activity {
             ingredients[i] = new Ingredient(ingredientsString[i]);
         }
 
-        this.testSearch(ingredients,operators);
+         // Recipe [] recipes = dbHelper.recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
+         this.testSearch(ingredients,operators);
 
         Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
