@@ -1,6 +1,8 @@
 package com.compilers.segcookhelper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +38,22 @@ public class ContainerActivity extends Activity {
                 r2 = new Recipe("NoRecipe","60 min", null, null, R.drawable.ic_logo_00, "ok")
         };*/
 
+        if (results[0] == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Sorry, no results were found");
+            builder.setCancelable(false);
 
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // TODO:delete the recipe from the database and return to research screen;
+                    Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
+                    setResult(RESULT_OK,intent);
+                    finish();
+                }
+            });
+
+
+        }else{
         RecipeAdapter ad = new RecipeAdapter(this, results);
         listView.setAdapter(ad);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,7 +68,7 @@ public class ContainerActivity extends Activity {
                 startActivityForResult(intent,0);
 
             }
-        });
+        });}
 
     }
 
