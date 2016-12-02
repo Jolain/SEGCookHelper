@@ -131,6 +131,7 @@ public class Database extends SQLiteOpenHelper {
             do {
                 String name = recipeCursor.getString(1);
                 output[n] = getRecipe(name);
+                n++;
             } while(recipeCursor.moveToNext());
         }
         recipeCursor.close();
@@ -173,7 +174,26 @@ public class Database extends SQLiteOpenHelper {
 
     public void editRecipe(Recipe oldRecipe, Recipe editedRecipe) {
         SQLiteDatabase db = getWritableDatabase();
+        ContentValues entry = new ContentValues();
+        String[] ingredientNames = editedRecipe.ingredientListToString().split(" ");
+        String convertedString = arrayToString(ingredientNames);
 
+        entry.put(DatabaseContract.R_table.COL_NAME, editedRecipe.getName());
+        entry.put(DatabaseContract.R_table.COL_CATEGORY, editedRecipe.getCategoryName());
+        entry.put(DatabaseContract.R_table.COL_DESC, editedRecipe.getDescription());
+        entry.put(DatabaseContract.R_table.COL_IMG, editedRecipe.getImg());
+        entry.put(DatabaseContract.R_table.COL_TIME, editedRecipe.getCookTime());
+        entry.put(DatabaseContract.R_table.COL_INGREDIENT, convertedString);
+        try {
+            db.update(DatabaseContract.R_table.TABLE_NAME, entry, DatabaseContract.R_table.COL_NAME + "=" + oldRecipe.getName(), null);
+        }
+        catch (Exception e) {
+            System.out.println("ERROR: Recipe was not edited");
+        }
+        linkedRecipe.remove(oldRecipe);
+        linkedRecipe.add(editedRecipe);
+
+        db.close();
     }
 
     // Redundant method
