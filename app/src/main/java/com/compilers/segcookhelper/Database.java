@@ -109,10 +109,9 @@ public class Database extends SQLiteOpenHelper {
     //TEMPORARY METHODS AND ATTRIBUTES
 
     public Recipe[] recipeQuery(Ingredient[] ingredients) {
-        SQLiteDatabase db = getReadableDatabase();
         String query;
         if(ingredients == null) {
-            query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME; // Returns all recipes if query is empty
+            return getRecipeArray(); // If query is null, return all recipe
         } else {
             query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME + " WHERE ";
             for (int i = 0; i < ingredients.length; i++) {
@@ -124,9 +123,19 @@ public class Database extends SQLiteOpenHelper {
                 }
             }
         }
-
+        SQLiteDatabase db = getReadableDatabase();
         Cursor recipeCursor = db.rawQuery(query, null);
-        return null;
+        Recipe[] output = new Recipe[recipeCursor.getCount()];
+        if(recipeCursor.moveToFirst()) { // Check if data is present
+            int n = 0;
+            do {
+                String name = recipeCursor.getString(1);
+                output[n] = getRecipe(name);
+            } while(recipeCursor.moveToNext());
+        }
+        recipeCursor.close();
+        db.close();
+        return output;
     }
 
 
