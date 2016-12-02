@@ -110,16 +110,22 @@ public class Database extends SQLiteOpenHelper {
 
     public Recipe[] recipeQuery(Ingredient[] ingredients) {
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME + " WHERE ";
-        for(int i = 0; i < ingredients.length; i++) {
-            if(ingredients[i] != null && ingredients[i].getName() != null) {
-                query = query + DatabaseContract.R_table.COL_INGREDIENT + " LIKE %" + ingredients[i].getName() + "% ";
-            }
-            if(ingredients[i+1] != null) {
-                query = query + "OR ";
+        String query;
+        if(ingredients == null) {
+            query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME; // Returns all recipes if query is empty
+        } else {
+            query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME + " WHERE ";
+            for (int i = 0; i < ingredients.length; i++) {
+                if (ingredients[i] != null && ingredients[i].getName() != null) {
+                    query = query + DatabaseContract.R_table.COL_INGREDIENT + " LIKE %" + ingredients[i].getName() + "% ";
+                }
+                if (ingredients[i + 1] != null) {
+                    query = query + "OR ";
+                }
             }
         }
 
+        Cursor recipeCursor = db.rawQuery(query, null);
         return null;
     }
 
