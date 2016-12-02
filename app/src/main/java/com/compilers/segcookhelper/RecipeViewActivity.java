@@ -38,7 +38,9 @@ public class RecipeViewActivity extends Activity {
         description = (TextView)findViewById(R.id.description);
         Bundle bundle = getIntent().getExtras();
         String message = bundle.getString("RecipeName");
-        Recipe recipeView;
+        Recipe recipeView =  new Recipe("","",new Category(""),null,"","");
+        Pertinence pertinence = Pertinence.getPertinence();
+        Recipe[] results = pertinence.getRecipeArray();
 
         // search in the database with message and recipe recipeView to return the recipe matching with message since the message
         // is the recipe name
@@ -46,8 +48,13 @@ public class RecipeViewActivity extends Activity {
         //TODO set category, Ingredients, Description
         //TODO attributes need names in front eg: [Ingredients: Onions Tomato etc...]
 
-        Database db = Database.getInstance(getApplicationContext());
-        recipeView = db.getRecipe(message);
+        //Database db = Database.getInstance(getApplicationContext());
+        //recipeView = db.getRecipe(message);
+        for(int i=0;i<results.length;i++){
+            if(results[i].getName().equals(message)){
+                recipeView = results[i];
+            }
+        }
 
         recipename.setText(message);
         category.setText("Category: " + recipeView.getCategoryName());

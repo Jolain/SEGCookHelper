@@ -74,7 +74,7 @@ public class ResearchActivity extends Activity {
             ingredients[i] = new Ingredient(ingredientsString[i]);
         }
 
-         // Recipe [] recipes = dbHelper.recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
+         Recipe [] recipes = dbHelper.recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
          this.testSearch(ingredients,operators);
 
         Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
