@@ -141,15 +141,15 @@ public class ResearchActivity extends Activity {
             list5.add(poulet);
             list5.add(pomme);
 
-            Recipe R1 = new Recipe("R1","15min",quebecois,list1,1,"ceci est une recette test");
+            Recipe R1 = new Recipe("R1","15min",quebecois,list1,"","ceci est une recette test");
 
-            Recipe R2 = new Recipe("R2","15min",quebecois,list2,1,"ceci est une recette test");
+            Recipe R2 = new Recipe("R2","15min",quebecois,list2,"","ceci est une recette test");
 
-            Recipe R3 = new Recipe("R3","15min",quebecois,list3,1,"ceci est une recette test");
+            Recipe R3 = new Recipe("R3","15min",quebecois,list3,"","ceci est une recette test");
 
-            Recipe R4 = new Recipe("R4","15min",quebecois,list4,1,"ceci est une recette test");
+            Recipe R4 = new Recipe("R4","15min",quebecois,list4,"","ceci est une recette test");
 
-            Recipe R5 = new Recipe("R5","15min",quebecois,list5,1,"ceci est une recette test");
+            Recipe R5 = new Recipe("R5","15min",quebecois,list5,"","ceci est une recette test");
 
             Recipe[] recipes = new Recipe[5];
             recipes[0] = R1;

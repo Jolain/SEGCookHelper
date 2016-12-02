@@ -77,7 +77,7 @@ public class EditRecipeActivity extends Activity {
 
 
         ingredient.setText(ingredientInString);
-        image.setImageResource(getApplicationContext().getResources().getIdentifier(originalRecipe.getImg(), "drawable", getPackageName()));
+        image.setImageResource(Integer.parseInt(originalRecipe.getImg()));
 
         Category[] categoryArray = db.getCategoryArray();
 
@@ -137,21 +137,38 @@ public class EditRecipeActivity extends Activity {
 
     }
 
-    public void onClickSave(View view){
+    public void onClickSave(View view) {
+        if(dropdown.getSelectedItem().equals(null)&&message.equals(null)&&cooktime.getText().equals(null)&&ingredient.getText().equals(null)){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Please fill up all the fields if you want your recipe to be save");
+            builder.setCancelable(true);
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // TODO:delete the recipe from the database and return to research screen;
+
+                    finish();
+                }
+            });
+
+        }else{
+
         Database dbHelper = Database.getInstance(getApplicationContext());
         String name = originalRecipe.getName();
         Category cat = dbHelper.getCategory(dropdown.getSelectedItem().toString());
         String desc = description.getText().toString();
-        String img = ""; // A changer
+
+        String img = Integer.toString(image.getId());
         String time = cooktime.getText().toString();
         LinkedList<Ingredient> ingredients = stringIntoLinkedList();
 
-        dbHelper.editRecipe(originalRecipe, new Recipe(name, time, cat, ingredients, img, desc));
+        dbHelper.editRecipe(new Recipe(name, time, cat, ingredients, img, desc));
 
         Intent returnintent = new Intent();
         returnintent.putExtra("RecipeName", name);
-        setResult(RESULT_OK,returnintent);
+        setResult(RESULT_OK, returnintent);
         finish();
+    }
     }
 
     public void onClickHelp(View view){

@@ -78,27 +78,42 @@ public class AddRecipeActivity extends Activity {
         });
     }
     public void onClickCreate(View view){
-        // create new recipe in the data base
-        Intent returnintent = new Intent();
-        setResult(RESULT_OK,returnintent);
-        String ingredients = ingredient.getText().toString();
-        List<String> items = Arrays.asList(ingredients.split("\\s*,\\s*"));
-        Ingredient[] resultIng = new Ingredient[items.size()];
-        for(int i =0; i<items.size();i++){
-            resultIng[i] = new Ingredient(items.get(i));
-        }
-        List<Ingredient> listIngredients = new ArrayList<Ingredient>(Arrays.asList(resultIng));
-        LinkedList<Ingredient> linkedIngredients = new LinkedList<Ingredient>();
-        for(int i = 0;i<listIngredients.size();i++){
-            linkedIngredients.add(listIngredients.get(i));
-        }
+        if(dropdown.getSelectedItem().equals(null)&&recipename.getText().equals(null)&&cooktime.getText().equals(null)&&ingredient.getText().equals(null)){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Please fill up all the fields");
+            builder.setCancelable(true);
 
-        Database dbHelper = Database.getInstance(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // TODO:delete the recipe from the database and return to research screen;
 
-        Recipe recipe = new Recipe(recipename.getText().toString(),cooktime.getText().toString(),new Category(dropdown.getSelectedItem().toString()),linkedIngredients,R.drawable.ic_logo_00,description.getText().toString());
-        dbHelper.addRecipe(recipe);
-        finish();
+                    finish();
+                }
+            });
+
+        }else {
+            // create new recipe in the data base
+            Intent returnintent = new Intent();
+            setResult(RESULT_OK, returnintent);
+            String ingredients = ingredient.getText().toString();
+            List<String> items = Arrays.asList(ingredients.split("\\s*,\\s*"));
+            Ingredient[] resultIng = new Ingredient[items.size()];
+            for (int i = 0; i < items.size(); i++) {
+                resultIng[i] = new Ingredient(items.get(i));
+            }
+            List<Ingredient> listIngredients = new ArrayList<Ingredient>(Arrays.asList(resultIng));
+            LinkedList<Ingredient> linkedIngredients = new LinkedList<Ingredient>();
+            for (int i = 0; i < listIngredients.size(); i++) {
+                linkedIngredients.add(listIngredients.get(i));
+            }
+
+            Database dbHelper = Database.getInstance(getApplicationContext());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            Recipe recipe = new Recipe(recipename.getText().toString(), cooktime.getText().toString(), new Category(dropdown.getSelectedItem().toString()), linkedIngredients, "", description.getText().toString());
+            dbHelper.addRecipe(recipe);
+            finish();
+        }
     }
 
 
