@@ -162,7 +162,7 @@ public class EditRecipeActivity extends Activity {
         String time = cooktime.getText().toString();
         LinkedList<Ingredient> ingredients = stringIntoLinkedList();
 
-        dbHelper.editRecipe(new Recipe(name, time, cat, ingredients, img, desc));
+        dbHelper.editRecipe(originalRecipe,new Recipe(name, time, cat, ingredients, img, desc));
 
         Intent returnintent = new Intent();
         returnintent.putExtra("RecipeName", name);
