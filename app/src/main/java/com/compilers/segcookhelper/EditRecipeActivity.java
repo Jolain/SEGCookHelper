@@ -80,13 +80,16 @@ public class EditRecipeActivity extends Activity {
         String ingredientInString = "";
         Ingredient[] current = originalRecipe.getIngredientArray();
         for(int i =0; i < current.length;i++){
-            ingredientInString+= current[i].getName()+ ", ";
+            ingredientInString+= current[i].getName();
+            if(i < current.length - 1) {
+                ingredientInString+= ", ";
+            }
         }
 
         cooktime.setText(originalRecipe.getCookTime());
         description.setText(originalRecipe.getDescription());
         ingredient.setText(ingredientInString);
-        //image.setImageResource(Integer.parseInt(originalRecipe.getImg()));
+        image.setImageResource(getResources().getIdentifier(originalRecipe.getImg(), "drawable", getPackageName()));
 
         Category[] categoryArray = db.getCategoryArray();
 
@@ -128,7 +131,8 @@ public class EditRecipeActivity extends Activity {
         }
         return index;
     }
-
+    /*
+    // Why is there two lists needed here?
     public LinkedList<Ingredient> stringIntoLinkedList(){
         String ingredients = ingredient.getText().toString();
         List<String> items = Arrays.asList(ingredients.split("\\s*,\\s*"));
@@ -144,6 +148,7 @@ public class EditRecipeActivity extends Activity {
         return linkedIngredients;
 
     }
+    */
 
     public void onClickSave(View view) {
         if(dropdown.getSelectedItem().toString().matches("")||message.matches("")||cooktime.getText().toString().matches("")||ingredient.getText().toString().matches("")||description.getText().toString().matches("")){
@@ -162,22 +167,26 @@ public class EditRecipeActivity extends Activity {
             alert.show();
 
         }else{
+            Database dbHelper = Database.getInstance(getApplicationContext());
+            String name = originalRecipe.getName();
+            Category cat = dbHelper.getCategory(dropdown.getSelectedItem().toString());
+            String desc = description.getText().toString();
+            // TODO: For now it uses the same image as the old recipe, should get the new one
+            String img = originalRecipe.getImg();
+            String time = cooktime.getText().toString();
 
-        Database dbHelper = Database.getInstance(getApplicationContext());
-        String name = originalRecipe.getName();
-        Category cat = dbHelper.getCategory(dropdown.getSelectedItem().toString());
-        String desc = description.getText().toString();
+            String[] ingredientsName = ingredient.getText().toString().split(", ");
+            LinkedList<Ingredient> ingredientList = new LinkedList<>();
+            for(int i = 0; i < ingredientsName.length; i++) {
+                ingredientList.add(dbHelper.getIngredient(ingredientsName[i]));
+            }
 
-        String img = Integer.toString(image.getId());
-        String time = cooktime.getText().toString();
-        LinkedList<Ingredient> ingredients = stringIntoLinkedList();
+            dbHelper.editRecipe(originalRecipe,new Recipe(name, time, cat, ingredientList, img, desc));
 
-        dbHelper.editRecipe(originalRecipe,new Recipe(name, time, cat, ingredients, img, desc));
-
-        Intent returnintent = new Intent();
-        returnintent.putExtra("RecipeName", name);
-        setResult(RESULT_OK, returnintent);
-        finish();
+            Intent returnintent = new Intent();
+            returnintent.putExtra("RecipeName", name);
+            setResult(RESULT_OK, returnintent);
+            finish();
     }
     }
 
