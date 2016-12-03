@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+
 public class RecipeViewActivity extends Activity {
     private TextView recipename;
     private TextView category;
@@ -41,7 +43,6 @@ public class RecipeViewActivity extends Activity {
         Recipe recipeView =  new Recipe("","",new Category(""),null,"","");
         Pertinence pertinence = Pertinence.getPertinence();
         Recipe[] results = pertinence.getRecipeArray();
-
         // search in the database with message and recipe recipeView to return the recipe matching with message since the message
         // is the recipe name
 

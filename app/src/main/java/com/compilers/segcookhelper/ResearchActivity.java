@@ -75,10 +75,10 @@ public class ResearchActivity extends Activity {
 
          Recipe [] recipes = dbHelper.recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
 
-        Pertinence pertinence = Pertinence.getPertinence();
-        pertinence.updateRecipe(recipes);
-        pertinence.updatePertinence(dbHelper.getCategory(dropdown.getSelectedItem().toString()), ingredients, operators);
-        pertinence.sortRecipe();
+          Pertinence pertinence = Pertinence.getPertinence();
+          pertinence.updateRecipe(recipes);
+          pertinence.updatePertinence(dbHelper.getCategory(dropdown.getSelectedItem().toString()), ingredients, operators);
+          pertinence.sortRecipe();
 
         //this.testSearch(ingredients,operators);
 

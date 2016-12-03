@@ -78,18 +78,20 @@ public class AddRecipeActivity extends Activity {
         });
     }
     public void onClickCreate(View view){
-        if(dropdown.getSelectedItem().equals(null)&&recipename.getText().equals(null)&&cooktime.getText().equals(null)&&ingredient.getText().equals(null)){
+        if(dropdown.getSelectedItem().toString().matches("")||recipename.getText().toString().matches("")||cooktime.getText().toString().matches("")||ingredient.getText().toString().matches("")||description.getText().toString().matches("")){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Please fill up all the fields");
             builder.setCancelable(true);
 
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // TODO:delete the recipe from the database and return to research screen;
 
-                    finish();
+                    dialog.dismiss();
                 }
             });
+            AlertDialog alert = builder.create();
+            alert.show();
 
         }else {
             // create new recipe in the data base

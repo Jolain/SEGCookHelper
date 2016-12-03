@@ -63,29 +63,38 @@ public class EditRecipeActivity extends Activity {
 
         Bundle bundle = getIntent().getExtras();
         message = bundle.getString("RecipeName");
-        Database db = Database.getInstance(getApplicationContext());
-        originalRecipe = db.getRecipe(message);
+        //Database db = Database.getInstance(getApplicationContext());
+        //originalRecipe = db.getRecipe(message);
 
-        cooktime.setText(originalRecipe.getCookTime());
-        description.setText(originalRecipe.getDescription());
+
+
+        Pertinence pertinence = Pertinence.getPertinence();
+        Recipe[] results = pertinence.getRecipeArray();
+
+
+        for(int i=0;i<results.length;i++){
+            if(results[i].getName().equals(message)){
+                originalRecipe = results[i];
+            }
+        }
         String ingredientInString = "";
         Ingredient[] current = originalRecipe.getIngredientArray();
         for(int i =0; i < current.length;i++){
             ingredientInString+= current[i].getName()+ ", ";
         }
 
-
-
+        cooktime.setText(originalRecipe.getCookTime());
+        description.setText(originalRecipe.getDescription());
         ingredient.setText(ingredientInString);
-        image.setImageResource(Integer.parseInt(originalRecipe.getImg()));
+        //image.setImageResource(Integer.parseInt(originalRecipe.getImg()));
 
-        Category[] categoryArray = db.getCategoryArray();
+        //Category[] categoryArray = db.getCategoryArray();
 
-        String[] categoryNameArray = new String[categoryArray.length];
+        //String[] categoryNameArray = new String[categoryArray.length];
 
-        for(int i=0;i<categoryNameArray.length;i++){
-            categoryNameArray[i] = categoryArray[i].getName();
-        }
+        //for(int i=0;i<categoryNameArray.length;i++){
+          //  categoryNameArray[i] = categoryArray[i].getName();
+        //}
 
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
         String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
@@ -106,7 +115,7 @@ public class EditRecipeActivity extends Activity {
             }
 
         });
-        db.close();
+        //db.close();
     }
     private int getIndex(Spinner spinner, String myString)
     {
@@ -138,18 +147,20 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onClickSave(View view) {
-        if(dropdown.getSelectedItem().equals(null)&&message.equals(null)&&cooktime.getText().equals(null)&&ingredient.getText().equals(null)){
+        if(dropdown.getSelectedItem().toString().matches("")||message.matches("")||cooktime.getText().toString().matches("")||ingredient.getText().toString().matches("")||description.getText().toString().matches("")){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Please fill up all the fields if you want your recipe to be save");
             builder.setCancelable(true);
 
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // TODO:delete the recipe from the database and return to research screen;
 
-                    finish();
+                    dialog.dismiss();
                 }
             });
+            AlertDialog alert = builder.create();
+            alert.show();
 
         }else{
 
