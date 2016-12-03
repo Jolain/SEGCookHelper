@@ -26,6 +26,7 @@ public class RecipeViewActivity extends Activity {
     Recipe tempRecipe;
     private Button editRecipe;
     private Button deleteRecipe;
+    Recipe recipeView;
 
 
 
@@ -40,7 +41,7 @@ public class RecipeViewActivity extends Activity {
         description = (TextView)findViewById(R.id.description);
         Bundle bundle = getIntent().getExtras();
         String message = bundle.getString("RecipeName");
-        Recipe recipeView =  new Recipe("","",new Category(""),null,"","");
+
         Pertinence pertinence = Pertinence.getPertinence();
         Recipe[] results = pertinence.getRecipeArray();
         // search in the database with message and recipe recipeView to return the recipe matching with message since the message
@@ -79,6 +80,8 @@ public class RecipeViewActivity extends Activity {
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // TODO:delete the recipe from the database and return to research screen;
+                Database db = Database.getInstance(getApplicationContext());
+                //db.deleteRecipe(recipeView);
                 Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
                 setResult(RESULT_OK,intent);
                 finish();
