@@ -90,9 +90,9 @@ public class EditRecipeActivity extends Activity {
 
         Category[] categoryArray = db.getCategoryArray();
 
-        String[] categoryNameArray = new String[categoryArray.length+1];
-        categoryNameArray[0] = " ";
-        for(int i=1;i<categoryNameArray.length;i++){
+        String[] categoryNameArray = new String[categoryArray.length];
+        // categoryNameArray[0] = " ";
+        for(int i=0;i<categoryNameArray.length;i++){
           categoryNameArray[i] = categoryArray[i].getName();
         }
 
