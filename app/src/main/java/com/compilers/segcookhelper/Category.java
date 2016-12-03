@@ -19,10 +19,6 @@ public class Category {
      */
     public Category(String name) {
         this.name = name;
-
-        //TODO database.addCategory(this) (test implementation)
-        Database db = Database.getInstance(null);
-        db.addCategory(this);
     }
 
     /**
