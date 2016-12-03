@@ -234,6 +234,28 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addIngredient(Ingredient i) {
+        if (!linkedIngredient.contains(i)) {
+            linkedIngredient.add(i);
+            System.out.println("Database: added ingredient " + i.getName());
+
+            // SQLite Implementation
+            SQLiteDatabase db = getWritableDatabase();
+            ContentValues entry = new ContentValues();
+
+            // Insert values in the entry
+            entry.put(DatabaseContract.I_table.COL_NAME, i.getName());
+
+            // Insert entry intro database
+            try {
+                db.insert(DatabaseContract.I_table.TABLE_NAME, null, entry);
+            } catch (Exception e) {
+                System.out.println("ERROR: Ingredient was not added to SQLite database");
+            }
+            db.close(); // Required to not get sync errors
+        }
+    }
+
     // Redundant method
     //public boolean containsRecipe(Recipe recipe){
     //    return linkedRecipe.contains(recipe);
@@ -290,12 +312,6 @@ public class Database extends SQLiteOpenHelper {
         return linkedCategory.toArray(new Category[linkedCategory.size()]);
     }
 
-    public void addIngredient(Ingredient ingredient){
-        if(!linkedIngredient.contains(ingredient)) {
-            linkedIngredient.add(ingredient);
-            System.out.println("Database: added ingredient " + ingredient.getName());
-        }
-    }
 
     public boolean containsIngredient(Ingredient ingredient){
         return linkedIngredient.contains(ingredient);
