@@ -6,6 +6,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -16,14 +22,18 @@ import java.util.LinkedList;
 public class Database extends SQLiteOpenHelper {
 
     private static Database instance;
+    private final Context context;
     private LinkedList<Recipe> linkedRecipe;
     private LinkedList<Ingredient> linkedIngredient;
     private LinkedList<Category> linkedCategory;
+    private String dbPath = "";
 
     // Private Constructor
 
     private Database(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
+        this.context = context;
+        dbPath = context.getApplicationInfo().dataDir + "/databases/";
     }
 
     // Singleton Implementation
@@ -40,14 +50,37 @@ public class Database extends SQLiteOpenHelper {
     // Override methods
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DatabaseContract.I_table.CREATE_TABLE);
-        db.execSQL(DatabaseContract.C_table.CREATE_TABLE);
-        db.execSQL(DatabaseContract.R_table.CREATE_TABLE);
+        //db.execSQL(DatabaseContract.I_table.CREATE_TABLE);
+        //db.execSQL(DatabaseContract.C_table.CREATE_TABLE);
+        //db.execSQL(DatabaseContract.R_table.CREATE_TABLE);
     }
 
-    public void onLoad(SQLiteDatabase db) {
+    public void onLoad() {
+        // Checks to see if database file already exists.
+        // If it isn't copy it from the asset folder.
+        File test = new File(dbPath + DatabaseContract.DATABASE_NAME);
+        if(!test.exists()) { // If database does not exist
+            this.getReadableDatabase(); // Creates the path if non-existent
+            this.close();
+            try {
+                InputStream dataInput = context.getAssets().open(DatabaseContract.DATABASE_NAME);
+                OutputStream dataOutput = new FileOutputStream(dbPath + DatabaseContract.DATABASE_NAME);
+                byte[] buffer = new byte[1024];
+                int dataLength;
+                while((dataLength = dataInput.read(buffer)) > 0) { // While there's still data in the buffer
+                    dataOutput.write(buffer, 0, dataLength);
+                }
+                dataOutput.flush();
+                dataOutput.close();
+                dataInput.close();
+            }
+            catch(Exception e) {
+                Log.v("SQL DATABASE:", "Failed to copy database from assets");
+            }
+        }
         // When the database is first initialized, it reads the entire database and creates
         // all the necessary objects. Clears existing objects in an atomic way.
+        SQLiteDatabase db = getReadableDatabase();
 
         linkedRecipe = new LinkedList<>();
         linkedCategory = new LinkedList<>();
@@ -95,6 +128,11 @@ public class Database extends SQLiteOpenHelper {
             } while(recipeCursor.moveToNext());
         }
         recipeCursor.close();
+        db.close();
+
+        Log.v("INGREDIENT ARRAY:", linkedIngredient.toString());
+        Log.v("CATEGORY ARRAY:  ", linkedCategory.toString());
+        Log.v("RECIPE ARRAY:    ", linkedRecipe.toString());
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -116,10 +154,10 @@ public class Database extends SQLiteOpenHelper {
             query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME + " WHERE ";
             for (int i = 0; i < ingredients.length; i++) {
                 if (ingredients[i] != null && ingredients[i].getName() != null) {
-                    query = query + DatabaseContract.R_table.COL_INGREDIENT + " LIKE %" + ingredients[i].getName() + "% ";
+                    query = query + DatabaseContract.R_table.COL_INGREDIENT + " LIKE '%" + ingredients[i].getName() + "%'";
                 }
-                if (ingredients[i + 1] != null) {
-                    query = query + "OR ";
+                if (i + 1 < ingredients.length) {
+                    query = query + " OR ";
                 }
             }
         }

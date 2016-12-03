@@ -31,8 +31,7 @@ public class ResearchActivity extends Activity {
         edit = (EditText)findViewById(R.id.searchQuery);
         help = (Button)findViewById(R.id.HelpResearch);
         dropdown = (Spinner)findViewById(R.id.catSpinner);
-        String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
-        // Category[] category = datebase.category; ???
+        String[] items = new String[]{"Quebecois", "Breakfast", "Italian", "Dinner", "Snacks", "Drinks"}; // this is only to help me
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -75,7 +74,13 @@ public class ResearchActivity extends Activity {
         }
 
          Recipe [] recipes = dbHelper.recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
-         this.testSearch(ingredients,operators);
+
+        Pertinence pertinence = Pertinence.getPertinence();
+        pertinence.updateRecipe(recipes);
+        pertinence.updatePertinence(dbHelper.getCategory(dropdown.getSelectedItem().toString()), ingredients, operators);
+        pertinence.sortRecipe();
+
+        //this.testSearch(ingredients,operators);
 
         Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
@@ -106,40 +111,40 @@ public class ResearchActivity extends Activity {
     }
 
     public void testSearch(Ingredient[] ingredients,String[] operators) {
-        Ingredient oignon = new Ingredient("oignon");
-        Ingredient tomate = new Ingredient("tomate");
-        Ingredient bacon = new Ingredient("bacon");
-        Ingredient poulet = new Ingredient("poulet");
-        Ingredient pomme = new Ingredient("pommme");
+            Ingredient oignon = new Ingredient("oignon");
+            Ingredient tomate = new Ingredient("tomate");
+            Ingredient bacon = new Ingredient("bacon");
+            Ingredient poulet = new Ingredient("poulet");
+            Ingredient pomme = new Ingredient("pommme");
 
-        Category quebecois = new Category("quebecois");
-        Category chinois = new Category("chinois");
-        Category indien = new Category("indien");
+            Category quebecois = new Category("quebecois");
+            Category chinois = new Category("chinois");
+            Category indien = new Category("indien");
 
-        LinkedList<Ingredient> list1 = new LinkedList<Ingredient>();
-        list1.add(oignon);
+            LinkedList<Ingredient> list1 = new LinkedList<Ingredient>();
+            list1.add(oignon);
 
-        LinkedList<Ingredient> list2 = new LinkedList<Ingredient>();
-        list2.add(oignon);
-        list2.add(tomate);
+            LinkedList<Ingredient> list2 = new LinkedList<Ingredient>();
+            list2.add(oignon);
+            list2.add(tomate);
 
-        LinkedList<Ingredient> list3 = new LinkedList<Ingredient>();
-        list3.add(oignon);
-        list3.add(tomate);
-        list3.add(bacon);
+            LinkedList<Ingredient> list3 = new LinkedList<Ingredient>();
+            list3.add(oignon);
+            list3.add(tomate);
+            list3.add(bacon);
 
-        LinkedList<Ingredient> list4 = new LinkedList<Ingredient>();
-        list4.add(oignon);
-        list4.add(tomate);
-        list4.add(bacon);
-        list4.add(poulet);
+            LinkedList<Ingredient> list4 = new LinkedList<Ingredient>();
+            list4.add(oignon);
+            list4.add(tomate);
+            list4.add(bacon);
+            list4.add(poulet);
 
-        LinkedList<Ingredient> list5 = new LinkedList<Ingredient>();
-        list5.add(oignon);
-        list5.add(tomate);
-        list5.add(bacon);
-        list5.add(poulet);
-        list5.add(pomme);
+            LinkedList<Ingredient> list5 = new LinkedList<Ingredient>();
+            list5.add(oignon);
+            list5.add(tomate);
+            list5.add(bacon);
+            list5.add(poulet);
+            list5.add(pomme);
 
         String R1_description = "1.\tIn a 2 gallon container, mix together the brown sugar, curing mixture, and water. Submerge the pork belly in the mixture so that it is covered completely. If the meat floats, you can weigh it down with a dinner plate or similar object. Refrigerate covered for six days.\n" +
                 "2.\tLight charcoal in an outdoor smoker. Soak wood chips in a bowl of water. When the temperature of the smoker is between 140 and 150 degrees coals are ready. Smoke the pork belly for 6 hours, throwing a handful of wood chips on the coals about once an hour. Store in the refrigerator. Slice and fry as you would with store-bought bacon.\n";
@@ -175,12 +180,12 @@ public class ResearchActivity extends Activity {
 
         Recipe R5 = new Recipe("grilled cheese","15min",quebecois,list5,"macaroni",R5_description);
 
-        Recipe[] recipes = new Recipe[5];
-        recipes[0] = R1;
-        recipes[1] = R2;
-        recipes[2] = R3;
-        recipes[3] = R4;
-        recipes[4] = R5;
+            Recipe[] recipes = new Recipe[5];
+            recipes[0] = R1;
+            recipes[1] = R2;
+            recipes[2] = R3;
+            recipes[3] = R4;
+            recipes[4] = R5;
 
             /*
             Ingredient[] ingredients = new Ingredient[5];
@@ -197,10 +202,10 @@ public class ResearchActivity extends Activity {
             operateur[3] = "not";
     `       */
 
-        Pertinence pertinence = Pertinence.getPertinence();
-        pertinence.updateRecipe(recipes);
-        pertinence.updatePertinence(quebecois, ingredients, operators);
-        pertinence.sortRecipe();
+            Pertinence pertinence = Pertinence.getPertinence();
+            pertinence.updateRecipe(recipes);
+            pertinence.updatePertinence(quebecois, ingredients, operators);
+            pertinence.sortRecipe();
             /*
             Recipe[] recette = pertinence.getRecipes();
             for(int i = 0; i<5; i++){
@@ -210,6 +215,6 @@ public class ResearchActivity extends Activity {
                 //System.out.println("pertinence: " +recette[i].recipePertinence);
             }
             */
-    }
+        }
 
 }
