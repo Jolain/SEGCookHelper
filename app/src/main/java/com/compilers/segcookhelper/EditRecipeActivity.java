@@ -63,7 +63,7 @@ public class EditRecipeActivity extends Activity {
 
         Bundle bundle = getIntent().getExtras();
         message = bundle.getString("RecipeName");
-        //Database db = Database.getInstance(getApplicationContext());
+        Database db = Database.getInstance(getApplicationContext());
         //originalRecipe = db.getRecipe(message);
 
 
@@ -88,18 +88,17 @@ public class EditRecipeActivity extends Activity {
         ingredient.setText(ingredientInString);
         //image.setImageResource(Integer.parseInt(originalRecipe.getImg()));
 
-        //Category[] categoryArray = db.getCategoryArray();
+        Category[] categoryArray = db.getCategoryArray();
 
-        //String[] categoryNameArray = new String[categoryArray.length];
+        String[] categoryNameArray = new String[categoryArray.length];
 
-        //for(int i=0;i<categoryNameArray.length;i++){
-          //  categoryNameArray[i] = categoryArray[i].getName();
-        //}
+        for(int i=0;i<categoryNameArray.length;i++){
+          categoryNameArray[i] = categoryArray[i].getName();
+        }
 
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
-        String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
         dropdown.setAdapter(adapter);
         dropdown.setSelection(getIndex(dropdown,originalRecipe.getCategory().getName()));
 

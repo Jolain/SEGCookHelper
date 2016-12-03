@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +51,7 @@ public class AddRecipeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
+        Database db = Database.getInstance(getApplicationContext());
         recipename = (EditText)findViewById(R.id.nameAdd);
         cooktime = (EditText)findViewById(R.id.cooktimeAdd);
         ingredient = (EditText)findViewById(R.id.ingredientsADD);
@@ -60,9 +62,17 @@ public class AddRecipeActivity extends Activity {
         create = (Button)findViewById(R.id.createAdd);
         help = (Button)findViewById(R.id.HelpAdd);
         dropdown = (Spinner)findViewById(R.id.categoryADD);
-        String[] items = new String[]{" ", "chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"}; // this is only to help me
-        // Category[] category = datebase.category; ???
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        Category[] categoryArray = db.getCategoryArray();
+
+        String[] categoryNameArray = new String[categoryArray.length];
+
+        for(int i=0;i<categoryNameArray.length;i++){
+            categoryNameArray[i] = categoryArray[i].getName();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
+
+
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

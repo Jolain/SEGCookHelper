@@ -31,8 +31,18 @@ public class ResearchActivity extends Activity {
         edit = (EditText)findViewById(R.id.searchQuery);
         help = (Button)findViewById(R.id.HelpResearch);
         dropdown = (Spinner)findViewById(R.id.catSpinner);
-        String[] items = new String[]{"Quebecois", "Breakfast", "Italian", "Dinner", "Snacks", "Drinks"}; // this is only to help me
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        Database db = Database.getInstance(getApplicationContext());
+        Category[] categoryArray = db.getCategoryArray();
+
+        String[] categoryNameArray = new String[categoryArray.length];
+
+        for(int i=0;i<categoryNameArray.length;i++){
+            categoryNameArray[i] = categoryArray[i].getName();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
+
+
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
