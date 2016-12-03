@@ -223,7 +223,7 @@ public class Database extends SQLiteOpenHelper {
         entry.put(DatabaseContract.R_table.COL_TIME, editedRecipe.getCookTime());
         entry.put(DatabaseContract.R_table.COL_INGREDIENT, convertedString);
         try {
-            db.update(DatabaseContract.R_table.TABLE_NAME, entry, DatabaseContract.R_table.COL_NAME + "=" + oldRecipe.getName(), null);
+            db.update(DatabaseContract.R_table.TABLE_NAME, entry, DatabaseContract.R_table.COL_NAME + " = ?", new String[] {oldRecipe.getName()});
         }
         catch (Exception e) {
             System.out.println("ERROR: Recipe was not edited");
