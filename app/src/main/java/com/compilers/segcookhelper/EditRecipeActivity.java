@@ -167,7 +167,11 @@ public class EditRecipeActivity extends Activity {
             String[] ingredientsName = ingredient.getText().toString().split(", ");
             LinkedList<Ingredient> ingredientList = new LinkedList<>();
             for(int i = 0; i < ingredientsName.length; i++) {
-                ingredientList.add(dbHelper.getIngredient(ingredientsName[i]));
+                Ingredient tmp = dbHelper.getIngredient(ingredientsName[i]);
+                if(tmp == null) {
+                    tmp = new Ingredient(ingredientsName[i]);
+                    dbHelper.addIngredient(tmp);
+                }
             }
 
             dbHelper.editRecipe(originalRecipe, new Recipe(name, time, cat, ingredientList, img, desc));
