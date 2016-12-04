@@ -64,9 +64,9 @@ public class AddRecipeActivity extends Activity {
         dropdown = (Spinner)findViewById(R.id.categoryADD);
         Category[] categoryArray = db.getCategoryArray();
 
-        String[] categoryNameArray = new String[categoryArray.length+1];
-        categoryNameArray[0] = " ";
-        for(int i=1;i<categoryNameArray.length;i++){
+        String[] categoryNameArray = new String[categoryArray.length];
+        // categoryNameArray[0] = " ";
+        for(int i=0;i<categoryNameArray.length;i++){
             categoryNameArray[i] = categoryArray[i].getName();
         }
 
@@ -95,35 +95,36 @@ public class AddRecipeActivity extends Activity {
 
             builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    // TODO:delete the recipe from the database and return to research screen;
-
                     dialog.dismiss();
                 }
             });
             AlertDialog alert = builder.create();
             alert.show();
 
-        }else {
-            // create new recipe in the data base
+        } else {
+            Database dbHelper = Database.getInstance(getApplicationContext());
+            String name = recipename.getText().toString();
+            Category cat = dbHelper.getCategory(dropdown.getSelectedItem().toString());
+            String desc = description.getText().toString();
+            // TODO: For now it uses the default "ic_logo_00" picture, should use another image
+            String img = "ic_logo_00";
+            String time = cooktime.getText().toString();
+
+            String[] ingredientsName = ingredient.getText().toString().split(", ");
+            LinkedList<Ingredient> ingredientList = new LinkedList<>();
+            for(int i = 0; i < ingredientsName.length; i++) {
+                Ingredient tmp = dbHelper.getIngredient(ingredientsName[i]);
+                if(tmp == null) {
+                    tmp = new Ingredient(ingredientsName[i]);
+                    dbHelper.addIngredient(tmp);
+                }
+                ingredientList.add(tmp);
+            }
+
+            dbHelper.addRecipe(new Recipe(name, time, cat, ingredientList, img, desc));
+            dbHelper.close();
             Intent returnintent = new Intent();
             setResult(RESULT_OK, returnintent);
-            String ingredients = ingredient.getText().toString();
-            List<String> items = Arrays.asList(ingredients.split("\\s*,\\s*"));
-            Ingredient[] resultIng = new Ingredient[items.size()];
-            for (int i = 0; i < items.size(); i++) {
-                resultIng[i] = new Ingredient(items.get(i));
-            }
-            List<Ingredient> listIngredients = new ArrayList<Ingredient>(Arrays.asList(resultIng));
-            LinkedList<Ingredient> linkedIngredients = new LinkedList<Ingredient>();
-            for (int i = 0; i < listIngredients.size(); i++) {
-                linkedIngredients.add(listIngredients.get(i));
-            }
-
-            Database dbHelper = Database.getInstance(getApplicationContext());
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-            Recipe recipe = new Recipe(recipename.getText().toString(), cooktime.getText().toString(), new Category(dropdown.getSelectedItem().toString()), linkedIngredients, "", description.getText().toString());
-            dbHelper.addRecipe(recipe);
             finish();
         }
     }

@@ -64,19 +64,8 @@ public class EditRecipeActivity extends Activity {
         Bundle bundle = getIntent().getExtras();
         message = bundle.getString("RecipeName");
         Database db = Database.getInstance(getApplicationContext());
-        //originalRecipe = db.getRecipe(message);
+        originalRecipe = db.getRecipe(message);
 
-
-
-        Pertinence pertinence = Pertinence.getPertinence();
-        Recipe[] results = pertinence.getRecipeArray();
-
-
-        for(int i=0;i<results.length;i++){
-            if(results[i].getName().equals(message)){
-                originalRecipe = results[i];
-            }
-        }
         String ingredientInString = "";
         Ingredient[] current = originalRecipe.getIngredientArray();
         for(int i =0; i < current.length;i++){
@@ -181,8 +170,8 @@ public class EditRecipeActivity extends Activity {
                 ingredientList.add(dbHelper.getIngredient(ingredientsName[i]));
             }
 
-            dbHelper.editRecipe(originalRecipe,new Recipe(name, time, cat, ingredientList, img, desc));
-
+            dbHelper.editRecipe(originalRecipe, new Recipe(name, time, cat, ingredientList, img, desc));
+            dbHelper.close();
             Intent returnintent = new Intent();
             returnintent.putExtra("RecipeName", name);
             setResult(RESULT_OK, returnintent);

@@ -148,7 +148,7 @@ public class Database extends SQLiteOpenHelper {
 
     public Recipe[] recipeQuery(Ingredient[] ingredients) {
         String query;
-        if(ingredients == null) {
+        if(ingredients[0] == null) {
             return getRecipeArray(); // If query is null, return all recipe
         } else {
             query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME + " WHERE ";
