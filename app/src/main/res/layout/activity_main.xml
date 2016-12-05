@@ -140,10 +140,10 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:layout_weight="0.51"
                 android:src="@drawable/macaroni"
-                app:srcCompat="@drawable/macaroni" />
+                app:srcCompat="@drawable/macaroni"
+                android:layout_height="128dp" />
 
             <LinearLayout
                 android:id="@+id/Buttons"
