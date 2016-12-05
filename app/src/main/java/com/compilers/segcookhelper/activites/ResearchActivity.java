@@ -1,8 +1,6 @@
 package com.compilers.segcookhelper.activites;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,17 +85,6 @@ public class ResearchActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("To research a recipe blablabla...");
-        builder.setCancelable(true);
-
-        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
+        ActivityUtil.openDialog("To research a recipe blablabla...", this, true, "OK");
     }
 }

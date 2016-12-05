@@ -8,14 +8,14 @@ import android.content.DialogInterface;
  * Created by Mathieu on 05/12/2016.
  */
 
-public class ActivityUtil {
+class ActivityUtil {
 
-    public static void openDialog(String msg, Activity activity, Boolean cancelable) {
+    static void openDialog(String msg, Activity activity, Boolean cancelable, String... buttonsText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage(msg);
         builder.setCancelable(cancelable);
 
-        builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(buttonsText[0], new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }

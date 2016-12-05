@@ -76,7 +76,7 @@ public class AddRecipeActivity extends Activity {
         if (dropdown.getSelectedItem().toString().matches("") || recipeNameField.getText().toString().matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
                 descriptionField.getText().toString().matches("")) {
-            ActivityUtil.openDialog("Please fill up all the fields", this, true);
+            ActivityUtil.openDialog("Please fill up all the fields", this, true, "OK");
             // TODO:delete the recipe from the database and return to research screen;
         } else {
             String name = recipeNameField.getText().toString();
@@ -96,18 +96,7 @@ public class AddRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("To add a recipe blablabla...");
-        builder.setCancelable(true);
-
-        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
+        ActivityUtil.openDialog("To add a recipe blablabla...", this, true, "OK");
     }
 
     public void onImageClick(View view) {

@@ -103,7 +103,7 @@ public class EditRecipeActivity extends Activity {
         if (dropdown.getSelectedItem().toString().matches("") || message.matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
                 descriptionField.getText().toString().matches("")) {//TODO keep description field between limits in Recipe
-            ActivityUtil.openDialog("Please fill up all the fields", this, true);
+            ActivityUtil.openDialog("Please fill up all the fields", this, true, "OK");
             // TODO:delete the recipe from the database and return to research screen;
         } else {
 
@@ -127,18 +127,7 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(" To edit a recipe blablabla...");
-        builder.setCancelable(true);
-
-        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
+        ActivityUtil.openDialog("To edit a recipe blablabla...", this, true, "OK");
     }
 
     public void onImageClick(View view) {
