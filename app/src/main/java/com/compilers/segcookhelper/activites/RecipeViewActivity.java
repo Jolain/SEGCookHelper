@@ -1,5 +1,6 @@
 package com.compilers.segcookhelper.activites;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,13 +12,12 @@ import android.widget.TextView;
 
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
-import com.compilers.segcookhelper.cookhelper.Pertinence;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
 //TODO remove associations with Recipe and pertinence, go through CookHelper
 
 public class RecipeViewActivity extends Activity {
-    CookHelper app;
+    private CookHelper app;
 
     private TextView recipeNameField;
     private TextView category;
@@ -32,6 +32,7 @@ public class RecipeViewActivity extends Activity {
     private Recipe recipeView;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,22 +47,14 @@ public class RecipeViewActivity extends Activity {
 
         app = CookHelper.getInstance(getApplicationContext());
 
-        Pertinence pertinence = Pertinence.getPertinence();
-        Recipe[] results = pertinence.getRecipeArray();
         // search in the database with message and recipe recipeView to return the recipe matching with message since the message
         // is the recipe name
 
-        //TODO set category, Ingredients, Description
-
-        for (int i = 0; i < results.length; i++) {
-            if (results[i].getName().equals(message)) {
-                recipeView = results[i];
-            }
-        }
+        recipeView = app.getRecipe(message);
 
         recipeNameField.setText(message);
         category.setText("Category: " + recipeView.getCategoryName());
-        ingredient.setText("Ingredient: " + recipeView.ingredientListToString().toString());
+        ingredient.setText("Ingredient: " + recipeView.ingredientListToString());
         cookTime.setText("CookTime: " + recipeView.getCookTime());
         description.setText("Description: " + recipeView.getDescription());
     }
@@ -99,6 +92,7 @@ public class RecipeViewActivity extends Activity {
         alert.show();
     }
 
+    @SuppressLint("SetTextI18n")
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
@@ -109,7 +103,7 @@ public class RecipeViewActivity extends Activity {
 
             tempRecipe = app.getRecipe(message);
             category.setText("Category: " + tempRecipe.getCategory().getName());
-            ingredient.setText("Ingredient: " + tempRecipe.ingredientListToString().toString());
+            ingredient.setText("Ingredient: " + tempRecipe.ingredientListToString());
             cookTime.setText("CookTime: " + tempRecipe.getCookTime());
             description.setText("Description: " + tempRecipe.getDescription());
         }
