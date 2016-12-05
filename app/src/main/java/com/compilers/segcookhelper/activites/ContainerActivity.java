@@ -21,7 +21,9 @@ import com.compilers.segcookhelper.cookhelper.Recipe;
  */
 
 public class ContainerActivity extends Activity {
-    ListView listView;
+    private CookHelper app;
+    private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,7 @@ public class ContainerActivity extends Activity {
         //TODO Retrieve objects created by the search query (not yet implemented)
         // nouvelle section pour tester le containter
 
-        CookHelper app = CookHelper.getInstance(getApplicationContext());
+        app = CookHelper.getInstance(getApplicationContext());
         Recipe[] results = app.getSortedRecipes();
 
         for (Recipe result : results) {
@@ -72,8 +74,7 @@ public class ContainerActivity extends Activity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
-            Pertinence pertinence = Pertinence.getPertinence();
-            Recipe[] results = pertinence.getRecipeArray();
+            Recipe[] results = app.getSortedRecipes();
             String recipeDelete = data.getStringExtra("RecipeName");
             Recipe[] newResults = new Recipe[results.length-1];
             for(int i=0;i<results.length;i++){
