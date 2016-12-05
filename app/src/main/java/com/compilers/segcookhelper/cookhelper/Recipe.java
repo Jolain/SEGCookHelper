@@ -172,12 +172,12 @@ public class Recipe {
     }
 
     /**
-     * Remove an ingredient form the recipe, deletes the recipe if the last ingredient is removed
+     * Remove an ingredient form the recipe
      *
      * @param ingredient the ingredient to remove
      */
     public void removeIngredient(Ingredient ingredient) {
-        if (!linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
+        if (!linkedIngredient.remove(ingredient)) {
             System.out.println("Failed to remove " + ingredient.getName() + " from " + getName());
         }
     }
