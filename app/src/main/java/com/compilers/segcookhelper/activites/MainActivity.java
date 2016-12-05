@@ -40,4 +40,5 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), AddRecipeActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
     }
+
 }

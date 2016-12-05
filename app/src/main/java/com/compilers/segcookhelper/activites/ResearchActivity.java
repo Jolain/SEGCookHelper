@@ -85,6 +85,8 @@ public class ResearchActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openNeutralAlertDialog("To research a recipe blablabla...", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("1. Tout d’abord les recherches sont faites selon les catégories (entrée, sauce etc..), le type de plat  (Éthiopien, Indien, Français etc..) et une liste des ingrédients.\n" +
+                "2. Les recherches selon les ingrédients devront utiliser des expressions AND , OR, NOT.\n", this, true, "OK");
     }
 }
+

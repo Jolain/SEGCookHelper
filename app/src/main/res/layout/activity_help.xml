@@ -14,6 +14,11 @@
         android:id="@+id/HelpText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipuscing elit. Duis dignissim in enim ut finibus. Nam eros turpis, pharetra at mauris et, varius interdum nisl. Nulla ultricies metus eu lectus ullamcorper placerat. Suspendisse."
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        android:text="Bienvenue sur Cook Helper ! Cette application vous permettra de rechercher des recettes à partir de n’importe quel ingrédient et ça en très peu de temps. Maintenant pour débuter les recherches cliquer sur le bouton rose tout à droite. "
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="30sp" />
 </RelativeLayout>

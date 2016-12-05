@@ -129,7 +129,7 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openNeutralAlertDialog("To edit a recipe blablabla...", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("Veuillez rentrez les données correspondant à chaque case.", this, true, "OK");
     }
 
     public void onImageClick(View view) {

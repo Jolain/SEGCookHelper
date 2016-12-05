@@ -99,7 +99,7 @@ public class AddRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openNeutralAlertDialog("To add a recipe blablabla...", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("Veuillez entrer les données correspondant à chaque case.", this, true, "OK");
     }
 
     public void onImageClick(View view) {
@@ -161,4 +161,8 @@ public class AddRecipeActivity extends Activity {
             }
         }
     }
+
+
+
+
 }
