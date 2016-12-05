@@ -3,7 +3,7 @@ package com.compilers.segcookhelper.cookhelper;
 import java.util.Objects;
 
 /**
- * Created by martin on 2016-11-25.
+ * Util class used to determine the pertinence of Recipes and sort them based off that pertinence
  */
 
 class Pertinence {
@@ -15,12 +15,20 @@ class Pertinence {
     private static int highestPertinence = -100; // will facilitate the sorting
     private static int lowestPertinence = 100; // will facilitate the sorting
 
-    static void updatePertinence(Recipe[] recipeArray, Category category, Ingredient[] ingredients, String[] operateur) {
+    /**
+     * Updates the pertinence of recipes based on arguments
+     *
+     * @param recipeArray the recipes to update
+     * @param category    the categories to base the pertinence off
+     * @param ingredients the ingredients to base the pertinence off
+     * @param operator    the operators to base the pertinence off
+     */
+    static void updatePertinence(Recipe[] recipeArray, Category category, Ingredient[] ingredients, String[] operator) {
         highestPertinence = 0;
         lowestPertinence = 100;
         for (Recipe aRecipe : recipeArray) {
             //System.out.println("recette with name: " + this.recipeArray[x].getName());
-            calculatePertinence(aRecipe, category, ingredients, operateur);
+            calculatePertinence(aRecipe, category, ingredients, operator);
         }
     }
 
@@ -89,9 +97,14 @@ class Pertinence {
         }
     }
 
-    // this method sort the recipe since we already determined the highest and lowest pertinence it give us a
-    // starting point
+    /**
+     * Sorts an array based on it's pertinence
+     *
+     * @param recipeArray the recipes to sort
+     */
     static void sortRecipe(Recipe[] recipeArray) {
+        // this method sort the recipe since we already determined the highest and lowest pertinence it give us a
+        // starting point
         int position = 0;
         int pertinenceIndex = highestPertinence;
         Recipe placeholder;
