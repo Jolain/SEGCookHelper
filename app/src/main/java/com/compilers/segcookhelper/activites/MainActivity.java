@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper;
+package com.compilers.segcookhelper.activites;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,30 +6,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.compilers.segcookhelper.R;
+import com.compilers.segcookhelper.cookhelper.CookHelper;
+
 public class MainActivity extends Activity {
 
     public Button search;
     public Button add;
     public Button help;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        search = (Button)findViewById(R.id.search1);
-        help = (Button)findViewById(R.id.help);
-        add = (Button)findViewById(R.id.add);
+        search = (Button) findViewById(R.id.search1);
+        help = (Button) findViewById(R.id.help);
+        add = (Button) findViewById(R.id.add);
 
-        // Initialise database singleton on app load
-        Database dbHelper = Database.getInstance(getApplicationContext());
-        dbHelper.onLoad();
-        dbHelper.close();
-        System.out.println("App started");
-
-        // Database already initialized categories
-        // String[] items = {"chinese", "breakfast", "italian", "dinner", "collation", "cookies", "drink"};
-        // for(int i=0;i<items.length;i++){
-        //     dbHelper.addCategory(new Category(items[i]));
-        // }
+        CookHelper app = CookHelper.getInstance(getApplicationContext());
     }
 
     public void onClickSearch(View view) {
@@ -46,5 +40,4 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), AddRecipeActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
     }
-
 }

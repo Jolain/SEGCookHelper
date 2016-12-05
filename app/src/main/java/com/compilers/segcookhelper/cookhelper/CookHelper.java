@@ -1,0 +1,197 @@
+package com.compilers.segcookhelper.cookhelper;
+
+import android.content.Context;
+
+import java.util.LinkedList;
+
+/**
+ * Facade class to CookHelper
+ */
+
+public class CookHelper {
+
+    private static CookHelper instance;
+    private Database db;
+
+    private CookHelper(Context context) {
+        // Initialise database singleton
+        db = Database.getInstance(context);
+        db.onLoad();
+        db.close();
+    }
+
+    /**
+     * Get the instance of CookHelper
+     *
+     * @param context the context of the application
+     * @return the instance
+     */
+    public static CookHelper getInstance(Context context) {
+        if (instance == null) {
+            instance = new CookHelper(context);
+        }
+        return instance;
+    }
+
+    /**
+     * Get an array of recipes from the database from an Array of ingredients
+     *
+     * @param ingredientArray the ingredients queried
+     * @return The recipes found
+     */
+    public Recipe[] recipeQuery(Ingredient[] ingredientArray) {
+        Recipe[] recipeArray = db.recipeQuery(ingredientArray);
+        db.close();
+        return recipeArray;
+    }
+
+    /**
+     * Add a recipe to the database
+     *
+     * @param recipe the recipe to add
+     */
+    public void addRecipe(Recipe recipe) {
+        db.addRecipe(recipe);
+        db.close();
+    }
+
+    /**
+     * Get a recipe from the database with a name
+     *
+     * @param name the name of the recipe
+     * @return the recipe found
+     */
+    public Recipe getRecipe(String name) {
+        Recipe recipe = db.getRecipe(name);
+        db.close();
+
+        return recipe;
+    }
+
+    /**
+     * Remove a recipe from the database
+     *
+     * @param recipe the recipe to remove
+     */
+    public void removeRecipe(Recipe recipe) {
+        db.removeRecipe(recipe);
+        db.close();
+    }
+
+    /**
+     * Create a recipe using multiple fields
+     *
+     * @param name                the name of the recipe
+     * @param time                the time required to make the recipe
+     * @param categoryName        the name of the category the recipe belongs to
+     * @param ingredientNameArray an Array of ingredient names to be part of the recipe
+     * @param img                 the image associated with the recipe
+     * @param desc                the description of the recipe
+     * @return the recipe created
+     */
+    public Recipe createRecipe(String name, String time, String categoryName, String[] ingredientNameArray, String img, String desc) {
+
+        LinkedList<Ingredient> ingredientLinkedList = new LinkedList<>();
+        for (String anIngredientNameArray : ingredientNameArray) {
+            Ingredient tmp = db.getIngredient(anIngredientNameArray);
+            if (tmp == null) {
+                tmp = new Ingredient(anIngredientNameArray);
+                db.addIngredient(tmp);
+            }
+            ingredientLinkedList.add(tmp);
+        }
+
+        Category category = db.getCategory(categoryName);
+        db.close();
+
+        return new Recipe(name, time, category, ingredientLinkedList, img, desc);
+    }
+
+    /**
+     * Edit a recipe in the database
+     *
+     * @param previousRecipe the recipe before being modified
+     * @param newRecipe      the modified recipe
+     */
+    public void editRecipe(Recipe previousRecipe, Recipe newRecipe) {
+        db.editRecipe(previousRecipe, newRecipe);
+        db.close();
+    }
+
+    /**
+     * Add an array of ingredients to the database
+     *
+     * @param ingredientNameArray the array fo ingredient names
+     */
+    public void addIngredients(String[] ingredientNameArray) {
+        for (String anIngredientNameArray : ingredientNameArray) {
+            Ingredient tmp = db.getIngredient(anIngredientNameArray);
+            if (tmp == null) {
+                tmp = new Ingredient(anIngredientNameArray);
+                db.addIngredient(tmp);
+            }
+        }
+        db.close();
+    }
+
+    /**
+     * Get an ingredient from the databse
+     *
+     * @param name the name of the ingredient
+     * @return the ingredient found
+     */
+    public Ingredient getIngredient(String name) {
+        Ingredient ingredient = db.getIngredient(name);
+        db.close();
+        return ingredient;
+    }
+
+    /**
+     * Get an array of all the ingredients in the database
+     *
+     * @return the ingredients in the database
+     */
+    public Ingredient[] getIngredientArray() {
+        Ingredient[] ingredientArray = db.getIngredientArray();
+        db.close();
+        return ingredientArray;
+    }
+
+    /**
+     * Add a new ingredient to the database
+     *
+     * @param name the name of the ingredient to add
+     */
+    public void addIngredient(String name) {
+        db.addIngredient(new Ingredient(name));
+        db.close();
+    }
+
+    /**
+     * Get a category from the database
+     *
+     * @param name the name of the category to get
+     * @return the category found
+     */
+    public Category getCategory(String name) {
+        Category category = db.getCategory(name);
+        db.close();
+        return category;
+    }
+
+    /**
+     * Get an array of all the category names in the databse
+     *
+     * @return the category names
+     */
+    public String[] getCategoryNameArray() {
+        Category[] categoryArray = db.getCategoryArray();
+        db.close();
+
+        String[] categoryNameArray = new String[categoryArray.length];
+        for (int i = 0; i < categoryNameArray.length; i++) {
+            categoryNameArray[i] = categoryArray[i].getName();
+        }
+        return categoryNameArray;
+    }
+}
