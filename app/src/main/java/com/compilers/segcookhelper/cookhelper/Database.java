@@ -1,6 +1,5 @@
-package com.compilers.segcookhelper;
+package com.compilers.segcookhelper.cookhelper;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,7 +20,7 @@ import java.util.LinkedList;
 
 public class Database extends SQLiteOpenHelper {
 
-    private static Database instance;
+    private static Database instance;//TODO memory leak
     private final Context context;
     private LinkedList<Recipe> linkedRecipe;
     private LinkedList<Ingredient> linkedIngredient;

@@ -8,31 +8,31 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.compilers.segcookhelper.RecipeViewActivity">
+    tools:context="com.compilers.segcookhelper.activities.RecipeViewActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="RecipeName"
+                    android:id="@+id/RecipeName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/RecipeName"
                     android:layout_weight="1"
-                    android:textStyle="normal|bold"
+                    android:text="RecipeName"
+                    android:textAlignment="center"
                     android:textSize="50sp"
-                    android:textAlignment="center" />
+                    android:textStyle="normal|bold" />
 
             </LinearLayout>
 
@@ -41,16 +41,16 @@
                 android:layout_height="50sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Cooktime:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/cookTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Cooktime:"
                     android:textSize="20sp"
                     android:textStyle="normal|bold" />
 
@@ -61,16 +61,16 @@
                 android:layout_height="20sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Category:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Category:"
                     android:textSize="20sp"
                     android:textStyle="normal|bold" />
             </LinearLayout>
@@ -80,18 +80,18 @@
                 android:layout_height="20sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Ingredients:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/ingredient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textStyle="normal|bold"
-                    android:textSize="20sp" />
+                    android:text="Ingredients:"
+                    android:textSize="20sp"
+                    android:textStyle="normal|bold" />
             </LinearLayout>
 
             <Space
@@ -99,18 +99,18 @@
                 android:layout_height="20sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Description:"
+                    android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/description"
                     android:layout_weight="1"
-                    android:textStyle="normal|bold"
-                    android:textSize="20sp" />
+                    android:text="Description:"
+                    android:textSize="20sp"
+                    android:textStyle="normal|bold" />
             </LinearLayout>
 
             <Space
@@ -118,25 +118,25 @@
                 android:layout_height="20sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <Button
-                    android:text="EditRecipe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/editRecipe"
-                    android:layout_weight="1"
-                    android:onClick="onClickEditRecipe" />
-
-                <Button
-                    android:text="DeleteRecipe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/deleteRecipe"
                     android:layout_weight="1"
-                    android:onClick="onClickDeleteRecipe" />
+                    android:onClick="onClickEditRecipe"
+                    android:text="EditRecipe" />
+
+                <Button
+                    android:id="@+id/deleteRecipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClickDeleteRecipe"
+                    android:text="DeleteRecipe" />
             </LinearLayout>
 
         </LinearLayout>

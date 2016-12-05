@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper;
+package com.compilers.segcookhelper.activities;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,7 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import com.compilers.segcookhelper.R;
+import com.compilers.segcookhelper.cookhelper.Recipe;
 
 /**
  * Created by Weierstrass on 2016-11-23.
@@ -36,14 +37,12 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         imageView.setImageResource(getImgID(recettes[position]));
         recipeName.setText(recipe.getName());
 
-
         return rowView;
     }
 
     private int getImgID(Recipe r) {
         Resources assets = context.getResources();
-        int id = assets.getIdentifier(r.getImg(), "drawable", context.getPackageName());
-        return id;
+        return assets.getIdentifier(r.getImg(), "drawable", context.getPackageName());
     }
 }
 

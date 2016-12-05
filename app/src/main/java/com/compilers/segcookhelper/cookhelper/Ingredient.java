@@ -1,6 +1,4 @@
-package com.compilers.segcookhelper;
-
-import java.util.LinkedList;
+package com.compilers.segcookhelper.cookhelper;
 
 /**
  * Created by Jolain Poirier on 11/16/2016.

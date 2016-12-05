@@ -8,12 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.compilers.segcookhelper.HelpActivity">
+    tools:context="com.compilers.segcookhelper.activities.HelpActivity">
 
     <TextView
+        android:id="@+id/HelpText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/HelpText"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipuscing elit. Duis dignissim in enim ut finibus. Nam eros turpis, pharetra at mauris et, varius interdum nisl. Nulla ultricies metus eu lectus ullamcorper placerat. Suspendisse." />
+        android:text="Lorem ipsum dolor sit amet, consectetur adipuscing elit. Duis dignissim in enim ut finibus. Nam eros turpis, pharetra at mauris et, varius interdum nisl. Nulla ultricies metus eu lectus ullamcorper placerat. Suspendisse."
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 </RelativeLayout>

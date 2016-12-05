@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add_recipe"
     android:layout_width="match_parent"
@@ -9,53 +8,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.compilers.segcookhelper.AddRecipeActivity">
+    tools:context="com.compilers.segcookhelper.activities.AddRecipeActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Create Recipe!"
+                    android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView9"
                     android:layout_weight="1"
-                    android:textStyle="normal|bold|italic"
-                    android:textSize="40sp"
+                    android:text="Create Recipe!"
                     android:textAlignment="center"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="40sp"
+                    android:textStyle="normal|bold|italic" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:scaleType="fitCenter"
+                    android:id="@+id/imageRecipeAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:adjustViewBounds="true"
                     android:maxHeight="120dp"
                     android:maxWidth="120dp"
-                    android:adjustViewBounds="true"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageRecipeAdd"
-                    android:src="@drawable/ic_logo_00"
-                    android:onClick="onImageClick" />
+                    android:onClick="onImageClick"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_logo_00" />
             </LinearLayout>
 
             <Space
@@ -63,30 +62,30 @@
                 android:layout_height="15sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="RecipeName:"
+                    android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView8"
                     android:layout_weight="0.42"
+                    android:text="RecipeName:"
                     android:textSize="20sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
+                    android:id="@+id/nameAdd"
                     android:layout_width="163dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
+                    android:layout_weight="0.48"
                     android:ems="10"
-                    android:id="@+id/nameAdd"
-                    android:textSize="15sp"
-                    android:textAlignment="textStart"
-                    android:textStyle="normal|italic"
                     android:hint="Enter recipe name "
-                    android:layout_weight="0.48" />
+                    android:inputType="textPersonName"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp"
+                    android:textStyle="normal|italic" />
             </LinearLayout>
 
             <Space
@@ -94,57 +93,26 @@
                 android:layout_height="15sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="CookTime:"
+                    android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView10"
                     android:layout_weight="0.97"
+                    android:text="CookTime:"
                     android:textSize="20sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
+                    android:id="@+id/cooktimeAdd"
                     android:layout_width="186dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/cooktimeAdd"
-                    android:textSize="15sp"
-                    android:hint="Enter cookTime" />
-
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="15sp" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:text="Ingredients:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView12"
-                    android:layout_weight="6.79"
-                    android:textSize="20sp"
-                    android:textStyle="normal|bold" />
-
-                <EditText
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
+                    android:hint="Enter cookTime"
                     android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/ingredientsADD"
-                    android:textAlignment="textStart"
-                    android:layout_weight="0.91"
-                    android:hint="Enter ingredients list"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -154,22 +122,53 @@
                 android:layout_height="15sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Category:"
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6.79"
+                    android:text="Ingredients:"
+                    android:textSize="20sp"
+                    android:textStyle="normal|bold" />
+
+                <EditText
+                    android:id="@+id/ingredientsADD"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.91"
+                    android:ems="10"
+                    android:hint="Enter ingredients list"
+                    android:inputType="textPersonName"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView13"
                     android:layout_width="147dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView13"
+                    android:text="Category:"
                     android:textSize="20sp"
                     android:textStyle="normal|bold" />
 
                 <Spinner
+                    android:id="@+id/categoryADD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/categoryADD"
                     android:spinnerMode="dialog" />
 
             </LinearLayout>
@@ -179,27 +178,27 @@
                 android:layout_height="15sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="Description:"
                     android:layout_width="147dp"
                     android:layout_height="wrap_content"
+                    android:text="Description:"
                     android:textSize="20sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
+                    android:id="@+id/descriptionAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:ems="10"
                     android:layout_weight="24062.80"
-                    android:textAlignment="textStart"
-                    android:textSize="15sp"
+                    android:ems="10"
                     android:hint="Enter description "
-                    android:id="@+id/descriptionAdd" />
+                    android:inputType="textPersonName"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -208,27 +207,27 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <Button
-                    android:text="Help"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/HelpAdd"
-                    android:layout_weight="1"
-                    android:textStyle="normal|bold"
-                    android:onClick="onClickHelp" />
-
-                <Button
-                    android:text="Create"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/createAdd"
                     android:layout_weight="1"
-                    android:textStyle="normal|bold"
-                    android:onClick="onClickCreate" />
+                    android:onClick="onClickHelp"
+                    android:text="Help"
+                    android:textStyle="normal|bold" />
+
+                <Button
+                    android:id="@+id/createAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClickCreate"
+                    android:text="Create"
+                    android:textStyle="normal|bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
