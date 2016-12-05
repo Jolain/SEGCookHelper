@@ -76,7 +76,7 @@ public class CookHelper {
      * @param recipe the recipe to remove
      */
     public void removeRecipe(Recipe recipe) {
-        db.removeRecipe(recipe);
+        db.deleteRecipe(recipe);
         db.close();
     }
 

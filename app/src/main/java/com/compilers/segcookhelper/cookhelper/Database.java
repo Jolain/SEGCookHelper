@@ -312,18 +312,6 @@ class Database extends SQLiteOpenHelper {
         return linkedRecipe.toArray(new Recipe[linkedRecipe.size()]);
     }
 
-    void removeRecipe(Recipe recipe) {
-        linkedRecipe.remove(recipe);
-        System.out.println("Database: removed recipe " + recipe.getName());
-    }
-
-    public void addCategory(Category category){
-        if(!linkedCategory.contains(category)) {
-            linkedCategory.add(category);
-            System.out.println("Database: added category " + category.getName());
-        }
-    }
-
     Category[] getCategoryArray() {
         return linkedCategory.toArray(new Category[linkedCategory.size()]);
     }
