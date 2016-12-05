@@ -4,7 +4,7 @@ package com.compilers.segcookhelper.cookhelper;
  * Created by Jolain Poirier on 11/16/2016.
  */
 
-public class Ingredient {
+class Ingredient {
     // **** Instance variable
 
     private final String name;
@@ -15,7 +15,7 @@ public class Ingredient {
      * Constructs an ingredient
      * @param name the name of the ingredient
      */
-    public Ingredient(String name){
+    Ingredient(String name) {
         this.name = name;
     }
 
@@ -30,7 +30,7 @@ public class Ingredient {
      * Get the name of the ingredient
      * @return the name of the ingredient
      */
-    public String getName(){
+    String getName() {
         return name;
     }
 

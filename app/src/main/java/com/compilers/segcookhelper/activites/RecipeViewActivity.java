@@ -100,7 +100,7 @@ public class RecipeViewActivity extends Activity {
             recipeNameField.setText(message);
 
             tempRecipe = app.getRecipe(message);
-            category.setText("Category: " + tempRecipe.getCategory().getName());
+            category.setText("Category: " + tempRecipe.getCategoryName());
             ingredient.setText("Ingredient: " + tempRecipe.ingredientListToString());
             cookTime.setText("CookTime: " + tempRecipe.getCookTime());
             description.setText("Description: " + tempRecipe.getDescription());

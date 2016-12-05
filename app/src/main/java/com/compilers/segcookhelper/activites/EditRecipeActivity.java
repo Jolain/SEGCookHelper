@@ -73,7 +73,7 @@ public class EditRecipeActivity extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
 
         dropdown.setAdapter(adapter);
-        dropdown.setSelection(getIndex(dropdown, originalRecipe.getCategory().getName()));
+        dropdown.setSelection(getIndex(dropdown, originalRecipe.getCategoryName()));
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
