@@ -190,7 +190,7 @@ class Database extends SQLiteOpenHelper {
             ContentValues entry = new ContentValues();
 
             // Convert ingredients into a string
-            String[] ingredientNames = recipe.ingredientListToString().split(", ");
+            String[] ingredientNames = recipe.getIngredientsString().split(", ");
             String convertedString = arrayToString(ingredientNames);
 
             // Insert values in the entry
@@ -215,7 +215,7 @@ class Database extends SQLiteOpenHelper {
     void editRecipe(Recipe oldRecipe, Recipe editedRecipe) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues entry = new ContentValues();
-        String[] ingredientNames = editedRecipe.ingredientListToString().split(", ");
+        String[] ingredientNames = editedRecipe.getIngredientsString().split(", ");
         String convertedString = arrayToString(ingredientNames);
 
         entry.put(DatabaseContract.R_table.COL_NAME, editedRecipe.getName());
