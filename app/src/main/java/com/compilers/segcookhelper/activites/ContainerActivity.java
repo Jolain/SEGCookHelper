@@ -30,25 +30,22 @@ public class ContainerActivity extends Activity {
 
         app = CookHelper.getInstance(getApplicationContext());
         Recipe[] results = app.getSortedRecipes();
+        if (results == null || results.length == 0) {
 
-        for (Recipe result : results) {
-            if (result == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Sorry, no results were found");
+            builder.setCancelable(false);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Sorry, no results were found");
-                builder.setCancelable(false);
-
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // TODO:delete the recipe from the database and return to research screen;
-                        Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // TODO:delete the recipe from the database and return to research screen;
+                    Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
 
         RecipeAdapter ad = new RecipeAdapter(this, results);
