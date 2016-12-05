@@ -14,16 +14,12 @@ public class Recipe {
     private final int MAX_DESCRIPTION_LIMIT = 500;
     private final int MIN_DESCRIPTION_LIMIT = 1;
     int recipePertinence;
-    /*
-    Instance variables
-     */
     private String name;
     private String description;
     private String img; // Maybe not Image type
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<>();
     private Category category;
     private String cookTime;
-    private Database db;
 
     /**
      * Constructs a Recipe
@@ -156,17 +152,10 @@ public class Recipe {
      * @param ingredient the ingredient to add
      */
     public void addIngredient(Ingredient ingredient) {
-        //TODO check database for existing ingredients (test inplementation)
-
         if (!linkedIngredient.contains(ingredient)) {
-            if(!db.containsIngredient(ingredient)) {
                 linkedIngredient.add(ingredient);
-                db.addIngredient(ingredient);
-            } else{
-                linkedIngredient.add(db.getIngredient(ingredient.getName()));
-            }
         } else {
-            System.out.println("Ingredient " + ingredient.toString() +
+            System.out.println("Ingredient " + ingredient.getName() +
                     " is already associated with recipe " + getName());
         }
     }
@@ -188,13 +177,7 @@ public class Recipe {
      * @param ingredient the ingredient to remove
      */
     public void removeIngredient(Ingredient ingredient) {
-        //TODO database.removeRecipe(this) (test implementation)
-
-        if (linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
-            if (linkedIngredient.size() < 1 && linkedIngredient.size() < 1) {
-                db.removeRecipe(this);
-            }
-        } else {
+        if (!linkedIngredient.remove(ingredient)) { // If the remove operation succeeded, check list size
             System.out.println("Failed to remove " + ingredient.getName() + " from " + getName());
         }
     }
