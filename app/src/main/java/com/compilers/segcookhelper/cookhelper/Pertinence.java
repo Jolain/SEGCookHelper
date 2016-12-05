@@ -6,8 +6,8 @@ import java.util.Objects;
  * Created by martin on 2016-11-25.
  */
 
-public class Pertinence {
-    private static Pertinence pertinence = new Pertinence();
+class Pertinence {
+    private static Pertinence pertinence;
 
     private int categoriePertinence = 3;
     private int ingredientPertinence = 1;
@@ -23,34 +23,37 @@ public class Pertinence {
 
     // permet d'avoir acces a l'objet pertinence
     public static Pertinence getPertinence() {
+        if (pertinence == null) {
+            pertinence = new Pertinence();
+        }
         return pertinence;
     }
 
     // UpdateRecipe recoit une liste de recipe de la database apres qu'un search aille ete effectuer
     // C'est cette liste de recipe qui serais trier.
-    public void updateRecipe(Recipe[] recipes) {
+    void updateRecipe(Recipe[] recipes) {
         recipeArray = recipes;
     }
 
     // permet au different activity au travers de l'application d'avoir asser au recette trier
-    public Recipe[] getRecipeArray(){
+    Recipe[] getRecipeArray() {
         //TODO currently gets all recipes from database without sorting
         return recipeArray;
     }
 
     // send every recipe to have their pertinence calculated and updated
     // the recipes sended are the one found from the database
-    public void updatePertinence(Category category, Ingredient[] ingredients, String[] operateur) {
+    void updatePertinence(Category category, Ingredient[] ingredients, String[] operateur) {
         this.highestPertinence = 0;
         this.lowestPertinence = 100;
-        for (int x = 0; x < recipeArray.length; x++) {
+        for (Recipe aRecipeArray : recipeArray) {
             //System.out.println("recette with name: " + this.recipeArray[x].getName());
-            this.calculatePertinence(this.recipeArray[x], category, ingredients, operateur);
+            this.calculatePertinence(aRecipeArray, category, ingredients, operateur);
         }
     }
 
     // calculate the pertinence of the recipe with respect to the list of ingredients and the category
-    public void calculatePertinence(Recipe recipe, Category category, Ingredient[] ingredients, String[] operateur) {
+    void calculatePertinence(Recipe recipe, Category category, Ingredient[] ingredients, String[] operateur) {
         int p = 0;
         boolean[] ingredientsMatch;
         ingredientsMatch = new boolean[ingredients.length];
@@ -119,7 +122,7 @@ public class Pertinence {
 
     // this method sort the recipe since we already determined the highest and lowest pertinence it give us a
     // starting point
-    public void sortRecipe() {
+    void sortRecipe() {
         int position = 0;
         int pertinenceIndex = this.highestPertinence;
         Recipe placeholder;

@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.compilers.segcookhelper.R;
-import com.compilers.segcookhelper.cookhelper.Pertinence;
+import com.compilers.segcookhelper.cookhelper.CookHelper;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
 //TODO remove associations with Recipe and pertinence, go through CookHelper
@@ -31,11 +31,11 @@ public class ContainerActivity extends Activity {
         //TODO Retrieve objects created by the search query (not yet implemented)
         // nouvelle section pour tester le containter
 
-        Pertinence pertinence = Pertinence.getPertinence();
-        Recipe[] results = pertinence.getRecipeArray();
+        CookHelper app = CookHelper.getInstance(getApplicationContext());
+        Recipe[] results = app.getSortedRecipes();
 
-        for (int i = 0; i < results.length; i++) {
-            if (results[i] == null) {
+        for (Recipe result : results) {
+            if (result == null) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Sorry, no results were found");

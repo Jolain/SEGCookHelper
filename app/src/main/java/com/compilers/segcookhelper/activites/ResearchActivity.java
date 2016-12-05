@@ -17,7 +17,6 @@ import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.Category;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
 import com.compilers.segcookhelper.cookhelper.Ingredient;
-import com.compilers.segcookhelper.cookhelper.Pertinence;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
 import java.util.LinkedList;
@@ -80,17 +79,9 @@ public class ResearchActivity extends Activity {
                 Log.i("info", splitArray[i]);
             }
         }
-        Ingredient[] ingredients = new Ingredient[ingredientsString.length];
-        for (int i = 0; i < ingredientsString.length; i++) {
-            ingredients[i] = new Ingredient(ingredientsString[i]);
-        }
 
-        Recipe[] recipes = app.recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
-
-        Pertinence pertinence = Pertinence.getPertinence();
-        pertinence.updateRecipe(recipes);
-        pertinence.updatePertinence(app.getCategory(dropdown.getSelectedItem().toString()), ingredients, operators);
-        pertinence.sortRecipe();
+        app.sortPertinence(app.createIngredientArray(ingredientsString),
+                app.getCategory(dropdown.getSelectedItem().toString()), operators);
 
         //this.testSearch(ingredients,operators);
 
@@ -121,6 +112,7 @@ public class ResearchActivity extends Activity {
     }
 
     public void testSearch(Ingredient[] ingredients, String[] operators) {
+        //TODO remove test method
         Ingredient oignon = new Ingredient("oignon");
         Ingredient tomate = new Ingredient("tomate");
         Ingredient bacon = new Ingredient("bacon");
@@ -212,10 +204,11 @@ public class ResearchActivity extends Activity {
             operateur[3] = "not";
     `       */
 
-        Pertinence pertinence = Pertinence.getPertinence();
-        pertinence.updateRecipe(recipes);
-        pertinence.updatePertinence(quebecois, ingredients, operators);
-        pertinence.sortRecipe();
+        //Go through CookHelper
+//        Pertinence pertinence = Pertinence.getPertinence();
+//        pertinence.updateRecipe(recipes);
+//        pertinence.updatePertinence(quebecois, ingredients, operators);
+//        pertinence.sortRecipe();
             /*
             Recipe[] recette = pertinence.getRecipes();
             for(int i = 0; i<5; i++){

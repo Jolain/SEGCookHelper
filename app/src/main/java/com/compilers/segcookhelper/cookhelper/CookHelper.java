@@ -194,4 +194,45 @@ public class CookHelper {
         }
         return categoryNameArray;
     }
+
+    /**
+     * Creates an array of ingredients from an array of names
+     *
+     * @param ingredientNameArray the names of the ingredients
+     * @return an array of ingredients
+     */
+    public Ingredient[] createIngredientArray(String[] ingredientNameArray) {
+        Ingredient[] ingredients = new Ingredient[ingredientNameArray.length];
+        for (int i = 0; i < ingredientNameArray.length; i++) {
+            ingredients[i] = new Ingredient(ingredientNameArray[i]);
+        }
+
+        return ingredients;
+    }
+
+    /**
+     * Sorts the recipes based on the arguments
+     *
+     * @param ingredients the ingredients used in the sorting
+     * @param category    the categories used in the sorting
+     * @param operators   the operators used in the sorting
+     */
+    public void sortPertinence(Ingredient[] ingredients, Category category, String[] operators) {
+
+        Recipe[] recipes = recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
+        Pertinence pertinence = Pertinence.getPertinence();
+        pertinence.updateRecipe(recipes);
+        pertinence.updatePertinence(category, ingredients, operators);
+        pertinence.sortRecipe();
+    }
+
+    /**
+     * Returns an array of recipes which were sorted the last time sortPertinence was called
+     *
+     * @return the sorted recipes
+     */
+    public Recipe[] getSortedRecipes() {
+        Pertinence pertinence = Pertinence.getPertinence();
+        return pertinence.getRecipeArray();
+    }
 }
