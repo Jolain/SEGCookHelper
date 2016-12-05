@@ -18,7 +18,7 @@ import java.util.LinkedList;
  * Created by Jolain Poirier on 11/23/2016.
  */
 
-public class Database extends SQLiteOpenHelper {
+class Database extends SQLiteOpenHelper {
 
     private static Database instance;//TODO memory leak
     private final Context context;
@@ -54,7 +54,7 @@ public class Database extends SQLiteOpenHelper {
         //db.execSQL(DatabaseContract.R_table.CREATE_TABLE);
     }
 
-    public void onLoad() {
+    void onLoad() {
         // Checks to see if database file already exists.
         // If it isn't copy it from the asset folder.
         File test = new File(dbPath + DatabaseContract.DATABASE_NAME);
@@ -120,8 +120,8 @@ public class Database extends SQLiteOpenHelper {
 
                 // Construct an array of the linked ingredients
                 LinkedList<Ingredient> ingObj = new LinkedList<>();
-                for(int i = 0; i < ingredient.length; i++) {
-                    ingObj.add(getIngredient(ingredient[i]));
+                for (String anIngredient : ingredient) {
+                    ingObj.add(getIngredient(anIngredient));
                 }
                 linkedRecipe.add(new Recipe(name, time, category, ingObj, img, description));
             } while(recipeCursor.moveToNext());
@@ -144,7 +144,7 @@ public class Database extends SQLiteOpenHelper {
 
     //TODO replace methods with database implementation
 
-    public Recipe[] recipeQuery(Ingredient[] ingredients) {
+    Recipe[] recipeQuery(Ingredient[] ingredients) {
         String query;
         if(ingredients[0] == null) {
             return getRecipeArray(); // If query is null, return all recipe
@@ -176,7 +176,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public void addRecipe(Recipe recipe){
+    void addRecipe(Recipe recipe) {
         if(!linkedRecipe.contains(recipe)) {
             linkedRecipe.add(recipe);
             System.out.println("Database: added recipe " + recipe.getName());
@@ -208,7 +208,7 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void editRecipe(Recipe oldRecipe, Recipe editedRecipe) {
+    void editRecipe(Recipe oldRecipe, Recipe editedRecipe) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues entry = new ContentValues();
         String[] ingredientNames = editedRecipe.ingredientListToString().split(", ");
@@ -242,7 +242,7 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void addIngredient(Ingredient i) {
+    void addIngredient(Ingredient i) {
         if (!linkedIngredient.contains(i)) {
             linkedIngredient.add(i);
             System.out.println("Database: added ingredient " + i.getName());
@@ -269,7 +269,7 @@ public class Database extends SQLiteOpenHelper {
     //    return linkedRecipe.contains(recipe);
     //}
 
-    public Recipe getRecipe(String name){
+    Recipe getRecipe(String name) {
 
         Iterator<Recipe> i = linkedRecipe.iterator();
 
@@ -284,7 +284,7 @@ public class Database extends SQLiteOpenHelper {
                 " is not included in the database");
     }
 
-    public Category getCategory(String name){
+    Category getCategory(String name) {
 
         Iterator<Category> i = linkedCategory.iterator();
 
@@ -300,11 +300,11 @@ public class Database extends SQLiteOpenHelper {
         return null;
     }
 
-    public Recipe[] getRecipeArray(){
+    Recipe[] getRecipeArray() {
         return linkedRecipe.toArray(new Recipe[linkedRecipe.size()]);
     }
 
-    public void removeRecipe(Recipe recipe){
+    void removeRecipe(Recipe recipe) {
         linkedRecipe.remove(recipe);
         System.out.println("Database: removed recipe " + recipe.getName());
     }
@@ -316,16 +316,16 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public Category[] getCategoryArray(){
+    Category[] getCategoryArray() {
         return linkedCategory.toArray(new Category[linkedCategory.size()]);
     }
 
 
-    public boolean containsIngredient(Ingredient ingredient){
+    boolean containsIngredient(Ingredient ingredient) {
         return linkedIngredient.contains(ingredient);
     }
 
-    public Ingredient getIngredient(String name){
+    Ingredient getIngredient(String name) {
         Iterator<Ingredient> i = linkedIngredient.iterator();
 
         Ingredient node;
@@ -340,11 +340,11 @@ public class Database extends SQLiteOpenHelper {
         return null;
     }
 
-    public Ingredient[] getIngredientArray(){
+    Ingredient[] getIngredientArray() {
         return linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
     }
 
-    public void removeIngredient(Ingredient ingredient){
+    void removeIngredient(Ingredient ingredient) {
         linkedIngredient.remove(ingredient);
         System.out.println("Database: removed ingredient " + ingredient.getName());
     }
@@ -355,7 +355,7 @@ public class Database extends SQLiteOpenHelper {
     // under a single string, all separated by "__,__". This permits SQL to store
     // an array.
 
-    public String arrayToString(String[] array) {
+    String arrayToString(String[] array) {
         String outputString = "";
         for(int i = 0; i < array.length; i++) { // Append each element next to each other with __,__
             outputString = outputString + array[i];
@@ -367,7 +367,7 @@ public class Database extends SQLiteOpenHelper {
         return outputString;
     }
 
-    public String[] stringToArray(String s) {
+    String[] stringToArray(String s) {
         return s.split("__,__");
     }
 
