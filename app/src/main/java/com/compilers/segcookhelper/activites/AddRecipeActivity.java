@@ -78,6 +78,9 @@ public class AddRecipeActivity extends Activity {
                 descriptionField.getText().toString().matches("")) {
             ActivityUtil.openNeutralAlertDialog("Please fill up all the fields", this, true, "OK");
             // TODO:delete the recipe from the database and return to research screen;
+        } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {
+            ActivityUtil.openNeutralAlertDialog("Description must be within " + ActivityUtil.MAX_DESCRIPTION_LIMIT +
+                    " and " + ActivityUtil.MIN_DESCRIPTION_LIMIT, this, true, "OK");
         } else {
             String name = recipeNameField.getText().toString();
             String cookTime = cookTimeField.getText().toString();

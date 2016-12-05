@@ -6,13 +6,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * Created by Jolain Poirier on 11/16/2016.
+ * Recipe object with a name, a Description, an image, multiple Ingredients, a Category and a cookTime
  */
 
 public class Recipe {
 
-    public final int MAX_DESCRIPTION_LIMIT = 500;
-    public final int MIN_DESCRIPTION_LIMIT = 1;
     int recipePertinence;
     private String name;
     private String description;
@@ -88,11 +86,7 @@ public class Recipe {
      * @param description the description to set
      */
     public void setDescription(String description) {
-        if (description.length() <= MAX_DESCRIPTION_LIMIT && description.length() >= MIN_DESCRIPTION_LIMIT) {
-            this.description = description;
-        } else{
-            //TODO Do something if description is outside limits
-        }
+        this.description = description;
     }
 
     /**
