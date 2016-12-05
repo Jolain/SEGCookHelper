@@ -14,6 +14,8 @@ import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.Pertinence;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
+//TODO remove associations with Recipe and pertinence, go through CookHelper
+
 /**
  * Created by Weierstrass on 2016-11-23.
  */

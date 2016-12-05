@@ -22,6 +22,8 @@ import com.compilers.segcookhelper.cookhelper.Recipe;
 
 import java.util.LinkedList;
 
+//TODO remove associations, go through CookHelper
+
 public class ResearchActivity extends Activity {
     private CookHelper app;
 

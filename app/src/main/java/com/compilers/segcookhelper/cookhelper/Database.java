@@ -143,7 +143,6 @@ public class Database extends SQLiteOpenHelper {
     }
 
     //TODO replace methods with database implementation
-    //TEMPORARY METHODS AND ATTRIBUTES
 
     public Recipe[] recipeQuery(Ingredient[] ingredients) {
         String query;

@@ -14,6 +14,8 @@ import com.compilers.segcookhelper.cookhelper.CookHelper;
 import com.compilers.segcookhelper.cookhelper.Pertinence;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
+//TODO remove associations with Recipe and pertinence, go through CookHelper
+
 public class RecipeViewActivity extends Activity {
     CookHelper app;
 
@@ -50,10 +52,7 @@ public class RecipeViewActivity extends Activity {
         // is the recipe name
 
         //TODO set category, Ingredients, Description
-        //TODO attributes need names in front eg: [Ingredients: Onions Tomato etc...]
 
-        //Database db = Database.getInstance(getApplicationContext());
-        //recipeView = db.getRecipe(message);
         for (int i = 0; i < results.length; i++) {
             if (results[i].getName().equals(message)) {
                 recipeView = results[i];

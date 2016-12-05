@@ -26,6 +26,8 @@ import com.compilers.segcookhelper.cookhelper.Recipe;
 import java.io.File;
 import java.util.Date;
 
+//TODO remove associations with Recipe, go through CookHelper
+
 public class EditRecipeActivity extends Activity {
 
     int RESULT_LOAD_IMAGE = 1;
@@ -83,7 +85,6 @@ public class EditRecipeActivity extends Activity {
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
             }
         });
     }

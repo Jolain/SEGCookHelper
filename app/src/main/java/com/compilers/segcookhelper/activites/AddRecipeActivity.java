@@ -71,7 +71,6 @@ public class AddRecipeActivity extends Activity {
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
             }
         });
     }
