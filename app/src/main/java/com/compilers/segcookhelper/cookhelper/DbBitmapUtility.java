@@ -5,9 +5,7 @@ import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
 
-/**
- * Created by Weierstrass on 2016-12-05.
- */
+
 
 public class DbBitmapUtility {
 
