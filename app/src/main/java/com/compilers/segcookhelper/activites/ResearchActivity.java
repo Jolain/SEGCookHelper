@@ -85,6 +85,6 @@ public class ResearchActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openDialog("To research a recipe blablabla...", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("To research a recipe blablabla...", this, true, "OK");
     }
 }

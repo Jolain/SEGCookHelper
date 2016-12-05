@@ -10,12 +10,12 @@ import android.content.DialogInterface;
 
 class ActivityUtil {
 
-    static void openDialog(String msg, Activity activity, Boolean cancelable, String... buttonsText) {
+    static void openNeutralAlertDialog(String msg, Activity activity, Boolean cancelable, String buttonText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage(msg);
         builder.setCancelable(cancelable);
 
-        builder.setNeutralButton(buttonsText[0], new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(buttonText, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
