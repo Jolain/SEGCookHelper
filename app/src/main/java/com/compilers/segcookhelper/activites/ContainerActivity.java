@@ -9,10 +9,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import com.compilers.segcookhelper.cookhelper.*;
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
 import com.compilers.segcookhelper.cookhelper.Recipe;
+
 
 //TODO remove associations with Recipe and pertinence, go through CookHelper
 
