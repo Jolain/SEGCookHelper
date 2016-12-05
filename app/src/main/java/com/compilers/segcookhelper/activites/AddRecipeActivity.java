@@ -27,21 +27,18 @@ import java.util.Date;
 
 public class AddRecipeActivity extends Activity {
 
+    private final int RESULT_LOAD_IMAGE = 1;
+    private final int CAPTURE_IMAGE = 2;
     private CookHelper app;
-
     private EditText recipeNameField;
     private EditText cookTimeField;
     private EditText ingredientField;
     private EditText descriptionField;
-
     private String imgPath;
     private Spinner dropdown;
     private ImageView image;
     private Button create;
     private Button help;
-
-    private int RESULT_LOAD_IMAGE = 1;
-    private int CAPTURE_IMAGE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

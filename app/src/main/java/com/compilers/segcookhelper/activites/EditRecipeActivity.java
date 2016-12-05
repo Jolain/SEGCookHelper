@@ -30,8 +30,8 @@ import java.util.Date;
 
 public class EditRecipeActivity extends Activity {
 
-    int RESULT_LOAD_IMAGE = 1;
-    int CAPTURE_IMAGE = 2;
+    final int RESULT_LOAD_IMAGE = 1;
+    final int CAPTURE_IMAGE = 2;
     private CookHelper app;
     private EditText cookTimeField;
     private EditText ingredientField;
@@ -72,7 +72,7 @@ public class EditRecipeActivity extends Activity {
         ingredientField.setText(ingredientInString);
         image.setImageResource(getResources().getIdentifier(originalRecipe.getImg(), "drawable", getPackageName()));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
 
         dropdown.setAdapter(adapter);
         dropdown.setSelection(getIndex(dropdown, originalRecipe.getCategory().getName()));

@@ -9,10 +9,10 @@ import java.util.Objects;
 class Pertinence {
     private static Pertinence pertinence;
 
-    private int categoriePertinence = 3;
-    private int ingredientPertinence = 1;
-    private int andPertinence = 1;
-    private int notPertinence = 3;
+    private final int categoryPertinence = 3;
+    private final int ingredientPertinence = 1;
+    private final int andPertinence = 1;
+    private final int notPertinence = 3;
     private int highestPertinence = -100; // will facilitate the sorting
     private int lowestPertinence = 100; // will facilitate the sorting
     private Recipe[] recipeArray;
@@ -22,7 +22,7 @@ class Pertinence {
     }
 
     // permet d'avoir acces a l'objet pertinence
-    public static Pertinence getPertinence() {
+    static Pertinence getPertinence() {
         if (pertinence == null) {
             pertinence = new Pertinence();
         }
@@ -53,13 +53,13 @@ class Pertinence {
     }
 
     // calculate the pertinence of the recipe with respect to the list of ingredients and the category
-    void calculatePertinence(Recipe recipe, Category category, Ingredient[] ingredients, String[] operateur) {
+    private void calculatePertinence(Recipe recipe, Category category, Ingredient[] ingredients, String[] operateur) {
         int p = 0;
         boolean[] ingredientsMatch;
         ingredientsMatch = new boolean[ingredients.length];
         // if the same category add the equivalent pertinence
         if ((recipe.getCategory().getName()).equals(category.getName())) {
-            p = p + this.categoriePertinence;
+            p = p + this.categoryPertinence;
         }
 
         // verifying which ingredient is present

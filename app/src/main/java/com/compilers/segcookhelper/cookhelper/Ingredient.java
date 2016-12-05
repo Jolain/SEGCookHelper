@@ -7,7 +7,7 @@ package com.compilers.segcookhelper.cookhelper;
 public class Ingredient {
     // **** Instance variable
 
-    private String name;
+    private final String name;
 
     // **** Constructor
 

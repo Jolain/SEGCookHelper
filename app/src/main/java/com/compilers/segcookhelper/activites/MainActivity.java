@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
         help = (Button) findViewById(R.id.help);
         add = (Button) findViewById(R.id.add);
 
-        CookHelper app = CookHelper.getInstance(getApplicationContext());
+        CookHelper.getInstance(getApplicationContext());
     }
 
     public void onClickSearch(View view) {

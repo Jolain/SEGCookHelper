@@ -11,7 +11,7 @@ import java.util.LinkedList;
 public class CookHelper {
 
     private static CookHelper instance;
-    private Database db;
+    private final Database db;
 
     private CookHelper(Context context) {
         // Initialise database singleton

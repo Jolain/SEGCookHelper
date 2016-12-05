@@ -11,7 +11,9 @@ import java.util.LinkedList;
 
 public class Recipe {
 
-    public int recipePertinence;
+    private final int MAX_DESCRIPTION_LIMIT = 500;
+    private final int MIN_DESCRIPTION_LIMIT = 1;
+    int recipePertinence;
     /*
     Instance variables
      */
@@ -21,8 +23,6 @@ public class Recipe {
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<>();
     private Category category;
     private String cookTime;
-    private int MAX_DESCRIPTION_LIMIT = 500;
-    private int MIN_DESCRIPTION_LIMIT = 1;
     private Database db;
 
     /**
@@ -177,8 +177,8 @@ public class Recipe {
      * @param ingredientArray the array of ingredients to add
      */
     public void addIngredient(Ingredient[] ingredientArray) {
-        for (int i = 0; i < ingredientArray.length; i++) {
-            addIngredient(ingredientArray[i]);
+        for (Ingredient anIngredientArray : ingredientArray) {
+            addIngredient(anIngredientArray);
         }
     }
 

@@ -18,12 +18,12 @@ import com.compilers.segcookhelper.cookhelper.Recipe;
  * Created by Weierstrass on 2016-11-23.
  */
 
-public class RecipeAdapter extends ArrayAdapter<Recipe> {
+class RecipeAdapter extends ArrayAdapter<Recipe> {
 
     private final Context context;
     private final Recipe[] recettes;
 
-    public RecipeAdapter(Context context, Recipe[] recettes) {
+    RecipeAdapter(Context context, Recipe[] recettes) {
         super(context, R.layout.item_recipe, recettes);
         this.context = context;
         this.recettes = recettes;
