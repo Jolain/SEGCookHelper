@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper.activities;
+package com.compilers.segcookhelper.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,13 +14,14 @@ public class MainActivity extends Activity {
     public Button search;
     public Button add;
     public Button help;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        search = (Button)findViewById(R.id.search1);
-        help = (Button)findViewById(R.id.help);
-        add = (Button)findViewById(R.id.add);
+        search = (Button) findViewById(R.id.search1);
+        help = (Button) findViewById(R.id.help);
+        add = (Button) findViewById(R.id.add);
 
         //TODO initialise app
         CookHelper app = CookHelper.getInstance(getApplicationContext());

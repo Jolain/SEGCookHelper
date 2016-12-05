@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper.activities;
+package com.compilers.segcookhelper.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -47,16 +47,16 @@ public class AddRecipeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
-        recipeNameField = (EditText)findViewById(R.id.nameAdd);
-        cookTimeField = (EditText)findViewById(R.id.cooktimeAdd);
-        ingredientField = (EditText)findViewById(R.id.ingredientsADD);
+        recipeNameField = (EditText) findViewById(R.id.nameAdd);
+        cookTimeField = (EditText) findViewById(R.id.cooktimeAdd);
+        ingredientField = (EditText) findViewById(R.id.ingredientsADD);
 
-        descriptionField = (EditText)findViewById(R.id.descriptionAdd);
+        descriptionField = (EditText) findViewById(R.id.descriptionAdd);
 
         image = (ImageView) findViewById(R.id.imageRecipeAdd);
-        create = (Button)findViewById(R.id.createAdd);
-        help = (Button)findViewById(R.id.HelpAdd);
-        dropdown = (Spinner)findViewById(R.id.categoryADD);
+        create = (Button) findViewById(R.id.createAdd);
+        help = (Button) findViewById(R.id.HelpAdd);
+        dropdown = (Spinner) findViewById(R.id.categoryADD);
 
         app = CookHelper.getInstance(getApplicationContext());
         String[] categoryNameArray = app.getCategoryNameArray();
@@ -69,16 +69,17 @@ public class AddRecipeActivity extends Activity {
                                        int position, long id) {
                 Log.v("item", (String) parent.getItemAtPosition(position));
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
             }
         });
     }
 
-    public void onClickCreate(View view){
-        if(dropdown.getSelectedItem().toString().matches("")|| recipeNameField.getText().toString().matches("")||
-                cookTimeField.getText().toString().matches("")|| ingredientField.getText().toString().matches("")||
-                descriptionField.getText().toString().matches("")){
+    public void onClickCreate(View view) {
+        if (dropdown.getSelectedItem().toString().matches("") || recipeNameField.getText().toString().matches("") ||
+                cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
+                descriptionField.getText().toString().matches("")) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Please fill up all the fields");
@@ -109,7 +110,7 @@ public class AddRecipeActivity extends Activity {
         }
     }
 
-    public void onClickHelp(View view){
+    public void onClickHelp(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("To add a recipe blablabla...");
         builder.setCancelable(true);
@@ -124,7 +125,7 @@ public class AddRecipeActivity extends Activity {
         alert.show();
     }
 
-    public void onImageClick(View view){
+    public void onImageClick(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Select where you want to take your picture");
@@ -132,8 +133,8 @@ public class AddRecipeActivity extends Activity {
 
         builder.setNeutralButton("Application", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Intent intent = new Intent(getApplicationContext(),DataBaseImages.class);
-                startActivityForResult(intent,0);
+                Intent intent = new Intent(getApplicationContext(), DataBaseImages.class);
+                startActivityForResult(intent, 0);
                 dialog.dismiss();
             }
         });
@@ -145,7 +146,7 @@ public class AddRecipeActivity extends Activity {
                 imgPath = file.getAbsolutePath();
                 final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
-                startActivityForResult(intent,CAPTURE_IMAGE);
+                startActivityForResult(intent, CAPTURE_IMAGE);
                 dialog.dismiss();
             }
         });
@@ -153,8 +154,8 @@ public class AddRecipeActivity extends Activity {
         builder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,RESULT_LOAD_IMAGE);
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, RESULT_LOAD_IMAGE);
                 dialog.dismiss();
             }
         });
@@ -164,16 +165,16 @@ public class AddRecipeActivity extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == CAPTURE_IMAGE) {
                 image.setImageBitmap(BitmapFactory.decodeFile(imgPath));
             }
             super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
                 Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String picturePath = cursor.getString(columnIndex);

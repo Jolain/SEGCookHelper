@@ -12,25 +12,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HelpActivity" />
-        <activity android:name=".activities.ResearchActivity" />
-        <activity android:name=".activities.RecipeViewActivity" />
+        <activity android:name=".activity.HelpActivity" />
+        <activity android:name=".activity.ResearchActivity" />
+        <activity android:name=".activity.RecipeViewActivity" />
         <activity
-            android:name=".activities.EditRecipeActivity"
+            android:name=".activity.EditRecipeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.AddRecipeActivity"
+            android:name=".activity.AddRecipeActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".activities.ContainerActivity" />
-        <activity android:name=".activities.DataBaseImages" />
+        <activity android:name=".activity.ContainerActivity" />
+        <activity android:name=".activity.DataBaseImages" />
 
     </application>
 

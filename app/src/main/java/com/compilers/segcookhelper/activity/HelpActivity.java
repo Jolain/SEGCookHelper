@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper.activities;
+package com.compilers.segcookhelper.activity;
 
 import android.app.Activity;
 import android.os.Bundle;

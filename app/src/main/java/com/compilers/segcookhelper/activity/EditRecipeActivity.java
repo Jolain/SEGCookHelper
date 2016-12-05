@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper.activities;
+package com.compilers.segcookhelper.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.compilers.segcookhelper.R;
-import com.compilers.segcookhelper.cookhelper.Category;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
@@ -48,13 +47,13 @@ public class EditRecipeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
         // Containers
-        cookTimeField = (EditText)findViewById(R.id.cooktimeEdit);
-        ingredientField = (EditText)findViewById(R.id.ingredientsEdit);
-        descriptionField = (EditText)findViewById(R.id.descriptionEdit);
+        cookTimeField = (EditText) findViewById(R.id.cooktimeEdit);
+        ingredientField = (EditText) findViewById(R.id.ingredientsEdit);
+        descriptionField = (EditText) findViewById(R.id.descriptionEdit);
         image = (ImageView) findViewById(R.id.imageRecipe);
-        save = (Button)findViewById(R.id.SaveEdit);
-        help = (Button)findViewById(R.id.HelpEdit);
-        dropdown = (Spinner)findViewById(R.id.categoryEdit);
+        save = (Button) findViewById(R.id.SaveEdit);
+        help = (Button) findViewById(R.id.HelpEdit);
+        dropdown = (Spinner) findViewById(R.id.categoryEdit);
 
         Bundle bundle = getIntent().getExtras();
         message = bundle.getString("RecipeName");
@@ -74,7 +73,7 @@ public class EditRecipeActivity extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
 
         dropdown.setAdapter(adapter);
-        dropdown.setSelection(getIndex(dropdown,originalRecipe.getCategory().getName()));
+        dropdown.setSelection(getIndex(dropdown, originalRecipe.getCategory().getName()));
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,18 +81,18 @@ public class EditRecipeActivity extends Activity {
                                        int position, long id) {
                 Log.v("item", (String) parent.getItemAtPosition(position));
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
             }
         });
     }
 
-    private int getIndex(Spinner spinner, String myString)
-    {
+    private int getIndex(Spinner spinner, String myString) {
         int index = 0;
 
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)) {
                 index = i;
                 break;
             }
@@ -102,9 +101,9 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onClickSave(View view) {
-        if(dropdown.getSelectedItem().toString().matches("")||message.matches("")||
-                cookTimeField.getText().toString().matches("")|| ingredientField.getText().toString().matches("")||
-                descriptionField.getText().toString().matches("")){
+        if (dropdown.getSelectedItem().toString().matches("") || message.matches("") ||
+                cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
+                descriptionField.getText().toString().matches("")) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Please fill up all the fields if you want your recipe to be save");
@@ -120,7 +119,7 @@ public class EditRecipeActivity extends Activity {
             AlertDialog alert = builder.create();
             alert.show();
 
-        } else{
+        } else {
 
             String name = originalRecipe.getName();
 
@@ -141,7 +140,7 @@ public class EditRecipeActivity extends Activity {
         }
     }
 
-    public void onClickHelp(View view){
+    public void onClickHelp(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(" To edit a recipe blablabla...");
         builder.setCancelable(true);
@@ -156,15 +155,15 @@ public class EditRecipeActivity extends Activity {
         alert.show();
     }
 
-    public void onImageClick(View view){
+    public void onImageClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Select where you want to take your picture");
         builder.setCancelable(true);
 
         builder.setNeutralButton("Application", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Intent intent = new Intent(getApplicationContext(),DataBaseImages.class);
-                startActivityForResult(intent,0);
+                Intent intent = new Intent(getApplicationContext(), DataBaseImages.class);
+                startActivityForResult(intent, 0);
                 dialog.dismiss();
             }
         });
@@ -176,7 +175,7 @@ public class EditRecipeActivity extends Activity {
                 imgPath = file.getAbsolutePath();
                 final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
-                startActivityForResult(intent,CAPTURE_IMAGE);
+                startActivityForResult(intent, CAPTURE_IMAGE);
                 dialog.dismiss();
             }
         });
@@ -184,8 +183,8 @@ public class EditRecipeActivity extends Activity {
         builder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,RESULT_LOAD_IMAGE);
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, RESULT_LOAD_IMAGE);
                 dialog.dismiss();
             }
         });
@@ -195,16 +194,16 @@ public class EditRecipeActivity extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == CAPTURE_IMAGE) {
                 image.setImageBitmap(BitmapFactory.decodeFile(imgPath));
             }
             super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
                 Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String picturePath = cursor.getString(columnIndex);

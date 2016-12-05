@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper.activities;
+package com.compilers.segcookhelper.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,8 +32,8 @@ public class ContainerActivity extends Activity {
         Pertinence pertinence = Pertinence.getPertinence();
         Recipe[] results = pertinence.getRecipeArray();
 
-        for(int i = 0;i<results.length;i++) {
-            if(results[i] == null) {
+        for (int i = 0; i < results.length; i++) {
+            if (results[i] == null) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Sorry, no results were found");
@@ -62,13 +62,14 @@ public class ContainerActivity extends Activity {
                 String text = textView.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), RecipeViewActivity.class); //Application Context and Activity
                 // Need some way to give recipe to the intent
-                intent.putExtra("RecipeName",text);
-                startActivityForResult(intent,0);
+                intent.putExtra("RecipeName", text);
+                startActivityForResult(intent, 0);
             }
-        });}
+        });
+    }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(resultCode == RESULT_OK) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
             finish();
         }
     }

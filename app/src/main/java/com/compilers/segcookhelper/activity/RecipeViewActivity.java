@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper.activities;
+package com.compilers.segcookhelper.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,16 +30,15 @@ public class RecipeViewActivity extends Activity {
     private Recipe recipeView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_view);
-        recipeNameField = (TextView)findViewById(R.id.RecipeName);
+        recipeNameField = (TextView) findViewById(R.id.RecipeName);
         category = (TextView) findViewById(R.id.category);
-        ingredient = (TextView)findViewById(R.id.ingredient);
+        ingredient = (TextView) findViewById(R.id.ingredient);
         cookTime = (TextView) findViewById(R.id.cookTime);
-        description = (TextView)findViewById(R.id.description);
+        description = (TextView) findViewById(R.id.description);
         Bundle bundle = getIntent().getExtras();
         String message = bundle.getString("RecipeName");
 
@@ -55,26 +54,26 @@ public class RecipeViewActivity extends Activity {
 
         //Database db = Database.getInstance(getApplicationContext());
         //recipeView = db.getRecipe(message);
-        for(int i=0;i<results.length;i++){
-            if(results[i].getName().equals(message)){
+        for (int i = 0; i < results.length; i++) {
+            if (results[i].getName().equals(message)) {
                 recipeView = results[i];
             }
         }
 
         recipeNameField.setText(message);
         category.setText("Category: " + recipeView.getCategoryName());
-        ingredient.setText("Ingredient: "+recipeView.ingredientListToString().toString());
+        ingredient.setText("Ingredient: " + recipeView.ingredientListToString().toString());
         cookTime.setText("CookTime: " + recipeView.getCookTime());
         description.setText("Description: " + recipeView.getDescription());
     }
 
-    public void onClickEditRecipe(View view){
+    public void onClickEditRecipe(View view) {
         Intent intent = new Intent(getApplicationContext(), EditRecipeActivity.class); //Application Context and Activity
         intent.putExtra("RecipeName", recipeNameField.getText().toString());
         startActivityForResult(intent, 0);
     }
 
-    public void onClickDeleteRecipe(View view){
+    public void onClickDeleteRecipe(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you really want to delete this recipe?");
@@ -85,7 +84,7 @@ public class RecipeViewActivity extends Activity {
                 // TODO:delete the recipe from the database and return to research screen;
                 app.removeRecipe(app.getRecipe(recipeNameField.getText().toString()));
                 Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
-                setResult(RESULT_OK,intent);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -100,8 +99,8 @@ public class RecipeViewActivity extends Activity {
         alert.show();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(resultCode == RESULT_OK){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             String message = bundle.getString("RecipeName");
 

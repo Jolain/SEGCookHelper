@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper.activities;
+package com.compilers.segcookhelper.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,11 +36,11 @@ public class ResearchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_research);
-        clear = (Button)findViewById(R.id.clearButton);
-        search = (Button)findViewById(R.id.searchButton);
-        edit = (EditText)findViewById(R.id.searchQuery);
-        help = (Button)findViewById(R.id.HelpResearch);
-        dropdown = (Spinner)findViewById(R.id.catSpinner);
+        clear = (Button) findViewById(R.id.clearButton);
+        search = (Button) findViewById(R.id.searchButton);
+        edit = (EditText) findViewById(R.id.searchQuery);
+        help = (Button) findViewById(R.id.HelpResearch);
+        dropdown = (Spinner) findViewById(R.id.catSpinner);
 
         app = CookHelper.getInstance(getApplicationContext());
 
@@ -55,6 +55,7 @@ public class ResearchActivity extends Activity {
                                        int position, long id) {
                 Log.v("item", (String) parent.getItemAtPosition(position));
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
@@ -65,30 +66,29 @@ public class ResearchActivity extends Activity {
         String query = edit.getText().toString();
 
         String[] splitArray = query.split("\\s+");
-        String[] ingredientsString = new String[(splitArray.length+1)/2];
-        String[] operators = new String[(splitArray.length-1)/2];
-        for(int i = 0;i<splitArray.length;i++){
+        String[] ingredientsString = new String[(splitArray.length + 1) / 2];
+        String[] operators = new String[(splitArray.length - 1) / 2];
+        for (int i = 0; i < splitArray.length; i++) {
 
-            if((i%2)==0){
-                ingredientsString[i/2] = splitArray[i];
-                Log.i("info",splitArray[i]);
-            }
-            else{
-                operators[(i-1)/2] = splitArray[i];
-                Log.i("info",splitArray[i]);
+            if ((i % 2) == 0) {
+                ingredientsString[i / 2] = splitArray[i];
+                Log.i("info", splitArray[i]);
+            } else {
+                operators[(i - 1) / 2] = splitArray[i];
+                Log.i("info", splitArray[i]);
             }
         }
         Ingredient[] ingredients = new Ingredient[ingredientsString.length];
-        for(int i = 0;i<ingredientsString.length;i++){
+        for (int i = 0; i < ingredientsString.length; i++) {
             ingredients[i] = new Ingredient(ingredientsString[i]);
         }
 
-         Recipe[] recipes = app.recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
+        Recipe[] recipes = app.recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
 
-          Pertinence pertinence = Pertinence.getPertinence();
-          pertinence.updateRecipe(recipes);
-          pertinence.updatePertinence(app.getCategory(dropdown.getSelectedItem().toString()), ingredients, operators);
-          pertinence.sortRecipe();
+        Pertinence pertinence = Pertinence.getPertinence();
+        pertinence.updateRecipe(recipes);
+        pertinence.updatePertinence(app.getCategory(dropdown.getSelectedItem().toString()), ingredients, operators);
+        pertinence.sortRecipe();
 
         //this.testSearch(ingredients,operators);
 
@@ -96,18 +96,16 @@ public class ResearchActivity extends Activity {
         startActivityForResult(intent, 0);
     }
 
-    public void onClickReset(View view){
+    public void onClickReset(View view) {
         edit.setText("");
         dropdown.setSelection(0);
     }
 
 
-
-    public void onClickHelp(View view){
+    public void onClickHelp(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("To research a recipe blablabla...");
         builder.setCancelable(true);
-
 
 
         builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -120,41 +118,41 @@ public class ResearchActivity extends Activity {
         alert.show();
     }
 
-    public void testSearch(Ingredient[] ingredients,String[] operators) {
-            Ingredient oignon = new Ingredient("oignon");
-            Ingredient tomate = new Ingredient("tomate");
-            Ingredient bacon = new Ingredient("bacon");
-            Ingredient poulet = new Ingredient("poulet");
-            Ingredient pomme = new Ingredient("pommme");
+    public void testSearch(Ingredient[] ingredients, String[] operators) {
+        Ingredient oignon = new Ingredient("oignon");
+        Ingredient tomate = new Ingredient("tomate");
+        Ingredient bacon = new Ingredient("bacon");
+        Ingredient poulet = new Ingredient("poulet");
+        Ingredient pomme = new Ingredient("pommme");
 
-            Category quebecois = new Category("quebecois");
-            Category chinois = new Category("chinois");
-            Category indien = new Category("indien");
+        Category quebecois = new Category("quebecois");
+        Category chinois = new Category("chinois");
+        Category indien = new Category("indien");
 
-            LinkedList<Ingredient> list1 = new LinkedList<>();
-            list1.add(oignon);
+        LinkedList<Ingredient> list1 = new LinkedList<>();
+        list1.add(oignon);
 
-            LinkedList<Ingredient> list2 = new LinkedList<>();
-            list2.add(oignon);
-            list2.add(tomate);
+        LinkedList<Ingredient> list2 = new LinkedList<>();
+        list2.add(oignon);
+        list2.add(tomate);
 
-            LinkedList<Ingredient> list3 = new LinkedList<>();
-            list3.add(oignon);
-            list3.add(tomate);
-            list3.add(bacon);
+        LinkedList<Ingredient> list3 = new LinkedList<>();
+        list3.add(oignon);
+        list3.add(tomate);
+        list3.add(bacon);
 
-            LinkedList<Ingredient> list4 = new LinkedList<>();
-            list4.add(oignon);
-            list4.add(tomate);
-            list4.add(bacon);
-            list4.add(poulet);
+        LinkedList<Ingredient> list4 = new LinkedList<>();
+        list4.add(oignon);
+        list4.add(tomate);
+        list4.add(bacon);
+        list4.add(poulet);
 
-            LinkedList<Ingredient> list5 = new LinkedList<>();
-            list5.add(oignon);
-            list5.add(tomate);
-            list5.add(bacon);
-            list5.add(poulet);
-            list5.add(pomme);
+        LinkedList<Ingredient> list5 = new LinkedList<>();
+        list5.add(oignon);
+        list5.add(tomate);
+        list5.add(bacon);
+        list5.add(poulet);
+        list5.add(pomme);
 
         String R1_description = "1.\tIn a 2 gallon container, mix together the brown sugar, curing mixture, and water. Submerge the pork belly in the mixture so that it is covered completely. If the meat floats, you can weigh it down with a dinner plate or similar object. Refrigerate covered for six days.\n" +
                 "2.\tLight charcoal in an outdoor smoker. Soak wood chips in a bowl of water. When the temperature of the smoker is between 140 and 150 degrees coals are ready. Smoke the pork belly for 6 hours, throwing a handful of wood chips on the coals about once an hour. Store in the refrigerator. Slice and fry as you would with store-bought bacon.\n";
@@ -180,22 +178,22 @@ public class ResearchActivity extends Activity {
                 "2. Press the sandwich slightly and place it in the skillet. Cook until golden on the bottom, 3 to 5 minutes.\n" +
                 "3. Flip, adding more butter to the pan if needed, and cook until the other side is golden and the cheese melts, 3 to 5 more minutes.\n";
 
-        Recipe R1 = new Recipe("bacon breakfast","15min",quebecois,list1,"bacon_breakfast",R1_description);
+        Recipe R1 = new Recipe("bacon breakfast", "15min", quebecois, list1, "bacon_breakfast", R1_description);
 
-        Recipe R2 = new Recipe("cheese stick","15min",quebecois,list2,"macaroni",R2_description);
+        Recipe R2 = new Recipe("cheese stick", "15min", quebecois, list2, "macaroni", R2_description);
 
-        Recipe R3 = new Recipe("macaroni","15min",quebecois,list3,"macaroni",R3_description);
+        Recipe R3 = new Recipe("macaroni", "15min", quebecois, list3, "macaroni", R3_description);
 
-        Recipe R4 = new Recipe("spaghetti","15min",quebecois,list4,"ic_logo_00",R4_description);
+        Recipe R4 = new Recipe("spaghetti", "15min", quebecois, list4, "ic_logo_00", R4_description);
 
-        Recipe R5 = new Recipe("grilled cheese","15min",quebecois,list5,"macaroni",R5_description);
+        Recipe R5 = new Recipe("grilled cheese", "15min", quebecois, list5, "macaroni", R5_description);
 
-            Recipe[] recipes = new Recipe[5];
-            recipes[0] = R1;
-            recipes[1] = R2;
-            recipes[2] = R3;
-            recipes[3] = R4;
-            recipes[4] = R5;
+        Recipe[] recipes = new Recipe[5];
+        recipes[0] = R1;
+        recipes[1] = R2;
+        recipes[2] = R3;
+        recipes[3] = R4;
+        recipes[4] = R5;
 
             /*
             Ingredient[] ingredients = new Ingredient[5];
@@ -212,10 +210,10 @@ public class ResearchActivity extends Activity {
             operateur[3] = "not";
     `       */
 
-            Pertinence pertinence = Pertinence.getPertinence();
-            pertinence.updateRecipe(recipes);
-            pertinence.updatePertinence(quebecois, ingredients, operators);
-            pertinence.sortRecipe();
+        Pertinence pertinence = Pertinence.getPertinence();
+        pertinence.updateRecipe(recipes);
+        pertinence.updatePertinence(quebecois, ingredients, operators);
+        pertinence.sortRecipe();
             /*
             Recipe[] recette = pertinence.getRecipes();
             for(int i = 0; i<5; i++){
@@ -225,6 +223,6 @@ public class ResearchActivity extends Activity {
                 //System.out.println("pertinence: " +recette[i].recipePertinence);
             }
             */
-        }
+    }
 
 }
