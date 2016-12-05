@@ -102,22 +102,9 @@ public class EditRecipeActivity extends Activity {
     public void onClickSave(View view) {
         if (dropdown.getSelectedItem().toString().matches("") || message.matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
-                descriptionField.getText().toString().matches("")) {
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Please fill up all the fields if you want your recipe to be save");
-            builder.setCancelable(true);
-
-            builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // TODO:delete the recipe from the database and return to research screen;
-
-                    dialog.dismiss();
-                }
-            });
-            AlertDialog alert = builder.create();
-            alert.show();
-
+                descriptionField.getText().toString().matches("")) {//TODO keep description field between limits in Recipe
+            Util.openDialog("Please fill up all the fields", this, true);
+            // TODO:delete the recipe from the database and return to research screen;
         } else {
 
             String name = originalRecipe.getName();

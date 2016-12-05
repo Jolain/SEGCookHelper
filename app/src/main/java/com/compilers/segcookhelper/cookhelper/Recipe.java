@@ -11,8 +11,8 @@ import java.util.LinkedList;
 
 public class Recipe {
 
-    private final int MAX_DESCRIPTION_LIMIT = 500;
-    private final int MIN_DESCRIPTION_LIMIT = 1;
+    public final int MAX_DESCRIPTION_LIMIT = 500;
+    public final int MIN_DESCRIPTION_LIMIT = 1;
     int recipePertinence;
     private String name;
     private String description;
