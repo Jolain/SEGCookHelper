@@ -19,12 +19,12 @@ import java.util.List;
  */
 
 public class ContainerActivity extends Activity {
-
+    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_container);
-        ListView listView = (ListView) findViewById(R.id.list_recipe);
+        listView = (ListView) findViewById(R.id.list_recipe);
 
         //TODO Retrieve objects created by the search query (not yet implemented)
         // nouvelle section pour tester le containter
@@ -75,8 +75,38 @@ public class ContainerActivity extends Activity {
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        //this need to be tested
         if(resultCode == RESULT_OK) {
-            finish();
+            Pertinence pertinence = Pertinence.getPertinence();
+            Recipe[] results = pertinence.getRecipeArray();
+            String recipeDelete = data.getStringExtra("RecipeName");
+            Recipe[] newResults = new Recipe[results.length-1];
+            for(int i=0;i<results.length;i++){
+                if(!results[i].getName().equals(recipeDelete)){
+                    newResults[i] = results[i];
+                }else {
+                    newResults[i] = results[i + 1];
+                }
+            }
+
+            RecipeAdapter ad = new RecipeAdapter(this, newResults);
+            listView.setAdapter(ad);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    TextView textView = (TextView) view.findViewById(R.id.RecipeName);
+                    String text = textView.getText().toString();
+                    Intent intent = new Intent(getApplicationContext(), RecipeViewActivity.class); //Application Context and Activity
+
+                    intent.putExtra("RecipeName",text);
+                    startActivityForResult(intent,0);
+
+                }
+            });}
+
+
+
         }
     }
 
@@ -84,4 +114,4 @@ public class ContainerActivity extends Activity {
 
 
 
-}
+

@@ -82,7 +82,8 @@ public class RecipeViewActivity extends Activity {
                 // TODO:delete the recipe from the database and return to research screen;
                 Database db = Database.getInstance(getApplicationContext());
                 db.deleteRecipe(db.getRecipe(recipename.getText().toString()));
-                Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
+                Intent intent = new Intent(); //Application Context and Activity
+                intent.putExtra("RecipeName",recipename.getText().toString());
                 setResult(RESULT_OK,intent);
                 finish();
             }
