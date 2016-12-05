@@ -8,7 +8,7 @@ import android.content.DialogInterface;
  * Created by Mathieu on 05/12/2016.
  */
 
-public class Util {
+public class ActivityUtil {
 
     public static void openDialog(String msg, Activity activity, Boolean cancelable) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

@@ -76,7 +76,7 @@ public class AddRecipeActivity extends Activity {
         if (dropdown.getSelectedItem().toString().matches("") || recipeNameField.getText().toString().matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
                 descriptionField.getText().toString().matches("")) {
-            Util.openDialog("Please fill up all the fields", this, true);
+            ActivityUtil.openDialog("Please fill up all the fields", this, true);
             // TODO:delete the recipe from the database and return to research screen;
         } else {
             String name = recipeNameField.getText().toString();
