@@ -1,4 +1,5 @@
-package com.compilers.segcookhelper;
+package com.compilers.segcookhelper.cookhelper;
+
 import java.util.Objects;
 
 /**

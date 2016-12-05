@@ -8,26 +8,26 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.compilers.segcookhelper.ContainerActivity">
+    tools:context="com.compilers.segcookhelper.activites.ContainerActivity">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:orientation="vertical">
 
         <TextView
-            android:text="Search Results"
+            android:id="@+id/searchResults"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchResults"
-            android:textSize="24sp"
-            android:paddingBottom="15dp" />
+            android:paddingBottom="15dp"
+            android:text="Search Results"
+            android:textSize="24sp" />
 
         <ListView
+            android:id="@+id/list_recipe"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/list_recipe" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 </RelativeLayout>

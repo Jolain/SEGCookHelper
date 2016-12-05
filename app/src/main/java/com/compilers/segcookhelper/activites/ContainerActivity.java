@@ -1,4 +1,4 @@
-package com.compilers.segcookhelper;
+package com.compilers.segcookhelper.activites;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,9 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import com.compilers.segcookhelper.R;
+import com.compilers.segcookhelper.cookhelper.Pertinence;
+import com.compilers.segcookhelper.cookhelper.Recipe;
+
+//TODO remove associations with Recipe and pertinence, go through CookHelper
 
 /**
  * Created by Weierstrass on 2016-11-23.
@@ -32,10 +34,8 @@ public class ContainerActivity extends Activity {
         Pertinence pertinence = Pertinence.getPertinence();
         Recipe[] results = pertinence.getRecipeArray();
 
-
-
-        for(int i = 0;i<results.length;i++) {
-            if(results[i] == null) {
+        for (int i = 0; i < results.length; i++) {
+            if (results[i] == null) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Sorry, no results were found");
@@ -52,9 +52,8 @@ public class ContainerActivity extends Activity {
                 AlertDialog alert = builder.create();
                 alert.show();
             }
-
-
         }
+
         RecipeAdapter ad = new RecipeAdapter(this, results);
         listView.setAdapter(ad);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,23 +64,15 @@ public class ContainerActivity extends Activity {
                 String text = textView.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), RecipeViewActivity.class); //Application Context and Activity
                 // Need some way to give recipe to the intent
-                intent.putExtra("RecipeName",text);
-                startActivityForResult(intent,0);
-
+                intent.putExtra("RecipeName", text);
+                startActivityForResult(intent, 0);
             }
-        });}
+        });
+    }
 
-
-
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(resultCode == RESULT_OK) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
             finish();
         }
     }
-
-
-
-
-
 }
