@@ -14,8 +14,6 @@ import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
-//TODO remove associations with Recipe and pertinence, go through CookHelper
-
 public class RecipeViewActivity extends Activity {
     private CookHelper app;
 

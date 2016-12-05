@@ -26,8 +26,6 @@ import com.compilers.segcookhelper.cookhelper.Recipe;
 import java.io.File;
 import java.util.Date;
 
-//TODO remove associations with Recipe, go through CookHelper
-
 public class EditRecipeActivity extends Activity {
 
     final int RESULT_LOAD_IMAGE = 1;
