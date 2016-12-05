@@ -82,7 +82,8 @@ public class RecipeViewActivity extends Activity {
             public void onClick(DialogInterface dialog, int id) {
                 // TODO:delete the recipe from the database and return to research screen;
                 app.removeRecipe(app.getRecipe(recipeNameField.getText().toString()));
-                Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
+                Intent intent = new Intent(); //Application Context and Activity
+                intent.putExtra("RecipeName",recipeNameField.getText().toString());
                 setResult(RESULT_OK, intent);
                 finish();
             }
