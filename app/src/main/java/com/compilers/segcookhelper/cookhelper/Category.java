@@ -4,7 +4,7 @@ package com.compilers.segcookhelper.cookhelper;
  * Created by Jolain Poirier on 11/16/2016.
  */
 
-public class Category {
+class Category {
     // **** Instance variable
 
     private final String name;
@@ -15,7 +15,7 @@ public class Category {
      * Constructs a Category
      * @param name the name of the category
      */
-    public Category(String name) {
+    Category(String name) {
         this.name = name;
     }
 
@@ -23,7 +23,7 @@ public class Category {
      * Get the name of the category
      * @return the name of the category
      */
-    public String getName(){
+    String getName() {
         return name;
     }
 

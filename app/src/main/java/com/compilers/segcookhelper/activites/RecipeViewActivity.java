@@ -14,8 +14,6 @@ import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
-//TODO remove associations with Recipe and pertinence, go through CookHelper
-
 public class RecipeViewActivity extends Activity {
     private CookHelper app;
 
@@ -102,7 +100,7 @@ public class RecipeViewActivity extends Activity {
             recipeNameField.setText(message);
 
             tempRecipe = app.getRecipe(message);
-            category.setText("Category: " + tempRecipe.getCategory().getName());
+            category.setText("Category: " + tempRecipe.getCategoryName());
             ingredient.setText("Ingredient: " + tempRecipe.ingredientListToString());
             cookTime.setText("CookTime: " + tempRecipe.getCookTime());
             description.setText("Description: " + tempRecipe.getDescription());

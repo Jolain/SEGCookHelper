@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
-//TODO remove associations with Recipe, go through CookHelper
 
 /**
  * Created by Weierstrass on 2016-11-23.

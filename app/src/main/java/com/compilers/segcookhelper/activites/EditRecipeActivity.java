@@ -26,8 +26,6 @@ import com.compilers.segcookhelper.cookhelper.Recipe;
 import java.io.File;
 import java.util.Date;
 
-//TODO remove associations with Recipe, go through CookHelper
-
 public class EditRecipeActivity extends Activity {
 
     final int RESULT_LOAD_IMAGE = 1;
@@ -75,7 +73,7 @@ public class EditRecipeActivity extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
 
         dropdown.setAdapter(adapter);
-        dropdown.setSelection(getIndex(dropdown, originalRecipe.getCategory().getName()));
+        dropdown.setSelection(getIndex(dropdown, originalRecipe.getCategoryName()));
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
