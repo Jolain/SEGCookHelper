@@ -52,7 +52,7 @@ public class RecipeViewActivity extends Activity {
 
         recipeNameField.setText(message);
         category.setText("Category: " + recipeView.getCategoryName());
-        ingredient.setText("Ingredient: " + recipeView.ingredientListToString());
+        ingredient.setText("Ingredient: " + recipeView.getIngredientsString());
         cookTime.setText("CookTime: " + recipeView.getCookTime());
         description.setText("Description: " + recipeView.getDescription());
     }
@@ -101,7 +101,7 @@ public class RecipeViewActivity extends Activity {
 
             tempRecipe = app.getRecipe(message);
             category.setText("Category: " + tempRecipe.getCategoryName());
-            ingredient.setText("Ingredient: " + tempRecipe.ingredientListToString());
+            ingredient.setText("Ingredient: " + tempRecipe.getIngredientsString());
             cookTime.setText("CookTime: " + tempRecipe.getCookTime());
             description.setText("Description: " + tempRecipe.getDescription());
         }

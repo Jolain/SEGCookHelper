@@ -61,7 +61,7 @@ public class EditRecipeActivity extends Activity {
 
         app = CookHelper.getInstance(getApplicationContext());
         originalRecipe = app.getRecipe(message);
-        String ingredientInString = originalRecipe.ingredientListToString();
+        String ingredientInString = originalRecipe.getIngredientsString();
 
         String[] categoryNameArray = app.getCategoryNameArray();
 

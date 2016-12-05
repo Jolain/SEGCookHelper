@@ -214,10 +214,29 @@ public class Recipe {
     }
 
     /**
+     * get an Array of ingredient names
+     *
+     * @return the array of ingredient names
+     */
+    public String[] getIngredientStringArray() {
+        String[] res = new String[linkedIngredient.size()];
+
+        Iterator<Ingredient> i = linkedIngredient.iterator();
+        Ingredient node;
+        int j = 0;
+        while (i.hasNext()) {
+            node = i.next();
+            res[j] = node.getName();
+            j++;
+        }
+        return res;
+    }
+
+    /**
      * Get all the ingredients in String form
      * @return the ingredients separated with a space
      */
-    public String ingredientListToString(){
+    public String getIngredientsString() {
         Iterator<Ingredient> i = linkedIngredient.iterator();
 
         String result = "";

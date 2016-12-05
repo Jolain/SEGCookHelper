@@ -13,6 +13,8 @@ public class CookHelper {
     private static CookHelper instance;
     private final Database db;
 
+    private Recipe[] recipeArray;
+
     private CookHelper(Context context) {
         // Initialise database singleton
         db = Database.getInstance(context);
@@ -40,7 +42,7 @@ public class CookHelper {
      * @return The recipes found
      */
     public Recipe[] recipeQuery(Ingredient[] ingredientArray) {
-        Recipe[] recipeArray = db.recipeQuery(ingredientArray);
+        recipeArray = db.recipeQuery(ingredientArray);
         db.close();
         return recipeArray;
     }
@@ -219,11 +221,10 @@ public class CookHelper {
      */
     public void sortPertinence(Ingredient[] ingredients, Category category, String[] operators) {
 
-        Recipe[] recipes = recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
-        Pertinence pertinence = Pertinence.getPertinence();
-        pertinence.updateRecipe(recipes);
-        pertinence.updatePertinence(category, ingredients, operators);
-        pertinence.sortRecipe();
+        recipeQuery(ingredients); // Liste de recette qui contient au moins 1 ingrédient
+
+        Pertinence.updatePertinence(recipeArray, category, ingredients, operators);
+        Pertinence.sortRecipe(recipeArray);
     }
 
     /**
@@ -232,7 +233,6 @@ public class CookHelper {
      * @return the sorted recipes
      */
     public Recipe[] getSortedRecipes() {
-        Pertinence pertinence = Pertinence.getPertinence();
-        return pertinence.getRecipeArray();
+        return recipeArray;
     }
 }

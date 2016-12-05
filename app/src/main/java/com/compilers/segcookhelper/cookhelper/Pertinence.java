@@ -7,63 +7,35 @@ import java.util.Objects;
  */
 
 class Pertinence {
-    private static Pertinence pertinence;
 
-    private final int categoryPertinence = 3;
-    private final int ingredientPertinence = 1;
-    private final int andPertinence = 1;
-    private final int notPertinence = 3;
-    private int highestPertinence = -100; // will facilitate the sorting
-    private int lowestPertinence = 100; // will facilitate the sorting
-    private Recipe[] recipeArray;
+    private static final int categoryPertinence = 3;
+    private static final int ingredientPertinence = 1;
+    private static final int andPertinence = 1;
+    private static final int notPertinence = 3;
+    private static int highestPertinence = -100; // will facilitate the sorting
+    private static int lowestPertinence = 100; // will facilitate the sorting
 
-    // the classe pertinence is a singleton
-    private Pertinence() {
-    }
-
-    // permet d'avoir acces a l'objet pertinence
-    static Pertinence getPertinence() {
-        if (pertinence == null) {
-            pertinence = new Pertinence();
-        }
-        return pertinence;
-    }
-
-    // UpdateRecipe recoit une liste de recipe de la database apres qu'un search aille ete effectuer
-    // C'est cette liste de recipe qui serais trier.
-    void updateRecipe(Recipe[] recipes) {
-        recipeArray = recipes;
-    }
-
-    // permet au different activity au travers de l'application d'avoir asser au recette trier
-    Recipe[] getRecipeArray() {
-        //TODO currently gets all recipes from database without sorting
-        return recipeArray;
-    }
-
-    // send every recipe to have their pertinence calculated and updated
-    // the recipes sended are the one found from the database
-    void updatePertinence(Category category, Ingredient[] ingredients, String[] operateur) {
-        this.highestPertinence = 0;
-        this.lowestPertinence = 100;
-        for (Recipe aRecipeArray : recipeArray) {
+    static void updatePertinence(Recipe[] recipeArray, Category category, Ingredient[] ingredients, String[] operateur) {
+        highestPertinence = 0;
+        lowestPertinence = 100;
+        for (Recipe aRecipe : recipeArray) {
             //System.out.println("recette with name: " + this.recipeArray[x].getName());
-            this.calculatePertinence(aRecipeArray, category, ingredients, operateur);
+            calculatePertinence(aRecipe, category, ingredients, operateur);
         }
     }
 
     // calculate the pertinence of the recipe with respect to the list of ingredients and the category
-    private void calculatePertinence(Recipe recipe, Category category, Ingredient[] ingredients, String[] operateur) {
+    private static void calculatePertinence(Recipe recipe, Category category, Ingredient[] ingredients, String[] operateur) {
         int p = 0;
         boolean[] ingredientsMatch;
         ingredientsMatch = new boolean[ingredients.length];
         // if the same category add the equivalent pertinence
-        if ((recipe.getCategory().getName()).equals(category.getName())) {
-            p = p + this.categoryPertinence;
+        if ((recipe.getCategoryName()).equals(category.getName())) {
+            p = p + categoryPertinence;
         }
 
         // verifying which ingredient is present
-        Ingredient[] listRecipeIngredient = recipe.getIngredientArray();
+        String[] listRecipeIngredient = recipe.getIngredientStringArray();
 
         for (int i = 0; i < ingredients.length; i++) {
             boolean start = true;
@@ -72,8 +44,8 @@ class Pertinence {
             // donner par l'utilisateur
             while (start) {
                 if (index < listRecipeIngredient.length) {
-                    if (Objects.equals(listRecipeIngredient[index].getName(), ingredients[i].getName())) {
-                        p = p + this.ingredientPertinence;
+                    if (Objects.equals(listRecipeIngredient[index], ingredients[i].getName())) {
+                        p = p + ingredientPertinence;
                         ingredientsMatch[i] = true;
                         start = false;
                     } else {
@@ -92,13 +64,13 @@ class Pertinence {
 
                 case "and":
                     if (ingredientsMatch[i] && ingredientsMatch[i + 1]) {
-                        p = p + this.andPertinence;
+                        p = p + andPertinence;
                     }
                     break;
 
                 case "not":
                     if (ingredientsMatch[i + 1]) {
-                        p = p - this.notPertinence;
+                        p = p - notPertinence;
                     }
                     break;
 
@@ -106,41 +78,36 @@ class Pertinence {
                     break;
             }
         }
-
         // update the pertinence
         recipe.recipePertinence = p;
         // this place make the sorting faster by setting upper and lower bound on the pertinence
-        if (p > this.highestPertinence) {
-            this.highestPertinence = p;
+        if (p > highestPertinence) {
+            highestPertinence = p;
         }
-        if (p < this.lowestPertinence) {
-            this.lowestPertinence = p;
+        if (p < lowestPertinence) {
+            lowestPertinence = p;
         }
-
-
     }
 
     // this method sort the recipe since we already determined the highest and lowest pertinence it give us a
     // starting point
-    void sortRecipe() {
+    static void sortRecipe(Recipe[] recipeArray) {
         int position = 0;
-        int pertinenceIndex = this.highestPertinence;
+        int pertinenceIndex = highestPertinence;
         Recipe placeholder;
 
-        while (position < this.recipeArray.length) {
+        while (position < recipeArray.length) {
 
-            for (int i = position; i < this.recipeArray.length; i++) {
+            for (int i = position; i < recipeArray.length; i++) {
                 //
-                if (this.recipeArray[i].recipePertinence == pertinenceIndex) {
-                    placeholder = this.recipeArray[i];
-                    this.recipeArray[i] = this.recipeArray[position];
-                    this.recipeArray[position] = placeholder;
+                if (recipeArray[i].recipePertinence == pertinenceIndex) {
+                    placeholder = recipeArray[i];
+                    recipeArray[i] = recipeArray[position];
+                    recipeArray[position] = placeholder;
                     position++;
                 }
             }
-
             pertinenceIndex = pertinenceIndex - 1;
         }
-
     }
 }
