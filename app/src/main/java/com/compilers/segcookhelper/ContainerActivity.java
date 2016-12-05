@@ -81,6 +81,7 @@ public class ContainerActivity extends Activity {
             Recipe[] results = pertinence.getRecipeArray();
             String recipeDelete = data.getStringExtra("RecipeName");
             Recipe[] newResults = new Recipe[results.length-1];
+
             for(int i=0;i<results.length;i++){
                 if(!results[i].getName().equals(recipeDelete)){
                     newResults[i] = results[i];
