@@ -28,9 +28,6 @@ public class ContainerActivity extends Activity {
         setContentView(R.layout.recipe_container);
         listView = (ListView) findViewById(R.id.list_recipe);
 
-        //TODO Retrieve objects created by the search query (not yet implemented)
-        // nouvelle section pour tester le containter
-
         app = CookHelper.getInstance(getApplicationContext());
         Recipe[] results = app.getSortedRecipes();
 

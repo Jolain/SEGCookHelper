@@ -95,7 +95,7 @@ public class Recipe {
         if (description.length() <= MAX_DESCRIPTION_LIMIT && description.length() >= MIN_DESCRIPTION_LIMIT) {
             this.description = description;
         } else{
-            //TODO Do something if description > 500 characters
+            //TODO Do something if description is outside limits
         }
     }
 

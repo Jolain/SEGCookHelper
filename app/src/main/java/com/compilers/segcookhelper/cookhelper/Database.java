@@ -60,7 +60,9 @@ class Database extends SQLiteOpenHelper {
         // Checks to see if database file already exists.
         // If it isn't copy it from the asset folder.
         File test = new File(dbPath + DatabaseContract.DATABASE_NAME);
+        System.out.println("DB exists test: " + test.exists());
         if(!test.exists()) { // If database does not exist
+            System.out.println("DB exists");
             this.getReadableDatabase(); // Creates the path if non-existent
             this.close();
             try {
@@ -93,6 +95,10 @@ class Database extends SQLiteOpenHelper {
         Cursor categoryCursor = db.rawQuery(query + DatabaseContract.C_table.TABLE_NAME, null);
         Cursor recipeCursor = db.rawQuery(query + DatabaseContract.R_table.TABLE_NAME, null);
         Cursor imageCursor = db.rawQuery(query + DatabaseContract.IM_table.TABLE_NAME,null);
+
+
+        //TODO add image cursor actions
+        imageCursor.close();
 
         // Parse data
         if(ingredientCursor.moveToFirst()) { // Check if data is present
@@ -145,8 +151,6 @@ class Database extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.IM_table.DELETE_TABLE);
         onCreate(db);
     }
-
-    //TODO replace methods with database implementation
 
     Recipe[] recipeQuery(Ingredient[] ingredients) {
         String query;

@@ -71,7 +71,6 @@ public class RecipeViewActivity extends Activity {
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // TODO:delete the recipe from the database and return to research screen;
                 app.removeRecipe(app.getRecipe(recipeNameField.getText().toString()));
                 Intent intent = new Intent(); //Application Context and Activity
                 intent.putExtra("RecipeName",recipeNameField.getText().toString());
