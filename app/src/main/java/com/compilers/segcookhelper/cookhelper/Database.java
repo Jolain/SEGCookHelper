@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -52,6 +53,7 @@ class Database extends SQLiteOpenHelper {
         //db.execSQL(DatabaseContract.I_table.CREATE_TABLE);
         //db.execSQL(DatabaseContract.C_table.CREATE_TABLE);
         //db.execSQL(DatabaseContract.R_table.CREATE_TABLE);
+        //db.execSQL(DatabaseContract.IM_table.CREATE_TABLE);
     }
 
     void onLoad() {
@@ -90,6 +92,7 @@ class Database extends SQLiteOpenHelper {
         Cursor ingredientCursor = db.rawQuery(query + DatabaseContract.I_table.TABLE_NAME, null);
         Cursor categoryCursor = db.rawQuery(query + DatabaseContract.C_table.TABLE_NAME, null);
         Cursor recipeCursor = db.rawQuery(query + DatabaseContract.R_table.TABLE_NAME, null);
+        Cursor imageCursor = db.rawQuery(query + DatabaseContract.IM_table.TABLE_NAME,null);
 
         // Parse data
         if(ingredientCursor.moveToFirst()) { // Check if data is present
@@ -139,6 +142,7 @@ class Database extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.I_table.DELETE_TABLE);
         db.execSQL(DatabaseContract.C_table.DELETE_TABLE);
         db.execSQL(DatabaseContract.R_table.DELETE_TABLE);
+        db.execSQL(DatabaseContract.IM_table.DELETE_TABLE);
         onCreate(db);
     }
 
@@ -370,5 +374,16 @@ class Database extends SQLiteOpenHelper {
     String[] stringToArray(String s) {
         return s.split("__,__");
     }
+
+    public void addEntry( String name, byte[] image) throws SQLiteException {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues cv = new  ContentValues();
+
+        cv.put(DatabaseContract.IM_table.COL_NAME,    name);
+        cv.put(DatabaseContract.IM_table.COL_IMAGE,   image);
+        database.insert(DatabaseContract.IM_table.TABLE_NAME, null, cv );
+    }
+
+
 
 }

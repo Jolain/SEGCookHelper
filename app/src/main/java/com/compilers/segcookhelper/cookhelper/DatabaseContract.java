@@ -43,6 +43,17 @@ class DatabaseContract {
                 COL_INGREDIENT + TEXT_TYPE + " )";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
+    static abstract class IM_table implements BaseColumns{
+        static final String TABLE_NAME = "ingredients";
+        static final String COL_NAME = "image_name";
+        static final String COL_IMAGE = "image_date";
+
+        static final String CREATE_TABLE = "CREATE TABLE" + TABLE_NAME + "("+
+                COL_NAME + TEXT_TYPE + COMMA_SEP+
+                COL_IMAGE + " BLOB);";
+        static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+
+    }
 
     static abstract class I_table implements BaseColumns {
         static final String TABLE_NAME = "Ingredients";
