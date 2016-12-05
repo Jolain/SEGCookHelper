@@ -40,7 +40,7 @@ public class EditRecipeActivity extends Activity {
     private Button save;
     private Button help;
     private String imgPath;
-    private Recipe originalRecipe;
+    private Recipe originalRecipe;   
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

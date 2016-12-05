@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.File;
@@ -26,6 +28,8 @@ class Database extends SQLiteOpenHelper {
     private LinkedList<Recipe> linkedRecipe;
     private LinkedList<Ingredient> linkedIngredient;
     private LinkedList<Category> linkedCategory;
+    private LinkedList<Bitmap> linkedImages;
+    private LinkedList<String> linkedImagesName;
     private String dbPath = "";
 
     // Private Constructor
@@ -88,6 +92,8 @@ class Database extends SQLiteOpenHelper {
         linkedRecipe = new LinkedList<>();
         linkedCategory = new LinkedList<>();
         linkedIngredient = new LinkedList<>();
+        linkedImagesName = new LinkedList<>();
+        linkedImages = new LinkedList<>();
 
         // Fetch data cursors
         String query = "SELECT * FROM ";
@@ -98,6 +104,14 @@ class Database extends SQLiteOpenHelper {
 
 
         //TODO add image cursor actions
+        if (imageCursor.moveToFirst()){
+            do {
+                byte[] imgByte = imageCursor.getBlob(1);
+                String name = imageCursor.getString(0);
+                linkedImagesName.add(name);
+                linkedImages.add(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
+            }while(imageCursor.moveToNext());
+        }
         imageCursor.close();
 
         // Parse data
@@ -141,6 +155,8 @@ class Database extends SQLiteOpenHelper {
         Log.v("INGREDIENT ARRAY:", linkedIngredient.toString());
         Log.v("CATEGORY ARRAY:  ", linkedCategory.toString());
         Log.v("RECIPE ARRAY:    ", linkedRecipe.toString());
+        Log.v("IMAGES ARRAY:    ", linkedImages.toString());
+        Log.v("IMAGES NAME:     ", linkedImagesName.toString());
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -385,7 +401,18 @@ class Database extends SQLiteOpenHelper {
 
         cv.put(DatabaseContract.IM_table.COL_NAME,    name);
         cv.put(DatabaseContract.IM_table.COL_IMAGE,   image);
+        linkedImages.add(BitmapFactory.decodeByteArray(image, 0, image.length));
+        linkedImagesName.add(name);
         database.insert(DatabaseContract.IM_table.TABLE_NAME, null, cv );
+    }
+
+    public Bitmap getImage(String name){
+        for(int i = 0;i<linkedImagesName.size();i++){
+            if(linkedImagesName.get(i).equals(name)){
+                return linkedImages.get(i);
+            }
+        }
+        return null;
     }
 
 

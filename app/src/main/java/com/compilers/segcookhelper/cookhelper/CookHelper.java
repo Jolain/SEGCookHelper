@@ -235,4 +235,20 @@ public class CookHelper {
     public Recipe[] getSortedRecipes() {
         return recipeArray;
     }
+
+    public Recipe[] removeElements(Recipe[] input, String deleteMe) {
+        LinkedList<Recipe> results = new LinkedList<Recipe>();
+
+        for(Recipe item : input)
+            if(!deleteMe.equals(item.getName()))
+                results.add(item);
+
+        Recipe[] newResults = new Recipe[results.toArray(input).length-1];
+        for(int i=0;i<newResults.length;i++){
+            newResults[i] = results.toArray(input)[i];
+
+        }
+        recipeArray = newResults;
+        return recipeArray;
+    }
 }
