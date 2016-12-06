@@ -10,7 +10,7 @@ import android.content.DialogInterface;
 
 class ActivityUtil {
 
-    static final int MAX_DESCRIPTION_LIMIT = 500;
+    static final int MAX_DESCRIPTION_LIMIT = 1000;
     static final int MIN_DESCRIPTION_LIMIT = 1;
 
     /**

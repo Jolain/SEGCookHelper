@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.File;
@@ -26,6 +28,8 @@ class Database extends SQLiteOpenHelper {
     private LinkedList<Recipe> linkedRecipe;
     private LinkedList<Ingredient> linkedIngredient;
     private LinkedList<Category> linkedCategory;
+    //private LinkedList<Bitmap> linkedImages;
+    //private LinkedList<String> linkedImagesName;
     private String dbPath = "";
 
     // Private Constructor
@@ -88,17 +92,27 @@ class Database extends SQLiteOpenHelper {
         linkedRecipe = new LinkedList<>();
         linkedCategory = new LinkedList<>();
         linkedIngredient = new LinkedList<>();
+        //linkedImagesName = new LinkedList<>();
+        //linkedImages = new LinkedList<>();
 
         // Fetch data cursors
         String query = "SELECT * FROM ";
         Cursor ingredientCursor = db.rawQuery(query + DatabaseContract.I_table.TABLE_NAME, null);
         Cursor categoryCursor = db.rawQuery(query + DatabaseContract.C_table.TABLE_NAME, null);
         Cursor recipeCursor = db.rawQuery(query + DatabaseContract.R_table.TABLE_NAME, null);
-        Cursor imageCursor = db.rawQuery(query + DatabaseContract.IM_table.TABLE_NAME,null);
+        //Cursor imageCursor = db.rawQuery(query + DatabaseContract.IM_table.TABLE_NAME,null);
 
 
         //TODO add image cursor actions
-        imageCursor.close();
+        /**if (imageCursor.moveToFirst()){
+            do {
+                byte[] imgByte = imageCursor.getBlob(1);
+                String name = imageCursor.getString(0);
+                linkedImagesName.add(name);
+                linkedImages.add(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
+            }while(imageCursor.moveToNext());
+        }
+        imageCursor.close();*/
 
         // Parse data
         if(ingredientCursor.moveToFirst()) { // Check if data is present
@@ -123,16 +137,16 @@ class Database extends SQLiteOpenHelper {
                 Category category = getCategory(recipeCursor.getString(2));
                 String description = recipeCursor.getString(3);
                 // Fetches the drawable ID by searching by filename
-                String img = recipeCursor.getString(4); // Implementation was wrong, looking for a fix
+                byte[] img = recipeCursor.getBlob(4); // Implementation was wrong, looking for a fix
                 String time = recipeCursor.getString(5);
                 String[] ingredient = stringToArray(recipeCursor.getString(6));
-
+                Bitmap bit = DbBitmapUtility.getImage(img);
                 // Construct an array of the linked ingredients
                 LinkedList<Ingredient> ingObj = new LinkedList<>();
                 for (String anIngredient : ingredient) {
                     ingObj.add(getIngredient(anIngredient));
                 }
-                linkedRecipe.add(new Recipe(name, time, category, ingObj, img, description));
+                linkedRecipe.add(new Recipe(name, time, category, ingObj, bit, description));
             } while(recipeCursor.moveToNext());
         }
         recipeCursor.close();
@@ -141,6 +155,8 @@ class Database extends SQLiteOpenHelper {
         Log.v("INGREDIENT ARRAY:", linkedIngredient.toString());
         Log.v("CATEGORY ARRAY:  ", linkedCategory.toString());
         Log.v("RECIPE ARRAY:    ", linkedRecipe.toString());
+        //Log.v("IMAGES ARRAY:    ", linkedImages.toString());
+        //Log.v("IMAGES NAME:     ", linkedImagesName.toString());
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -148,7 +164,7 @@ class Database extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.I_table.DELETE_TABLE);
         db.execSQL(DatabaseContract.C_table.DELETE_TABLE);
         db.execSQL(DatabaseContract.R_table.DELETE_TABLE);
-        db.execSQL(DatabaseContract.IM_table.DELETE_TABLE);
+        //db.execSQL(DatabaseContract.IM_table.DELETE_TABLE);
         onCreate(db);
     }
 
@@ -196,12 +212,12 @@ class Database extends SQLiteOpenHelper {
             // Convert ingredients into a string
             String[] ingredientNames = recipe.getIngredientsString().split(", ");
             String convertedString = arrayToString(ingredientNames);
-
+            byte[] byt = DbBitmapUtility.getBytes(recipe.getImg());
             // Insert values in the entry
             entry.put(DatabaseContract.R_table.COL_NAME, recipe.getName());
             entry.put(DatabaseContract.R_table.COL_CATEGORY, recipe.getCategoryName());
             entry.put(DatabaseContract.R_table.COL_DESC, recipe.getDescription());
-            entry.put(DatabaseContract.R_table.COL_IMG, recipe.getImg());
+            entry.put(DatabaseContract.R_table.COL_IMG, byt);
             entry.put(DatabaseContract.R_table.COL_TIME, recipe.getCookTime());
             entry.put(DatabaseContract.R_table.COL_INGREDIENT, convertedString);
 
@@ -221,11 +237,12 @@ class Database extends SQLiteOpenHelper {
         ContentValues entry = new ContentValues();
         String[] ingredientNames = editedRecipe.getIngredientsString().split(", ");
         String convertedString = arrayToString(ingredientNames);
-
+        Bitmap bit = editedRecipe.getImg();
+        byte[] byt = DbBitmapUtility.getBytes(bit);
         entry.put(DatabaseContract.R_table.COL_NAME, editedRecipe.getName());
         entry.put(DatabaseContract.R_table.COL_CATEGORY, editedRecipe.getCategoryName());
         entry.put(DatabaseContract.R_table.COL_DESC, editedRecipe.getDescription());
-        entry.put(DatabaseContract.R_table.COL_IMG, editedRecipe.getImg());
+        entry.put(DatabaseContract.R_table.COL_IMG, byt);
         entry.put(DatabaseContract.R_table.COL_TIME, editedRecipe.getCookTime());
         entry.put(DatabaseContract.R_table.COL_INGREDIENT, convertedString);
         try {
@@ -244,6 +261,7 @@ class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.delete(DatabaseContract.R_table.TABLE_NAME, DatabaseContract.R_table.COL_NAME + " = ?", new String[] {r.getName()} );
+            //linkedRecipe.remove(r);
         }
         catch (Exception e) {
             System.out.println("ERROR: Recipe was not deleted");
@@ -280,13 +298,16 @@ class Database extends SQLiteOpenHelper {
     Recipe getRecipe(String name) {
 
         Iterator<Recipe> i = linkedRecipe.iterator();
-
-        Recipe node;
-        while(i.hasNext()){
-            node = i.next();
-            if(node.getName().equals(name)){
-                return node;
+        try {
+            Recipe node;
+            while (i.hasNext()) {
+                node = i.next();
+                if (node.getName().equals(name)) {
+                    return node;
+                }
             }
+        }catch(Exception e){
+            System.out.println("No such recipe");
         }
         throw new IllegalArgumentException("Recipe with name: " + name +
                 " is not included in the database");
@@ -367,14 +388,25 @@ class Database extends SQLiteOpenHelper {
         return s.split("__,__");
     }
 
-    public void addEntry( String name, byte[] image) throws SQLiteException {
+    /**void addEntry( String name, byte[] image) throws SQLiteException {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues cv = new  ContentValues();
 
         cv.put(DatabaseContract.IM_table.COL_NAME,    name);
         cv.put(DatabaseContract.IM_table.COL_IMAGE,   image);
+        linkedImages.add(BitmapFactory.decodeByteArray(image, 0, image.length));
+        linkedImagesName.add(name);
         database.insert(DatabaseContract.IM_table.TABLE_NAME, null, cv );
-    }
+    }*/
+
+    /**Bitmap getImage(String name){
+        for(int i = 0;i<linkedImagesName.size();i++){
+            if(linkedImagesName.get(i).equals(name)){
+                return linkedImages.get(i);
+            }
+        }
+        return null;
+    }*/
 
 
 

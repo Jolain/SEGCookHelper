@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.Spinner;
 
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
+import com.compilers.segcookhelper.cookhelper.DbBitmapUtility;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
 import java.io.File;
@@ -39,8 +41,9 @@ public class EditRecipeActivity extends Activity {
     private ImageView image;
     private Button save;
     private Button help;
+    private Bitmap bitmap;
     private String imgPath;
-    private Recipe originalRecipe;
+    private Recipe originalRecipe;   
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +67,11 @@ public class EditRecipeActivity extends Activity {
         String ingredientInString = originalRecipe.getIngredientsString();
 
         String[] categoryNameArray = app.getCategoryNameArray();
-
+        bitmap = originalRecipe.getImg();
         cookTimeField.setText(originalRecipe.getCookTime());
         descriptionField.setText(originalRecipe.getDescription());
         ingredientField.setText(ingredientInString);
-        image.setImageResource(getResources().getIdentifier(originalRecipe.getImg(), "drawable", getPackageName()));
+        image.setImageBitmap(bitmap);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
 
@@ -114,12 +117,16 @@ public class EditRecipeActivity extends Activity {
             String cat = dropdown.getSelectedItem().toString();
             String desc = descriptionField.getText().toString();
             // TODO: For now it uses the same image as the old recipe, should get the new one
-            String img = originalRecipe.getImg();
+
             String time = cookTimeField.getText().toString();
 
             String[] ingredientsName = ingredientField.getText().toString().split(", ");
 
-            app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsName, img, desc));
+            /*DbBitmapUtility dec = new DbBitmapUtility();
+            byte[] bytes = dec.getBytes(bitmap);
+            app.addEntry(message,bytes);*/
+
+            app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsName, bitmap, desc));
 
             Intent returnIntent = new Intent();
             returnIntent.putExtra("RecipeName", name);
@@ -174,6 +181,9 @@ public class EditRecipeActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == CAPTURE_IMAGE) {
+
+                bitmap = BitmapFactory.decodeFile(imgPath);
+
                 image.setImageBitmap(BitmapFactory.decodeFile(imgPath));
             }
             super.onActivityResult(requestCode, resultCode, data);
@@ -185,6 +195,7 @@ public class EditRecipeActivity extends Activity {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String picturePath = cursor.getString(columnIndex);
                 cursor.close();
+                bitmap = BitmapFactory.decodeFile(picturePath);
 
                 image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             }

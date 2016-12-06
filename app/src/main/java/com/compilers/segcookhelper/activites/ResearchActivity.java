@@ -65,7 +65,7 @@ public class ResearchActivity extends Activity {
                 ingredientsString[i / 2] = splitArray[i];
                 Log.i("info", splitArray[i]);
             } else {
-                operators[(i - 1) / 2] = splitArray[i];
+                 operators[(i - 1) / 2] = splitArray[i];
                 Log.i("info", splitArray[i]);
             }
         }

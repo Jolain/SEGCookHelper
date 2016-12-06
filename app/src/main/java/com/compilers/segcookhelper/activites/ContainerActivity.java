@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.res.TypedArrayUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
 import com.compilers.segcookhelper.cookhelper.Recipe;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Weierstrass on 2016-11-23.
@@ -65,21 +69,16 @@ public class ContainerActivity extends Activity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //finish();
         if(resultCode == RESULT_OK) {
-            Recipe[] results = app.getSortedRecipes();
             String recipeDelete = data.getStringExtra("RecipeName");
-            Recipe[] newResults = new Recipe[results.length-1];
-            for(int i=0;i<results.length;i++){
-                if(!results[i].getName().equals(recipeDelete)){
-                    newResults[i] = results[i];
-                }else {
-                    newResults[i] = results[i + 1];
-                }
-            }
+            Recipe[] results = app.removeElements(app.getSortedRecipes(),recipeDelete);
+            ListView listView1 = (ListView) findViewById(R.id.list_recipe);
 
-            RecipeAdapter ad = new RecipeAdapter(this, newResults);
-            listView.setAdapter(ad);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            RecipeAdapter ad = new RecipeAdapter(this, results);
+            listView1.setAdapter(ad);
+            listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 

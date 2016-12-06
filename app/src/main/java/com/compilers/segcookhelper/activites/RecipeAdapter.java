@@ -35,15 +35,15 @@ class RecipeAdapter extends ArrayAdapter<Recipe> {
         TextView recipeName = (TextView) rowView.findViewById(R.id.RecipeName);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.ImageRecipe);
         Recipe recipe = recettes[position];
-        imageView.setImageResource(getImgID(recettes[position]));
+        imageView.setImageBitmap((recipe.getImg()));
         recipeName.setText(recipe.getName());
 
         return rowView;
     }
 
-    private int getImgID(Recipe r) {
+    /*private int getImgID(Recipe r) {
         Resources assets = context.getResources();
         return assets.getIdentifier(r.getImg(), "drawable", context.getPackageName());
-    }
+    }*/
 }
 
