@@ -261,7 +261,7 @@ class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.delete(DatabaseContract.R_table.TABLE_NAME, DatabaseContract.R_table.COL_NAME + " = ?", new String[] {r.getName()} );
-            //linkedRecipe.remove(r);
+            linkedRecipe.remove(r);
         }
         catch (Exception e) {
             System.out.println("ERROR: Recipe was not deleted");
