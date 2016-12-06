@@ -2,6 +2,8 @@ package com.compilers.segcookhelper.cookhelper;
 
 
 
+import android.graphics.Bitmap;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -14,7 +16,7 @@ public class Recipe {
     int recipePertinence;
     private String name;
     private String description;
-    private String img; // Maybe not Image type
+    private Bitmap img; // Maybe not Image type
     private LinkedList<Ingredient> linkedIngredient = new LinkedList<>();
     private Category category;
     private String cookTime;
@@ -29,7 +31,7 @@ public class Recipe {
      * @param img              image chosen
      * @param description      description of the recipe
      */
-    public Recipe(String name, String cookTime, Category category, LinkedList<Ingredient> linkedIngredient, String img, String description) {
+    public Recipe(String name, String cookTime, Category category, LinkedList<Ingredient> linkedIngredient, Bitmap img, String description) {
         this.name = name;
         this.cookTime = cookTime;
         this.category = category;
@@ -39,7 +41,7 @@ public class Recipe {
         this.recipePertinence = 0;
     }
 
-    public Recipe(String name, String cookTime, Category category, Ingredient[] ingredientArray, String img, String description) {
+    public Recipe(String name, String cookTime, Category category, Ingredient[] ingredientArray, Bitmap img, String description) {
         this.name = name;
         this.cookTime = cookTime;
         this.category = category;
@@ -94,14 +96,14 @@ public class Recipe {
      *
      * @return the int of the image
      */
-    public String getImg() {
+    public Bitmap getImg() {
         return img;
     }
 
     /**
      * Set the int of the image
      */
-    public void setImg(String img) {
+    public void setImg(Bitmap img) {
         this.img = img;
     }
 

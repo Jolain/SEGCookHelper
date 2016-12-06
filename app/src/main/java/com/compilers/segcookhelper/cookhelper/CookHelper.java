@@ -1,6 +1,7 @@
 package com.compilers.segcookhelper.cookhelper;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import java.util.LinkedList;
 
@@ -91,7 +92,7 @@ public class CookHelper {
      * @param desc                the description of the recipe
      * @return the recipe created
      */
-    public Recipe createRecipe(String name, String time, String categoryName, String[] ingredientNameArray, String img, String desc) {
+    public Recipe createRecipe(String name, String time, String categoryName, String[] ingredientNameArray, Bitmap img, String desc) {
 
         LinkedList<Ingredient> ingredientLinkedList = new LinkedList<>();
         for (String anIngredientNameArray : ingredientNameArray) {
@@ -225,6 +226,7 @@ public class CookHelper {
 
         Pertinence.updatePertinence(recipeArray, category, ingredients, operators);
         Pertinence.sortRecipe(recipeArray);
+
     }
 
     /**
@@ -235,7 +237,7 @@ public class CookHelper {
     public Recipe[] getSortedRecipes() {
         return recipeArray;
     }
-
+    //remove a specific element from an array, in this case, the method is use to remove a deleteRecipe in attribut recipeArray
     public Recipe[] removeElements(Recipe[] input, String deleteMe) {
         LinkedList<Recipe> results = new LinkedList<>();
 
@@ -251,4 +253,12 @@ public class CookHelper {
         recipeArray = newResults;
         return recipeArray;
     }
+    //put a byte of image in the database
+    /**public void addEntry(String name, byte[] image){
+        db.addEntry(name,image);
+    }
+    //get an image from the database
+    public Bitmap getImage(String name){
+        return db.getImage(name);
+    }*/
 }

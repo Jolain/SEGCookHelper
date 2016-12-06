@@ -10,15 +10,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.compilers.segcookhelper.activites.HelpActivity">
 
-    <TextView
-        android:id="@+id/HelpText"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Bienvenue sur Cook Helper ! Cette application vous permettra de rechercher des recettes à partir de n’importe quel ingrédient et ça en très peu de temps. Maintenant pour débuter les recherches cliquer sur le bouton rose tout à droite. "
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:textSize="30sp" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/HelpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bienvenue sur Cook Helper ! Cette application vous permettra de rechercher des recettes à partir de n’importe quel ingrédient et ça en très peu de temps. Maintenant pour débuter les recherches cliquer sur le bouton rose tout à droite. "
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="30sp" />
+    </ScrollView>
+
 </RelativeLayout>

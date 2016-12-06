@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +23,7 @@ import android.widget.Spinner;
 
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
+import com.compilers.segcookhelper.cookhelper.DbBitmapUtility;
 
 import java.io.File;
 import java.util.Date;
@@ -39,6 +42,7 @@ public class AddRecipeActivity extends Activity {
     private ImageView image;
     private Button create;
     private Button help;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,7 @@ public class AddRecipeActivity extends Activity {
         create = (Button) findViewById(R.id.createAdd);
         help = (Button) findViewById(R.id.HelpAdd);
         dropdown = (Spinner) findViewById(R.id.categoryADD);
-
+        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_logo_00);
         app = CookHelper.getInstance(getApplicationContext());
         String[] categoryNameArray = app.getCategoryNameArray();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
@@ -87,10 +91,14 @@ public class AddRecipeActivity extends Activity {
             String category = dropdown.getSelectedItem().toString();
             String[] ingredientsNameArray = ingredientField.getText().toString().split(", ");
             // TODO: For now it uses the default "ic_logo_00" picture, should use another image
-            String img = "ic_logo_00";
-            String desc = descriptionField.getText().toString();
 
-            app.addRecipe(app.createRecipe(name, cookTime, category, ingredientsNameArray, img, desc));
+
+            String desc = descriptionField.getText().toString();
+            /*DbBitmapUtility dec = new DbBitmapUtility();
+            byte[] bytes = dec.getBytes(bitmap);
+            app.addEntry(recipeNameField.getText().toString(),bytes);*/
+
+            app.addRecipe(app.createRecipe(name, cookTime, category, ingredientsNameArray, bitmap, desc));
 
             Intent returnIntent = new Intent();
             setResult(RESULT_OK, returnIntent);
@@ -143,8 +151,11 @@ public class AddRecipeActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (resultCode != Activity.RESULT_CANCELED) {
             if (requestCode == CAPTURE_IMAGE) {
+                bitmap = BitmapFactory.decodeFile(imgPath);
+
                 image.setImageBitmap(BitmapFactory.decodeFile(imgPath));
             }
             super.onActivityResult(requestCode, resultCode, data);
@@ -156,6 +167,7 @@ public class AddRecipeActivity extends Activity {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String picturePath = cursor.getString(columnIndex);
                 cursor.close();
+                bitmap = BitmapFactory.decodeFile(picturePath);
 
                 image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             }
