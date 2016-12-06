@@ -80,7 +80,7 @@ public class AddRecipeActivity extends Activity {
         if (dropdown.getSelectedItem().toString().matches("") || recipeNameField.getText().toString().matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
                 descriptionField.getText().toString().matches("")) {
-            ActivityUtil.openNeutralAlertDialog("Please fill up all the fields", this, true, "OK");
+            ActivityUtil.openNeutralAlertDialog("S'il vous plaît, remplissez toutes les cases", this, true, "OK");
             // TODO:delete the recipe from the database and return to research screen;
         } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {
             ActivityUtil.openNeutralAlertDialog("Description must be within " + ActivityUtil.MAX_DESCRIPTION_LIMIT +
@@ -107,13 +107,14 @@ public class AddRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openNeutralAlertDialog("Veuillez entrer les données correspondant à chaque case.", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("Veuillez entrer les données correspondant à chaque case. Cliquez sur l'image" +
+                " pour choisir une image pour votre recette. Cliquez sur Breakfast pour choisir une autre catégorie", this, true, "OK");
     }
 
     public void onImageClick(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Select where you want to take your picture");
+        builder.setMessage("Selectionnez où vous voulez prendre votre image.");
         builder.setCancelable(true);
 
         builder.setNeutralButton("Application", new DialogInterface.OnClickListener() {

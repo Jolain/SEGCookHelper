@@ -136,12 +136,13 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openNeutralAlertDialog("Veuillez rentrez les données correspondant à chaque case.", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("Veuillez rentrez les données correspondant à chaque case. Cliquez sur l'image pour" +
+                " modifier l'image de cette recette. Cliquez sur le nom de la catégorie pour sélectionnez une nouvelle catégorie", this, true, "OK");
     }
 
     public void onImageClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Select where you want to take your picture");
+        builder.setMessage("Choisissez où vous vouliez prendre votre image");
         builder.setCancelable(true);
 
         builder.setNeutralButton("Application", new DialogInterface.OnClickListener() {

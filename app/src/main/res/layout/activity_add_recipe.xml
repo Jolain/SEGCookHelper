@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.42"
                     android:text="RecipeName:"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.97"
                     android:text="CookTime:"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
@@ -128,23 +128,23 @@
 
                 <TextView
                     android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="6.79"
+                    android:layout_weight="0.36"
                     android:text="Ingredients:"
-                    android:textSize="20sp"
-                    android:textStyle="normal|bold" />
+                    android:textSize="18sp"
+                    android:textStyle="normal|bold"
+                    android:layout_width="120sp" />
 
                 <EditText
-                    android:id="@+id/ingredientsADD"
-                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.91"
+                    android:inputType="textMultiLine"
                     android:ems="10"
-                    android:hint="Enter ingredients list"
-                    android:inputType="textPersonName"
-                    android:textAlignment="textStart"
-                    android:textSize="15sp" />
+                    android:id="@+id/ingredientsADD"
+                    android:hint="Enter ingredients"
+                    android:textSize="15sp"
+                    android:textAlignment="viewStart"
+                    android:layout_weight="0.21"
+                    android:layout_width="170sp" />
 
             </LinearLayout>
 
@@ -162,7 +162,7 @@
                     android:layout_width="147dp"
                     android:layout_height="wrap_content"
                     android:text="Category:"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="normal|bold" />
 
                 <Spinner
@@ -186,18 +186,17 @@
                     android:layout_width="147dp"
                     android:layout_height="wrap_content"
                     android:text="Description:"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="normal|bold" />
 
                 <EditText
-                    android:id="@+id/descriptionAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="24062.80"
+                    android:inputType="textMultiLine"
                     android:ems="10"
-                    android:hint="Enter description "
-                    android:inputType="textPersonName"
-                    android:textAlignment="textStart"
+                    android:id="@+id/descriptionAdd"
+                    android:layout_weight="1"
+                    android:hint="Enter a description"
                     android:textSize="15sp" />
 
             </LinearLayout>
