@@ -160,10 +160,11 @@ class Database extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // If database changes, drop old tables and create new ones
-        db.execSQL(DatabaseContract.I_table.DELETE_TABLE);
-        db.execSQL(DatabaseContract.C_table.DELETE_TABLE);
-        db.execSQL(DatabaseContract.R_table.DELETE_TABLE);
+        // If database changes, drop old tables and create empty new ones
+        // This method isn't used but is required to override
+        // db.execSQL(DatabaseContract.I_table.DELETE_TABLE);
+        // db.execSQL(DatabaseContract.C_table.DELETE_TABLE);
+        // db.execSQL(DatabaseContract.R_table.DELETE_TABLE);
         //db.execSQL(DatabaseContract.IM_table.DELETE_TABLE);
         onCreate(db);
     }
@@ -198,7 +199,6 @@ class Database extends SQLiteOpenHelper {
         db.close();
         return output;
     }
-
 
     void addRecipe(Recipe recipe) {
         if(!linkedRecipe.contains(recipe)) {
@@ -361,10 +361,13 @@ class Database extends SQLiteOpenHelper {
         return linkedIngredient.toArray(new Ingredient[linkedIngredient.size()]);
     }
 
+    // This method should never be used, breaks app when used.
+    /*
     void removeIngredient(Ingredient ingredient) {
         linkedIngredient.remove(ingredient);
         System.out.println("Database: removed ingredient " + ingredient.getName());
     }
+    */
 
     // Array Conversion Methods
 
