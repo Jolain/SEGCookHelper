@@ -4,10 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.File;
@@ -17,9 +15,6 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-/**
- * Created by Jolain Poirier on 11/23/2016.
- */
 
 class Database extends SQLiteOpenHelper {
 
@@ -257,11 +252,11 @@ class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteRecipe (Recipe r) {
+    void deleteRecipe (Recipe r) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.delete(DatabaseContract.R_table.TABLE_NAME, DatabaseContract.R_table.COL_NAME + " = ?", new String[] {r.getName()} );
-            //linkedRecipe.remove(r);
+            linkedRecipe.remove(r);
         }
         catch (Exception e) {
             System.out.println("ERROR: Recipe was not deleted");
