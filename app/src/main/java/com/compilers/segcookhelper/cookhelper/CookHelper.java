@@ -41,7 +41,7 @@ public class CookHelper {
      * @param ingredientArray the ingredients queried
      * @return The recipes found
      */
-    public Recipe[] recipeQuery(Ingredient[] ingredientArray) {
+    private Recipe[] recipeQuery(Ingredient[] ingredientArray) {
         recipeArray = db.recipeQuery(ingredientArray);
         db.close();
         return recipeArray;
@@ -182,7 +182,7 @@ public class CookHelper {
     }
 
     /**
-     * Get an array of all the category names in the databse
+     * Get an array of all the category names in the database
      *
      * @return the category names
      */
@@ -237,7 +237,7 @@ public class CookHelper {
     }
 
     public Recipe[] removeElements(Recipe[] input, String deleteMe) {
-        LinkedList<Recipe> results = new LinkedList<Recipe>();
+        LinkedList<Recipe> results = new LinkedList<>();
 
         for(Recipe item : input)
             if(!deleteMe.equals(item.getName()))
