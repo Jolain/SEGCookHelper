@@ -22,7 +22,6 @@ import android.widget.Spinner;
 
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
-import com.compilers.segcookhelper.cookhelper.DbBitmapUtility;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
 import java.io.File;
@@ -105,7 +104,7 @@ public class EditRecipeActivity extends Activity {
     public void onClickSave(View view) {
         if (dropdown.getSelectedItem().toString().matches("") || message.matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
-                descriptionField.getText().toString().matches("")) {//TODO keep description field between limits in Recipe
+                descriptionField.getText().toString().matches("")) {
             ActivityUtil.openNeutralAlertDialog("Please fill up all the fields", this, true, "OK");
             // TODO:delete the recipe from the database and return to research screen;
         } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {
