@@ -119,13 +119,15 @@ public class EditRecipeActivity extends Activity {
 
             String time = cookTimeField.getText().toString();
 
-            String[] ingredientsName = ingredientField.getText().toString().split(", ");
+            String ingredientString = ingredientField.getText().toString();
+            ingredientString = ingredientString.replaceAll(" ", "");
+            String[] ingredientsNameArray = ingredientString.split(",");
 
             /*DbBitmapUtility dec = new DbBitmapUtility();
             byte[] bytes = dec.getBytes(bitmap);
             app.addEntry(message,bytes);*/
 
-            app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsName, bitmap, desc));
+            app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsNameArray, bitmap, desc));
 
             Intent returnIntent = new Intent();
             returnIntent.putExtra("RecipeName", name);
@@ -135,8 +137,10 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openNeutralAlertDialog("Veuillez rentrez les données correspondant à chaque case. Cliquez sur l'image pour" +
-                " modifier l'image de cette recette. Cliquez sur le nom de la catégorie pour sélectionnez une nouvelle catégorie", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("Veuillez rentrez les données correspondant à chaque case.\n" +
+                "Cliquez sur l'image pour modifier l'image de cette recette.\n" +
+                "Cliquez sur le nom de la catégorie pour sélectionnez une nouvelle catégorie.\n" +
+                "Les ingrédients doivent être séparer par des virgules.", this, true, "OK");
     }
 
     public void onImageClick(View view) {

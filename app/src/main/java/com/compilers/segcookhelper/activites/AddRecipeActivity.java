@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,7 +22,6 @@ import android.widget.Spinner;
 
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
-import com.compilers.segcookhelper.cookhelper.DbBitmapUtility;
 
 import java.io.File;
 import java.util.Date;
@@ -85,13 +83,19 @@ public class AddRecipeActivity extends Activity {
         } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {
             ActivityUtil.openNeutralAlertDialog("Description must be within " + ActivityUtil.MAX_DESCRIPTION_LIMIT +
                     " and " + ActivityUtil.MIN_DESCRIPTION_LIMIT, this, true, "OK");
+        } else if (app.getRecipe(recipeNameField.getText().toString()) != null) {
+            ActivityUtil.openNeutralAlertDialog("Recipe with name " +
+                    recipeNameField.getText().toString() + " already exists", this, true, "OK");
         } else {
             String name = recipeNameField.getText().toString();
             String cookTime = cookTimeField.getText().toString();
             String category = dropdown.getSelectedItem().toString();
-            String[] ingredientsNameArray = ingredientField.getText().toString().split(", ");
-            // TODO: For now it uses the default "ic_logo_00" picture, should use another image
 
+            String ingredientString = ingredientField.getText().toString();
+            ingredientString = ingredientString.replaceAll(" ", "");
+            String[] ingredientsNameArray = ingredientString.split(",");
+
+            // TODO: For now it uses the default "ic_logo_00" picture, should use another image
 
             String desc = descriptionField.getText().toString();
             /*DbBitmapUtility dec = new DbBitmapUtility();
@@ -107,8 +111,10 @@ public class AddRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openNeutralAlertDialog("Veuillez entrer les données correspondant à chaque case. Cliquez sur l'image" +
-                " pour choisir une image pour votre recette. Cliquez sur Breakfast pour choisir une autre catégorie", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("Veuillez rentrez les données correspondant à chaque case.\n" +
+                "Cliquez sur l'image pour modifier l'image de cette recette.\n" +
+                "Cliquez sur le nom de la catégorie pour sélectionnez une nouvelle catégorie.\n" +
+                "Les ingrédients doivent être séparer par des virgules.", this, true, "OK");
     }
 
     public void onImageClick(View view) {

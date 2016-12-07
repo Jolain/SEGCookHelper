@@ -329,8 +329,7 @@ class Database extends SQLiteOpenHelper {
         }catch(Exception e){
             System.out.println("No such recipe");
         }
-        throw new IllegalArgumentException("Recipe with name: " + name +
-                " is not included in the database");
+        return null;
     }
 
     // Returns a Recipe object contained in the private list matching the name given, if it exists.
