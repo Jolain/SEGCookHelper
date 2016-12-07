@@ -112,10 +112,10 @@ public class EditRecipeActivity extends Activity {
     public void onClickSave(View view) {
         if (dropdown.getSelectedItem().toString().matches("") || message.matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
-                descriptionField.getText().toString().matches("")) {
+                descriptionField.getText().toString().matches("")) {//check for empty fields
             ActivityUtil.openNeutralAlertDialog("Please fill up all the fields", this, true, "OK");
             // TODO:delete the recipe from the database and return to research screen;
-        } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {
+        } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {//check if description is within limits
             ActivityUtil.openNeutralAlertDialog("Description must be within " + ActivityUtil.MAX_DESCRIPTION_LIMIT +
                     " and " + ActivityUtil.MIN_DESCRIPTION_LIMIT, this, true, "OK");
         } else {
