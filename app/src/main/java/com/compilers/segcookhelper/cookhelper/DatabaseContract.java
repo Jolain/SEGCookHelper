@@ -41,7 +41,7 @@ class DatabaseContract {
                 COL_DESC + TEXT_TYPE + COMMA_SEP +
                 COL_IMG + TEXT_TYPE + COMMA_SEP +
                 COL_TIME + TEXT_TYPE + COMMA_SEP +
-                COL_INGREDIENT + TEXT_TYPE +
+                COL_INGREDIENT + TEXT_TYPE + COMMA_SEP +
                 COL_BLOB + " BLOB)";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }

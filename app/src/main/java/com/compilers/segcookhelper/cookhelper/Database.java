@@ -103,7 +103,7 @@ class Database extends SQLiteOpenHelper {
         String query = "SELECT * FROM ";
         Cursor ingredientCursor = db.rawQuery(query + DatabaseContract.I_table.TABLE_NAME, null);
         Cursor categoryCursor = db.rawQuery(query + DatabaseContract.C_table.TABLE_NAME, null);
-        Cursor recipeCursor = db.rawQuery(query + DatabaseContract.R_table.TABLE_NAME, null);
+        Cursor recipeCursor = db.rawQuery(query + DatabaseContract.R_table.TABLE_NAME,null);
 
 
 
@@ -131,19 +131,21 @@ class Database extends SQLiteOpenHelper {
                 String name = recipeCursor.getString(1);
                 Category category = getCategory(recipeCursor.getString(2));
                 String description = recipeCursor.getString(3);
+                String imgName = recipeCursor.getString(4);
                 // Fetches the drawable ID by searching by filename
-                byte[] img = recipeCursor.getBlob(7); // this will be null if the image isn't from the user
+
                 String time = recipeCursor.getString(5);
                 String[] ingredient = stringToArray(recipeCursor.getString(6));
+                byte[] img = recipeCursor.getBlob(7); // this will be null if the image isn't from the user
 
 
-                // Construct an array of the linked ingredients
-                String imgName = recipeCursor.getString(4); // this will be null if the recipe is create from the user
+
                 if (img == null) {
                     bit = null;
                 }else {
                     bit = DbBitmapUtility.getImage(img);
                 }
+                // construct an array of linkedlist
                 LinkedList<Ingredient> ingObj = new LinkedList<>();
                 for (String anIngredient : ingredient) {
                     ingObj.add(getIngredient(anIngredient));
@@ -151,7 +153,7 @@ class Database extends SQLiteOpenHelper {
                 Recipe recet = new Recipe(name,time,category, ingObj,bit,description);
                 recet.setImageFromDatabase(imgName);// give a string name which is the name of images in drawable
                 linkedRecipe.add(recet);
-            } while(recipeCursor.moveToNext());
+            }while(recipeCursor.moveToNext());
         }
         recipeCursor.close();
         db.close();
