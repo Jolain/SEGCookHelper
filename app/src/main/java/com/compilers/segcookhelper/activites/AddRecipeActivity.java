@@ -79,23 +79,28 @@ public class AddRecipeActivity extends Activity {
     public void onClickCreate(View view) {
         if (dropdown.getSelectedItem().toString().matches("") || recipeNameField.getText().toString().matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
-                descriptionField.getText().toString().matches("")) {
+                descriptionField.getText().toString().matches("")) { //check for empty fields
             ActivityUtil.openNeutralAlertDialog("S'il vous plaît, remplissez toutes les cases", this, true, "OK");
             // TODO:delete the recipe from the database and return to research screen;
-        } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {
+        } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) { //check if desrciption is within limits
             ActivityUtil.openNeutralAlertDialog("Description must be within " + ActivityUtil.MAX_DESCRIPTION_LIMIT +
                     " and " + ActivityUtil.MIN_DESCRIPTION_LIMIT, this, true, "OK");
-        } else {
+        } else if(app.getRecipe(recipeNameField.getText().toString()) != null) {//check if a recipe with the same name already exists
+            ActivityUtil.openNeutralAlertDialog("Recipe with name: " +
+                    recipeNameField.getText().toString() + " already exists", this, true, "OK");
+        } else{
             String name = recipeNameField.getText().toString();
             String cookTime = cookTimeField.getText().toString();
             String category = dropdown.getSelectedItem().toString();
-            String[] ingredientsNameArray = ingredientField.getText().toString().split(", ");
+            String ingredientString = ingredientField.getText().toString();
+
+            //remove all spaces in the ingredient field
+            ingredientString = ingredientString.replaceAll(" ", "");
+            //split ingredients by commas
+            String[] ingredientsNameArray = ingredientString.split(",");
+
             // TODO: For now it uses the default "ic_logo_00" picture, should use another image
-
-
             String desc = descriptionField.getText().toString();
-
-
             app.addRecipe(app.createRecipe(name, cookTime, category, ingredientsNameArray, bitmap, desc));
 
             Intent returnIntent = new Intent();

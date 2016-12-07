@@ -131,8 +131,6 @@ public class EditRecipeActivity extends Activity {
             ingredientString = ingredientString.replaceAll(" ", "");
             String[] ingredientsNameArray = ingredientString.split(",");
 
-
-
             app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsNameArray, bitmap, desc));
 
             Intent returnIntent = new Intent();
