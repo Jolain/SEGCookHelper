@@ -57,26 +57,28 @@ public class ResearchActivity extends Activity {
         String query = edit.getText().toString();
 
         String[] splitArray = query.split("\\s+");
-        String[] ingredientsString = new String[(splitArray.length + 1) / 2];
-        String[] operators = new String[(splitArray.length - 1) / 2];
-        for (int i = 0; i < splitArray.length; i++) {
 
-            if ((i % 2) == 0) {
-                ingredientsString[i / 2] = splitArray[i];
-                Log.i("info", splitArray[i]);
-            } else {
-                 operators[(i - 1) / 2] = splitArray[i];
-                Log.i("info", splitArray[i]);
+        if(splitArray[0].equals("not") || splitArray[0].equals("and") ||splitArray[0].equals("NOT") || splitArray[0].equals("AND") || splitArray[0].equals("And") ||splitArray[0].equals("Not")){
+            ActivityUtil.openNeutralAlertDialog("Veuillez commencer votre recherche en entrant un ingrédient et  avec un opérateur AND ou NOT", this, true, "OK");
+
+        }else {
+            String[] ingredientsString = new String[(splitArray.length + 1) / 2];
+            String[] operators = new String[(splitArray.length - 1) / 2];
+            for (int i = 0; i < splitArray.length; i++) {
+
+                if ((i % 2) == 0) {
+                    ingredientsString[i / 2] = splitArray[i];
+                    Log.i("info", splitArray[i]);
+                } else {
+                    operators[(i - 1) / 2] = splitArray[i];
+                    Log.i("info", splitArray[i]);
+                }
             }
+            app.sortPertinence(app.createIngredientArray(ingredientsString),
+                    app.getCategory(dropdown.getSelectedItem().toString()), operators);
+            Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
+            startActivityForResult(intent, 0);
         }
-
-        app.sortPertinence(app.createIngredientArray(ingredientsString),
-                app.getCategory(dropdown.getSelectedItem().toString()), operators);
-
-        //this.testSearch(ingredients,operators);
-
-        Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
-        startActivityForResult(intent, 0);
     }
 
     public void onClickReset(View view) {
