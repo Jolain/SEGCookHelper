@@ -94,9 +94,7 @@ public class AddRecipeActivity extends Activity {
 
 
             String desc = descriptionField.getText().toString();
-            /*DbBitmapUtility dec = new DbBitmapUtility();
-            byte[] bytes = dec.getBytes(bitmap);
-            app.addEntry(recipeNameField.getText().toString(),bytes);*/
+
 
             app.addRecipe(app.createRecipe(name, cookTime, category, ingredientsNameArray, bitmap, desc));
 
@@ -108,8 +106,14 @@ public class AddRecipeActivity extends Activity {
 
     public void onClickHelp(View view) {
         ActivityUtil.openNeutralAlertDialog("Veuillez entrer les données correspondant à chaque case. Cliquez sur l'image" +
-                " pour choisir une image pour votre recette. Cliquez sur Breakfast pour choisir une autre catégorie", this, true, "OK");
+                " pour choisir une image pour votre recette. Cliquez sur Breakfast pour choisir une autre catégorie." +
+                "lorsque vous ajoutez vos ingrédients, séparez chaque ingrédient par des virgules", this, true, "OK");
     }
+    public ImageView getimg(){
+        return this.image;
+    }
+
+
 
     public void onImageClick(View view) {
 
@@ -117,13 +121,7 @@ public class AddRecipeActivity extends Activity {
         builder.setMessage("Selectionnez où vous voulez prendre votre image.");
         builder.setCancelable(true);
 
-        builder.setNeutralButton("Application", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Intent intent = new Intent(getApplicationContext(), DataBaseImages.class);
-                startActivityForResult(intent, 0);
-                dialog.dismiss();
-            }
-        });
+
 
         builder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

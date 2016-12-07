@@ -253,12 +253,5 @@ public class CookHelper {
         recipeArray = newResults;
         return recipeArray;
     }
-    //put a byte of image in the database
-    /**public void addEntry(String name, byte[] image){
-        db.addEntry(name,image);
-    }
-    //get an image from the database
-    public Bitmap getImage(String name){
-        return db.getImage(name);
-    }*/
+
 }

@@ -4,18 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 
+import android.util.Log;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import static android.R.attr.drawable;
 
 /**
  * Created by Jolain Poirier on 11/23/2016.
@@ -31,6 +31,7 @@ class Database extends SQLiteOpenHelper {
     //private LinkedList<Bitmap> linkedImages;
     //private LinkedList<String> linkedImagesName;
     private String dbPath = "";
+    private Bitmap bit;
 
     // Private Constructor
 
@@ -137,16 +138,25 @@ class Database extends SQLiteOpenHelper {
                 Category category = getCategory(recipeCursor.getString(2));
                 String description = recipeCursor.getString(3);
                 // Fetches the drawable ID by searching by filename
-                byte[] img = recipeCursor.getBlob(4); // Implementation was wrong, looking for a fix
+                byte[] img = recipeCursor.getBlob(7); // this will be null if the image isn't from the user
                 String time = recipeCursor.getString(5);
                 String[] ingredient = stringToArray(recipeCursor.getString(6));
-                Bitmap bit = DbBitmapUtility.getImage(img);
+
+
                 // Construct an array of the linked ingredients
+                String imgName = recipeCursor.getString(4); // this will be null if the recipe is create from the user
+                if (img == null) {
+                    bit = null;
+                }else {
+                    bit = DbBitmapUtility.getImage(img);
+                }
                 LinkedList<Ingredient> ingObj = new LinkedList<>();
                 for (String anIngredient : ingredient) {
                     ingObj.add(getIngredient(anIngredient));
                 }
-                linkedRecipe.add(new Recipe(name, time, category, ingObj, bit, description));
+                Recipe recet = new Recipe(name,time,category, ingObj,bit,description);
+                recet.setImageFromDatabase(imgName);// give a string name which is the name of images in drawable
+                linkedRecipe.add(recet);
             } while(recipeCursor.moveToNext());
         }
         recipeCursor.close();
@@ -155,8 +165,7 @@ class Database extends SQLiteOpenHelper {
         Log.v("INGREDIENT ARRAY:", linkedIngredient.toString());
         Log.v("CATEGORY ARRAY:  ", linkedCategory.toString());
         Log.v("RECIPE ARRAY:    ", linkedRecipe.toString());
-        //Log.v("IMAGES ARRAY:    ", linkedImages.toString());
-        //Log.v("IMAGES NAME:     ", linkedImagesName.toString());
+
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -217,11 +226,12 @@ class Database extends SQLiteOpenHelper {
             entry.put(DatabaseContract.R_table.COL_NAME, recipe.getName());
             entry.put(DatabaseContract.R_table.COL_CATEGORY, recipe.getCategoryName());
             entry.put(DatabaseContract.R_table.COL_DESC, recipe.getDescription());
-            entry.put(DatabaseContract.R_table.COL_IMG, byt);
+            //entry.put(DatabaseContract.R_table.COL_IMG, byt);
             entry.put(DatabaseContract.R_table.COL_TIME, recipe.getCookTime());
             entry.put(DatabaseContract.R_table.COL_INGREDIENT, convertedString);
+            entry.put(DatabaseContract.R_table.COL_BLOB,byt);
 
-            // Insert entry intro database
+            // Insert entry into database
             try {
                 db.insert(DatabaseContract.R_table.TABLE_NAME, null, entry);
             }
@@ -242,9 +252,10 @@ class Database extends SQLiteOpenHelper {
         entry.put(DatabaseContract.R_table.COL_NAME, editedRecipe.getName());
         entry.put(DatabaseContract.R_table.COL_CATEGORY, editedRecipe.getCategoryName());
         entry.put(DatabaseContract.R_table.COL_DESC, editedRecipe.getDescription());
-        entry.put(DatabaseContract.R_table.COL_IMG, byt);
+        //entry.put(DatabaseContract.R_table.COL_IMG, byt);
         entry.put(DatabaseContract.R_table.COL_TIME, editedRecipe.getCookTime());
         entry.put(DatabaseContract.R_table.COL_INGREDIENT, convertedString);
+        entry.put(DatabaseContract.R_table.COL_BLOB,byt);
         try {
             db.update(DatabaseContract.R_table.TABLE_NAME, entry, DatabaseContract.R_table.COL_NAME + " = ?", new String[] {oldRecipe.getName()});
         }
@@ -257,7 +268,7 @@ class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteRecipe (Recipe r) {
+    void deleteRecipe (Recipe r) {
         SQLiteDatabase db = getWritableDatabase();
         try {
             db.delete(DatabaseContract.R_table.TABLE_NAME, DatabaseContract.R_table.COL_NAME + " = ?", new String[] {r.getName()} );
@@ -391,25 +402,7 @@ class Database extends SQLiteOpenHelper {
         return s.split("__,__");
     }
 
-    /**void addEntry( String name, byte[] image) throws SQLiteException {
-        SQLiteDatabase database = this.getWritableDatabase();
-        ContentValues cv = new  ContentValues();
 
-        cv.put(DatabaseContract.IM_table.COL_NAME,    name);
-        cv.put(DatabaseContract.IM_table.COL_IMAGE,   image);
-        linkedImages.add(BitmapFactory.decodeByteArray(image, 0, image.length));
-        linkedImagesName.add(name);
-        database.insert(DatabaseContract.IM_table.TABLE_NAME, null, cv );
-    }*/
-
-    /**Bitmap getImage(String name){
-        for(int i = 0;i<linkedImagesName.size();i++){
-            if(linkedImagesName.get(i).equals(name)){
-                return linkedImages.get(i);
-            }
-        }
-        return null;
-    }*/
 
 
 

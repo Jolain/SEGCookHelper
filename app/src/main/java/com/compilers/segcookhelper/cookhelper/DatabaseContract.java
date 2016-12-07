@@ -28,6 +28,7 @@ class DatabaseContract {
         static final String COL_DESC = "Description"; // String
         static final String COL_IMG = "LinkedImage"; // Bytes stored in BLOB SQL format
         static final String COL_TIME = "CookingTime"; // String
+        static final String COL_BLOB = "BlobImage";
         // SQLite does not support storing arrays. By using arrayToString() and stringToArray(),
         // we can store the ingredient array in a string like so:
         // ["Tomato", "Potato"] -> "Tomato__,__Potato"
@@ -38,9 +39,10 @@ class DatabaseContract {
                 COL_NAME + TEXT_TYPE + COMMA_SEP +
                 COL_CATEGORY + TEXT_TYPE + COMMA_SEP +
                 COL_DESC + TEXT_TYPE + COMMA_SEP +
-                COL_IMG + " BLOB" + COMMA_SEP +
+                COL_IMG + TEXT_TYPE + COMMA_SEP +
                 COL_TIME + TEXT_TYPE + COMMA_SEP +
-                COL_INGREDIENT + TEXT_TYPE + " )";
+                COL_INGREDIENT + TEXT_TYPE +
+                COL_BLOB + " BLOB)";
         static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
     /**static abstract class IM_table implements BaseColumns{

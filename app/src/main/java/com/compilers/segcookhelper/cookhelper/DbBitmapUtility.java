@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
 
+// this class is use to convert byte into bitmap and bitmap into byte
 
 
 public class DbBitmapUtility {

@@ -21,6 +21,10 @@ public class Recipe {
     private Category category;
     private String cookTime;
 
+
+
+    private String imageFromDatabase;
+
     /**
      * Constructs a Recipe
      *
@@ -51,6 +55,14 @@ public class Recipe {
         this.recipePertinence = 0;
     }
 
+
+    public String getImageFromDatabase() {
+        return imageFromDatabase;
+    }
+
+    public void setImageFromDatabase(String imageFromDatabase) {
+        this.imageFromDatabase = imageFromDatabase;
+    }
     /*
     Public methods
      */

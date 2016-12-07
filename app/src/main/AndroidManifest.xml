@@ -30,7 +30,6 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".activites.ContainerActivity" />
-        <activity android:name=".activites.DataBaseImages" />
 
     </application>
 

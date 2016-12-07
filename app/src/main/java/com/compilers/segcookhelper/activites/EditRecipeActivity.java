@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -71,7 +72,14 @@ public class EditRecipeActivity extends Activity {
         cookTimeField.setText(originalRecipe.getCookTime());
         descriptionField.setText(originalRecipe.getDescription());
         ingredientField.setText(ingredientInString);
-        image.setImageBitmap(bitmap);
+        if(originalRecipe.getImg()!=null){
+            image.setImageBitmap(bitmap);
+
+        }else {
+            image.setImageResource(getApplicationContext().getResources().getIdentifier(originalRecipe.getImageFromDatabase(), "drawable", getPackageName()));
+            bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        }
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
 
@@ -145,13 +153,7 @@ public class EditRecipeActivity extends Activity {
         builder.setMessage("Choisissez où vous vouliez prendre votre image");
         builder.setCancelable(true);
 
-        builder.setNeutralButton("Application", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Intent intent = new Intent(getApplicationContext(), DataBaseImages.class);
-                startActivityForResult(intent, 0);
-                dialog.dismiss();
-            }
-        });
+
 
         builder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

@@ -35,7 +35,11 @@ class RecipeAdapter extends ArrayAdapter<Recipe> {
         TextView recipeName = (TextView) rowView.findViewById(R.id.RecipeName);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.ImageRecipe);
         Recipe recipe = recettes[position];
-        imageView.setImageBitmap((recipe.getImg()));
+        if(recettes[position].getImg()!=null){
+            imageView.setImageBitmap((recettes[position].getImg()));
+        }else {
+            imageView.setImageResource(getContext().getResources().getIdentifier(recettes[position].getImageFromDatabase(), "drawable", getContext().getPackageName()));
+        }
         recipeName.setText(recipe.getName());
 
         return rowView;

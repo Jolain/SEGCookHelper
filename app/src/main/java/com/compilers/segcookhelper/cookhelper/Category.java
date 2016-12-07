@@ -1,5 +1,10 @@
 package com.compilers.segcookhelper.cookhelper;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.compilers.segcookhelper.R;
+
 /**
  * Created by Jolain Poirier on 11/16/2016.
  */
