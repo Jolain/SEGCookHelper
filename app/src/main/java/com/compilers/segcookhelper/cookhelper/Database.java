@@ -29,8 +29,7 @@ class Database extends SQLiteOpenHelper {
     private LinkedList<Recipe> linkedRecipe; // Container for all the recipe objects
     private LinkedList<Ingredient> linkedIngredient; // Container for all the ingredient objects
     private LinkedList<Category> linkedCategory; // Container for all the category objects
-    //private LinkedList<Bitmap> linkedImages;
-    //private LinkedList<String> linkedImagesName;
+
     private String dbPath = "";
     private Bitmap bit;
 
@@ -105,19 +104,9 @@ class Database extends SQLiteOpenHelper {
         Cursor ingredientCursor = db.rawQuery(query + DatabaseContract.I_table.TABLE_NAME, null);
         Cursor categoryCursor = db.rawQuery(query + DatabaseContract.C_table.TABLE_NAME, null);
         Cursor recipeCursor = db.rawQuery(query + DatabaseContract.R_table.TABLE_NAME, null);
-        //Cursor imageCursor = db.rawQuery(query + DatabaseContract.IM_table.TABLE_NAME,null);
 
 
-        //TODO add image cursor actions
-        /**if (imageCursor.moveToFirst()){
-            do {
-                byte[] imgByte = imageCursor.getBlob(1);
-                String name = imageCursor.getString(0);
-                linkedImagesName.add(name);
-                linkedImages.add(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
-            }while(imageCursor.moveToNext());
-        }
-        imageCursor.close();*/
+
 
         // Parse data for all cursors and create objects.
 

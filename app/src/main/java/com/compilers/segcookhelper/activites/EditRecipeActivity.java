@@ -131,9 +131,7 @@ public class EditRecipeActivity extends Activity {
             ingredientString = ingredientString.replaceAll(" ", "");
             String[] ingredientsNameArray = ingredientString.split(",");
 
-            /*DbBitmapUtility dec = new DbBitmapUtility();
-            byte[] bytes = dec.getBytes(bitmap);
-            app.addEntry(message,bytes);*/
+
 
             app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsNameArray, bitmap, desc));
 
