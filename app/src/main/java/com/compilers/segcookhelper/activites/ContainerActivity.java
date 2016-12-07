@@ -34,7 +34,7 @@ public class ContainerActivity extends Activity {
 
         app = CookHelper.getInstance(getApplicationContext());
         Recipe[] results = app.getSortedRecipes();
-        if (results == null || results.length == 0) {
+        if (results == null || results.length == 0) {// regarde s'il n'y a aucun résultat, si le cas échant, affiche un message à l'utilisateur disant qu'aucune recette n'a été trouvé
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Sorry, no results were found");
@@ -52,16 +52,16 @@ public class ContainerActivity extends Activity {
             alert.show();
         }
 
-        RecipeAdapter ad = new RecipeAdapter(this, results);
+        RecipeAdapter ad = new RecipeAdapter(this, results); // crée un recipe adapteur pour afficher les recettes selon un layout voulu
         listView.setAdapter(ad);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) { // démarre l'activité researchActivity si tu cliques sur une recette dans la liste
 
                 TextView textView = (TextView) view.findViewById(R.id.RecipeName);
                 String text = textView.getText().toString();
                 Intent intent = new Intent(getApplicationContext(), RecipeViewActivity.class); //Application Context and Activity
-                // Need some way to give recipe to the intent
+
                 intent.putExtra("RecipeName", text);
                 startActivityForResult(intent, 0);
             }
@@ -69,8 +69,8 @@ public class ContainerActivity extends Activity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //finish();
-        if(resultCode == RESULT_OK) {
+
+        if(resultCode == RESULT_OK) { // update la listView si et seulement si une recette a été supprimé
             String recipeDelete = data.getStringExtra("RecipeName");
             Recipe[] results = app.removeElements(app.getSortedRecipes(),recipeDelete);
             ListView listView1 = (ListView) findViewById(R.id.list_recipe);

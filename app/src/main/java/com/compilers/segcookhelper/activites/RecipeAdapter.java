@@ -16,7 +16,7 @@ import com.compilers.segcookhelper.cookhelper.Recipe;
 /**
  * Created by Weierstrass on 2016-11-23.
  */
-
+// cette classe est un adapteur qui permet d'afficher les recettes selon un layout désiré
 class RecipeAdapter extends ArrayAdapter<Recipe> {
 
     private final Context context;
@@ -35,7 +35,7 @@ class RecipeAdapter extends ArrayAdapter<Recipe> {
         TextView recipeName = (TextView) rowView.findViewById(R.id.RecipeName);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.ImageRecipe);
         Recipe recipe = recettes[position];
-        if(recettes[position].getImg()!=null){
+        if(recettes[position].getImg()!=null){ // si le bitmap n'est pas égale null, l'image de l'activité prend la valeur du bitmap, le cas échéant çca prend une image dans le drawable de cette recette
             imageView.setImageBitmap((recettes[position].getImg()));
         }else {
             imageView.setImageResource(getContext().getResources().getIdentifier(recettes[position].getImageFromDatabase(), "drawable", getContext().getPackageName()));
@@ -45,9 +45,6 @@ class RecipeAdapter extends ArrayAdapter<Recipe> {
         return rowView;
     }
 
-    /*private int getImgID(Recipe r) {
-        Resources assets = context.getResources();
-        return assets.getIdentifier(r.getImg(), "drawable", context.getPackageName());
-    }*/
+
 }
 

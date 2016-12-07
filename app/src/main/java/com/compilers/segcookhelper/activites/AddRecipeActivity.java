@@ -58,13 +58,13 @@ public class AddRecipeActivity extends Activity {
         create = (Button) findViewById(R.id.createAdd);
         help = (Button) findViewById(R.id.HelpAdd);
         dropdown = (Spinner) findViewById(R.id.categoryADD);
-        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_logo_00);
+        bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_logo_00); // attribut une image à bitmap
         app = CookHelper.getInstance(getApplicationContext());
         String[] categoryNameArray = app.getCategoryNameArray();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray); // instancie un adapteur de categoryArray
 
         dropdown.setAdapter(adapter);
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {  // crée une action si tu choisis un des items
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
@@ -81,7 +81,7 @@ public class AddRecipeActivity extends Activity {
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
                 descriptionField.getText().toString().matches("")) { //check for empty fields
             ActivityUtil.openNeutralAlertDialog("S'il vous plaît, remplissez toutes les cases", this, true, "OK");
-            // TODO:delete the recipe from the database and return to research screen;
+
         } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) { //check if desrciption is within limits
             ActivityUtil.openNeutralAlertDialog("Description must be within " + ActivityUtil.MAX_DESCRIPTION_LIMIT +
                     " and " + ActivityUtil.MIN_DESCRIPTION_LIMIT, this, true, "OK");
@@ -99,7 +99,7 @@ public class AddRecipeActivity extends Activity {
             //split ingredients by commas
             String[] ingredientsNameArray = ingredientString.split(",");
 
-            // TODO: For now it uses the default "ic_logo_00" picture, should use another image
+
             String desc = descriptionField.getText().toString();
             app.addRecipe(app.createRecipe(name, cookTime, category, ingredientsNameArray, bitmap, desc));
 
@@ -109,27 +109,25 @@ public class AddRecipeActivity extends Activity {
         }
     }
 
-    public void onClickHelp(View view) {
+    public void onClickHelp(View view) { // affiche un dialogue lorsqu'on clique sur le bouton help
         ActivityUtil.openNeutralAlertDialog("Veuillez entrer les données correspondant à chaque case. Cliquez sur l'image" +
                 " pour choisir une image pour votre recette. Cliquez sur Breakfast pour choisir une autre catégorie." +
                 "lorsque vous ajoutez vos ingrédients, séparez chaque ingrédient par des virgules", this, true, "OK");
     }
-    public ImageView getimg(){
-        return this.image;
-    }
+
 
 
 
     public void onImageClick(View view) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this); // demande à l'utilisateur où il veut choisir son image
         builder.setMessage("Selectionnez où vous voulez prendre votre image.");
         builder.setCancelable(true);
 
 
 
         builder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int id) { // ouvre la camera de ton apparail
                 File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".png");
                 Uri imgUri = Uri.fromFile(file);
                 imgPath = file.getAbsolutePath();
@@ -141,7 +139,7 @@ public class AddRecipeActivity extends Activity {
         });
 
         builder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int id) {// ouvre la gallerie photos de ton appareil
 
                 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
@@ -157,13 +155,13 @@ public class AddRecipeActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode != Activity.RESULT_CANCELED) {
-            if (requestCode == CAPTURE_IMAGE) {
+            if (requestCode == CAPTURE_IMAGE) {// remplace l'image de l'activité par la photo prise
                 bitmap = BitmapFactory.decodeFile(imgPath);
 
                 image.setImageBitmap(BitmapFactory.decodeFile(imgPath));
             }
             super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {//remplace l'image de l'activité par la photo sélectionnez dans la gallerie photo
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);

@@ -26,17 +26,17 @@ public class MainActivity extends Activity {
         CookHelper.getInstance(getApplicationContext());
     }
 
-    public void onClickSearch(View view) {
+    public void onClickSearch(View view) { // va à l'activité researchActivity si le bouton search est cliqué
         Intent intent = new Intent(getApplicationContext(), ResearchActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
     }
 
-    public void onClickHelp(View view) {
+    public void onClickHelp(View view) { // va à l'activité helpActivity si le bouton help est cliqué
         Intent intent = new Intent(getApplicationContext(), HelpActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
     }
 
-    public void onClickAddRecipe(View view) {
+    public void onClickAddRecipe(View view) { // va à l'activité addRecipe si le bouton ADDRECIPE est cliqué
         Intent intent = new Intent(getApplicationContext(), AddRecipeActivity.class); //Application Context and Activity
         startActivityForResult(intent, 0);
     }

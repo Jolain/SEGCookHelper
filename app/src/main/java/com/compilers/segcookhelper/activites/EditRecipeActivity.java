@@ -59,11 +59,11 @@ public class EditRecipeActivity extends Activity {
         dropdown = (Spinner) findViewById(R.id.categoryEdit);
 
         Bundle bundle = getIntent().getExtras();
-        message = bundle.getString("RecipeName");
+        message = bundle.getString("RecipeName"); // récupère le nom spécifique de la recette de l'activité précédente
 
 
         app = CookHelper.getInstance(getApplicationContext());
-        originalRecipe = app.getRecipe(message);
+        originalRecipe = app.getRecipe(message); // cherche dans l'application une recette selon le nom spécifié de la recette
         String ingredientInString = originalRecipe.getIngredientsString();
 
         String[] categoryNameArray = app.getCategoryNameArray();
@@ -71,7 +71,7 @@ public class EditRecipeActivity extends Activity {
         cookTimeField.setText(originalRecipe.getCookTime());
         descriptionField.setText(originalRecipe.getDescription());
         ingredientField.setText(ingredientInString);
-        if(originalRecipe.getImg()!=null){
+        if(originalRecipe.getImg()!=null){ // si l'image bitmap de la recette obtenu dans le database n'est pas null, afficher l'image de cette activity selon le bitmap, sinon afficher l'image de l'activité selon le nom du fichier dans drawable
             image.setImageBitmap(bitmap);
 
         }else {
@@ -85,7 +85,7 @@ public class EditRecipeActivity extends Activity {
         dropdown.setAdapter(adapter);
         dropdown.setSelection(getIndex(dropdown, originalRecipe.getCategoryName()));
 
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() { // attribuer une action si tu cliques sur une des catégories du dialogue
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
@@ -97,7 +97,7 @@ public class EditRecipeActivity extends Activity {
         });
     }
 
-    private int getIndex(Spinner spinner, String myString) {
+    private int getIndex(Spinner spinner, String myString) { // méthode permettant de trouver l'index dans un spinner selon la valeur de cet index
         int index = 0;
 
         for (int i = 0; i < spinner.getCount(); i++) {
@@ -114,7 +114,7 @@ public class EditRecipeActivity extends Activity {
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
                 descriptionField.getText().toString().matches("")) {//check for empty fields
             ActivityUtil.openNeutralAlertDialog("Please fill up all the fields", this, true, "OK");
-            // TODO:delete the recipe from the database and return to research screen;
+
         } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {//check if description is within limits
             ActivityUtil.openNeutralAlertDialog("Description must be within " + ActivityUtil.MAX_DESCRIPTION_LIMIT +
                     " and " + ActivityUtil.MIN_DESCRIPTION_LIMIT, this, true, "OK");
@@ -123,7 +123,7 @@ public class EditRecipeActivity extends Activity {
 
             String cat = dropdown.getSelectedItem().toString();
             String desc = descriptionField.getText().toString();
-            // TODO: For now it uses the same image as the old recipe, should get the new one
+
 
             String time = cookTimeField.getText().toString();
 
@@ -131,7 +131,7 @@ public class EditRecipeActivity extends Activity {
             ingredientString = ingredientString.replaceAll(" ", "");
             String[] ingredientsNameArray = ingredientString.split(",");
 
-            app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsNameArray, bitmap, desc));
+            app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsNameArray, bitmap, desc));// supprime la vieille recette du database, et ajoute une nouvelle recette
 
             Intent returnIntent = new Intent();
             returnIntent.putExtra("RecipeName", name);
@@ -148,7 +148,7 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onImageClick(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this); // permet a l'utilisateur de choisir l'image de la gallery photo où de la camera
         builder.setMessage("Choisissez où vous vouliez prendre votre image");
         builder.setCancelable(true);
 
@@ -181,7 +181,7 @@ public class EditRecipeActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_CANCELED) {
+        if (resultCode != Activity.RESULT_CANCELED) {// l'image de l'activité devient soit l'image pris dans la gallerie, ou l'image pris à partir de l'appareil photo
             if (requestCode == CAPTURE_IMAGE) {
 
                 bitmap = BitmapFactory.decodeFile(imgPath);

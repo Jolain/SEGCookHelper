@@ -57,13 +57,13 @@ public class RecipeViewActivity extends Activity {
         description.setText("Description: " + recipeView.getDescription());
     }
 
-    public void onClickEditRecipe(View view) {
+    public void onClickEditRecipe(View view) { // l'application va dans la prochaine activité editRecipe
         Intent intent = new Intent(getApplicationContext(), EditRecipeActivity.class); //Application Context and Activity
-        intent.putExtra("RecipeName", recipeNameField.getText().toString());
+        intent.putExtra("RecipeName", recipeNameField.getText().toString()); // donne le nom de l'activité à l'intent
         startActivityForResult(intent, 0);
     }
 
-    public void onClickDeleteRecipe(View view) {
+    public void onClickDeleteRecipe(View view) { // supprime la recette du database et retourne à l'activité précédente
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you really want to delete this recipe?");
@@ -93,12 +93,12 @@ public class RecipeViewActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
-            String message = bundle.getString("RecipeName");
+            String message = bundle.getString("RecipeName"); // prend le nom de la recette de l'activité prochain
 
-            //research again a recipe in the database with message as parameter and say tempRecipe = getDataBaseRecipe(message)
+
             recipeNameField.setText(message);
 
-            tempRecipe = app.getRecipe(message);
+            tempRecipe = app.getRecipe(message);// recherche la recette updater dans l'application
             category.setText("Category: " + tempRecipe.getCategoryName());
             ingredient.setText("Ingredient: " + tempRecipe.getIngredientsString());
             cookTime.setText("CookTime: " + tempRecipe.getCookTime());

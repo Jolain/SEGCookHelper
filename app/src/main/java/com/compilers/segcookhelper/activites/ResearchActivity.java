@@ -40,7 +40,7 @@ public class ResearchActivity extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoryNameArray);
 
         dropdown.setAdapter(adapter);
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {// donne une action si tu cliques un des items dans le spinner
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
@@ -52,7 +52,7 @@ public class ResearchActivity extends Activity {
         });
     }
 
-    public void onClickSearchRecipe(View view) {
+    public void onClickSearchRecipe(View view) { // recherche la recette dans le database, vérifie si le champ de recherche a des entrées voulu, sinon produit des messages d'erreur
 
         String query = edit.getText().toString();
 
@@ -62,6 +62,7 @@ public class ResearchActivity extends Activity {
             ActivityUtil.openNeutralAlertDialog("Veuillez commencer votre recherche en entrant un ingrédient et  avec un opérateur AND ou NOT", this, true, "OK");
 
         }else {
+            try{
             String[] ingredientsString = new String[(splitArray.length + 1) / 2];
             String[] operators = new String[(splitArray.length - 1) / 2];
             for (int i = 0; i < splitArray.length; i++) {
@@ -74,19 +75,25 @@ public class ResearchActivity extends Activity {
                     Log.i("info", splitArray[i]);
                 }
             }
-            app.sortPertinence(app.createIngredientArray(ingredientsString),
-                    app.getCategory(dropdown.getSelectedItem().toString()), operators);
-            Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
-            startActivityForResult(intent, 0);
+
+                app.sortPertinence(app.createIngredientArray(ingredientsString),
+                        app.getCategory(dropdown.getSelectedItem().toString()), operators);
+                Intent intent = new Intent(getApplicationContext(), ContainerActivity.class); //Application Context and Activity
+                startActivityForResult(intent, 0);
+            }catch (Exception e){
+                ActivityUtil.openNeutralAlertDialog("Aucun résultat n'a été trouvé, veuillez séparez chaque ingrédient par un opérateur And ou Not", this, true, "OK");
+
+            }
+
         }
     }
 
-    public void onClickReset(View view) {
+    public void onClickReset(View view) { // reset les paramètres d'entrée de recherche
         edit.setText("");
         dropdown.setSelection(0);
     }
 
-    public void onClickHelp(View view) {
+    public void onClickHelp(View view) { // affiche la fenêtre du help
         ActivityUtil.openNeutralAlertDialog("1. Tout d’abord les recherches sont faites selon les catégories (entrée, sauce etc..), le type de plat  (Éthiopien, Indien, Français etc..) et une liste des ingrédients.\n" +
                 "2. Les recherches selon les ingrédients devront utiliser des expressions AND , OR, NOT.\n", this, true, "OK");
     }
