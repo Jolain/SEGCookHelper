@@ -52,7 +52,7 @@ class Pertinence {
             // donner par l'utilisateur
             while (start) {
                 if (index < listRecipeIngredient.length) {
-                    if (Objects.equals(listRecipeIngredient[index], ingredients[i].getName())) {
+                    if (Objects.equals(listRecipeIngredient[index].toLowerCase(), ingredients[i].getName().toLowerCase())) {
                         p = p + ingredientPertinence;
                         ingredientsMatch[i] = true;
                         start = false;
@@ -68,7 +68,7 @@ class Pertinence {
         // taking into account the and, or, not. I am assuming that between every ingredients
         // an operator is present. In other word operator length is 1 less then the ingredients length
         for (int i = 0; i < operateur.length; i++) {
-            switch (operateur[i]) {
+            switch (operateur[i].toLowerCase()) {
 
                 case "and":
                     if (ingredientsMatch[i] && ingredientsMatch[i + 1]) {
