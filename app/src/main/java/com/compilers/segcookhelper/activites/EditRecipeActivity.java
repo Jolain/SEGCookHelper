@@ -23,7 +23,6 @@ import android.widget.Spinner;
 
 import com.compilers.segcookhelper.R;
 import com.compilers.segcookhelper.cookhelper.CookHelper;
-import com.compilers.segcookhelper.cookhelper.DbBitmapUtility;
 import com.compilers.segcookhelper.cookhelper.Recipe;
 
 import java.io.File;
@@ -113,7 +112,7 @@ public class EditRecipeActivity extends Activity {
     public void onClickSave(View view) {
         if (dropdown.getSelectedItem().toString().matches("") || message.matches("") ||
                 cookTimeField.getText().toString().matches("") || ingredientField.getText().toString().matches("") ||
-                descriptionField.getText().toString().matches("")) {//TODO keep description field between limits in Recipe
+                descriptionField.getText().toString().matches("")) {
             ActivityUtil.openNeutralAlertDialog("Please fill up all the fields", this, true, "OK");
             // TODO:delete the recipe from the database and return to research screen;
         } else if (!ActivityUtil.isWithinDescriptionLimits(descriptionField.getText().toString())) {
@@ -128,13 +127,15 @@ public class EditRecipeActivity extends Activity {
 
             String time = cookTimeField.getText().toString();
 
-            String[] ingredientsName = ingredientField.getText().toString().split(", ");
+            String ingredientString = ingredientField.getText().toString();
+            ingredientString = ingredientString.replaceAll(" ", "");
+            String[] ingredientsNameArray = ingredientString.split(",");
 
             /*DbBitmapUtility dec = new DbBitmapUtility();
             byte[] bytes = dec.getBytes(bitmap);
             app.addEntry(message,bytes);*/
 
-            app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsName, bitmap, desc));
+            app.editRecipe(originalRecipe, app.createRecipe(name, time, cat, ingredientsNameArray, bitmap, desc));
 
             Intent returnIntent = new Intent();
             returnIntent.putExtra("RecipeName", name);
@@ -144,8 +145,10 @@ public class EditRecipeActivity extends Activity {
     }
 
     public void onClickHelp(View view) {
-        ActivityUtil.openNeutralAlertDialog("Veuillez rentrez les données correspondant à chaque case. Cliquez sur l'image pour" +
-                " modifier l'image de cette recette. Cliquez sur le nom de la catégorie pour sélectionnez une nouvelle catégorie", this, true, "OK");
+        ActivityUtil.openNeutralAlertDialog("Veuillez rentrez les données correspondant à chaque case.\n" +
+                "Cliquez sur l'image pour modifier l'image de cette recette.\n" +
+                "Cliquez sur le nom de la catégorie pour sélectionnez une nouvelle catégorie.\n" +
+                "Les ingrédients doivent être séparer par des virgules.", this, true, "OK");
     }
 
     public void onImageClick(View view) {

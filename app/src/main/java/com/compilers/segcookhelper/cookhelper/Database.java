@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 
 import android.util.Log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -15,7 +16,7 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import static android.R.attr.drawable;
+
 
 /**
  * Created by Jolain Poirier on 11/23/2016.
@@ -23,11 +24,11 @@ import static android.R.attr.drawable;
 
 class Database extends SQLiteOpenHelper {
 
-    private static Database instance;//TODO memory leak
+    private static Database instance; // Can possibly cause a memory leak by storing a context value in a static object
     private final Context context;
-    private LinkedList<Recipe> linkedRecipe;
-    private LinkedList<Ingredient> linkedIngredient;
-    private LinkedList<Category> linkedCategory;
+    private LinkedList<Recipe> linkedRecipe; // Container for all the recipe objects
+    private LinkedList<Ingredient> linkedIngredient; // Container for all the ingredient objects
+    private LinkedList<Category> linkedCategory; // Container for all the category objects
     //private LinkedList<Bitmap> linkedImages;
     //private LinkedList<String> linkedImagesName;
     private String dbPath = "";
@@ -44,7 +45,7 @@ class Database extends SQLiteOpenHelper {
     // Singleton Implementation
 
     // The synchronized keyword makes sure that only one thread accesses the database
-    // at any time.
+    // at any time to prevent IOException & SQLException.
     static synchronized Database getInstance(Context context) {
         if(instance == null) {
             instance = new Database(context.getApplicationContext());
@@ -61,6 +62,9 @@ class Database extends SQLiteOpenHelper {
         //db.execSQL(DatabaseContract.IM_table.CREATE_TABLE);
     }
 
+    // Method called when app is initialised, code could technically be moved to onCreate()
+    // Loads the database from disk (or copy it from assets folder if not present) and load
+    // objects into memory for easier access.
     void onLoad() {
         // Checks to see if database file already exists.
         // If it isn't copy it from the asset folder.
@@ -115,7 +119,8 @@ class Database extends SQLiteOpenHelper {
         }
         imageCursor.close();*/
 
-        // Parse data
+        // Parse data for all cursors and create objects.
+
         if(ingredientCursor.moveToFirst()) { // Check if data is present
             do {
                 String name = ingredientCursor.getString(1);
@@ -178,13 +183,23 @@ class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // This method is used to fetch an SQL query based on the ingredients inputted by the user.
+    // It returns an Recipe[] array containing all the recipes stored containing at least 1 ingredient
+    // matched by the query.
     Recipe[] recipeQuery(Ingredient[] ingredients) {
         String query;
         if(ingredients[0] == null) {
             return getRecipeArray(); // If query is null, return all recipe
         } else {
-            query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME + " WHERE ";
-            for (int i = 0; i < ingredients.length; i++) {
+            query = "SELECT * FROM " + DatabaseContract.R_table.TABLE_NAME + " WHERE "; // Construct base SQLite query
+
+            /*
+            Note: this implementation is bad because it's vulnerable to SQL injections if you edit
+            a recipe ingredients value to contain SQL code. Although in this context, this is a local
+            database which contains no sensitive information and is not a problem.
+            */
+
+            for (int i = 0; i < ingredients.length; i++) { // Construct remaining query using user input
                 if (ingredients[i] != null && ingredients[i].getName() != null) {
                     query = query + DatabaseContract.R_table.COL_INGREDIENT + " LIKE '%" + ingredients[i].getName() + "%'";
                 }
@@ -194,13 +209,13 @@ class Database extends SQLiteOpenHelper {
             }
         }
         SQLiteDatabase db = getReadableDatabase();
-        Cursor recipeCursor = db.rawQuery(query, null);
-        Recipe[] output = new Recipe[recipeCursor.getCount()];
+        Cursor recipeCursor = db.rawQuery(query, null); // Pass query to SQLite database
+        Recipe[] output = new Recipe[recipeCursor.getCount()]; // Create empty array to hold recipes
         if(recipeCursor.moveToFirst()) { // Check if data is present
             int n = 0;
             do {
                 String name = recipeCursor.getString(1);
-                output[n] = getRecipe(name);
+                output[n] = getRecipe(name); // Fetch matching recipes from existing list
                 n++;
             } while(recipeCursor.moveToNext());
         }
@@ -209,9 +224,10 @@ class Database extends SQLiteOpenHelper {
         return output;
     }
 
+    // This method takes a created Recipe object from user input and adds it to the database.
+    // This method SHOULD check the ingredients values for SQL injection.
     void addRecipe(Recipe recipe) {
         if(!linkedRecipe.contains(recipe)) {
-            linkedRecipe.add(recipe);
             System.out.println("Database: added recipe " + recipe.getName());
 
             // SQLite Implementation
@@ -221,6 +237,7 @@ class Database extends SQLiteOpenHelper {
             // Convert ingredients into a string
             String[] ingredientNames = recipe.getIngredientsString().split(", ");
             String convertedString = arrayToString(ingredientNames);
+            // Convert BitmapImage to raw bytes for storage
             byte[] byt = DbBitmapUtility.getBytes(recipe.getImg());
             // Insert values in the entry
             entry.put(DatabaseContract.R_table.COL_NAME, recipe.getName());
@@ -234,6 +251,7 @@ class Database extends SQLiteOpenHelper {
             // Insert entry into database
             try {
                 db.insert(DatabaseContract.R_table.TABLE_NAME, null, entry);
+                linkedRecipe.add(recipe); // Add the created recipe to the private list
             }
             catch (Exception e) {
                 System.out.println("ERROR: Recipe was not added to SQLite database");
@@ -242,6 +260,9 @@ class Database extends SQLiteOpenHelper {
         }
     }
 
+    // This method deletes the oldRecipe object from the list, creates a new one using the edited values
+    // and add this new recipe to the SQLite database.
+    // This method SHOULD also check the ingredients values for SQL injection.
     void editRecipe(Recipe oldRecipe, Recipe editedRecipe) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues entry = new ContentValues();
@@ -258,16 +279,17 @@ class Database extends SQLiteOpenHelper {
         entry.put(DatabaseContract.R_table.COL_BLOB,byt);
         try {
             db.update(DatabaseContract.R_table.TABLE_NAME, entry, DatabaseContract.R_table.COL_NAME + " = ?", new String[] {oldRecipe.getName()});
+            linkedRecipe.remove(oldRecipe);
+            linkedRecipe.add(editedRecipe);
         }
         catch (Exception e) {
             System.out.println("ERROR: Recipe was not edited");
         }
-        linkedRecipe.remove(oldRecipe);
-        linkedRecipe.add(editedRecipe);
 
         db.close();
     }
 
+    // Deletes a given recipe from the database and the linked objects list.
     void deleteRecipe (Recipe r) {
         SQLiteDatabase db = getWritableDatabase();
         try {
@@ -279,6 +301,8 @@ class Database extends SQLiteOpenHelper {
         }
     }
 
+    // Adds a given ingredient to the database. This method is only called when the user
+    // creates or edit a recipe and an ingredient named does not exist in the database.
     void addIngredient(Ingredient i) {
         if (!linkedIngredient.contains(i)) {
             linkedIngredient.add(i);
@@ -306,6 +330,8 @@ class Database extends SQLiteOpenHelper {
     //    return linkedRecipe.contains(recipe);
     //}
 
+    // Returns a Recipe object contained in the private list matching the name given, if it exists.
+    // Returns null otherwise.
     Recipe getRecipe(String name) {
 
         Iterator<Recipe> i = linkedRecipe.iterator();
@@ -313,17 +339,18 @@ class Database extends SQLiteOpenHelper {
             Recipe node;
             while (i.hasNext()) {
                 node = i.next();
-                if (node.getName().equals(name)) {
-                    return node;
+                if (node.getName().equals(name)) { // If name matches
+                    return node; // Return recipe
                 }
             }
         }catch(Exception e){
             System.out.println("No such recipe");
         }
-        throw new IllegalArgumentException("Recipe with name: " + name +
-                " is not included in the database");
+        return null;
     }
 
+    // Returns a Recipe object contained in the private list matching the name given, if it exists.
+    // Returns null otherwise.
     Category getCategory(String name) {
 
         Iterator<Category> i = linkedCategory.iterator();
@@ -331,12 +358,10 @@ class Database extends SQLiteOpenHelper {
         Category node;
         while(i.hasNext()){
             node = i.next();
-            if(node.getName().equals(name)){
-                return node;
+            if(node.getName().equals(name)){ // If name matches
+                return node; // Return category
             }
         }
-        //throw new IllegalArgumentException("Recipe with name: " + name +
-               // " is not included in the database");
         return null;
     }
 
@@ -352,7 +377,8 @@ class Database extends SQLiteOpenHelper {
     boolean containsIngredient(Ingredient ingredient) {
         return linkedIngredient.contains(ingredient);
     }
-
+    // Returns an Ingredient object contained in the private list matching the name given, if it exists.
+    // Returns null otherwise.
     Ingredient getIngredient(String name) {
         Iterator<Ingredient> i = linkedIngredient.iterator();
 
@@ -363,8 +389,6 @@ class Database extends SQLiteOpenHelper {
                 return node;
             }
         }
-//        throw new IllegalArgumentException("Recipe with name: " + name +
-               // " is not included in the database");
         return null;
     }
 
