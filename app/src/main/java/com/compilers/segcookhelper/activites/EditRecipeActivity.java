@@ -1,9 +1,11 @@
 package com.compilers.segcookhelper.activites;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +13,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -156,22 +160,29 @@ public class EditRecipeActivity extends Activity {
 
         builder.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".png");
-                Uri imgUri = Uri.fromFile(file);
-                imgPath = file.getAbsolutePath();
-                final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
-                startActivityForResult(intent, CAPTURE_IMAGE);
-                dialog.dismiss();
+                if(isCameraPermissionGranted()) {
+                    File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "image" + new Date().getTime() + ".png");
+                    Uri imgUri = Uri.fromFile(file);
+                    imgPath = file.getAbsolutePath();
+                    final Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+                    startActivityForResult(intent, CAPTURE_IMAGE);
+                    dialog.dismiss();
+                } else {
+                    dialog.dismiss();
+                }
             }
         });
 
         builder.setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-
-                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, RESULT_LOAD_IMAGE);
-                dialog.dismiss();
+                if(isStoragePermissionGranted()) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, RESULT_LOAD_IMAGE);
+                    dialog.dismiss();
+                } else {
+                    dialog.dismiss();
+                }
             }
         });
 
@@ -201,6 +212,49 @@ public class EditRecipeActivity extends Activity {
 
                 image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             }
+        }
+    }
+    // Implementation for SDK >= 23 devices, permissions need to be requested on run.
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Log.v("STORAGE:","Permission is granted");
+                return true;
+            } else {
+                Log.v("STORAGE:","Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("STORAGE:","Permission is granted");
+            return true;
+        }
+    }
+
+    public  boolean isCameraPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                Log.v("STORAGE:","Permission is granted");
+                return true;
+            } else {
+                Log.v("STORAGE:","Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("STORAGE:","Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            Log.v("","Permission: "+permissions[0]+ "was "+grantResults[0]);
         }
     }
 }
